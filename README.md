@@ -1,6 +1,5 @@
-# projet-web
-Projet Web L3
+# Projet Web - L3 Info - 2016/2017
+Par CLEMENT Hugo, O'ROURKE Marvyn & FUZIER Pauline
 
-Pauline Fuzier
-Hugo Clément
-Marvyn O'Rourke
+## Sujet du site
+A COMPLETER
