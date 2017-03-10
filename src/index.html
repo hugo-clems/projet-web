@@ -12,9 +12,10 @@
 ;
 
 var map;
+var albi = {lat: 43.919367, lng: 2.138310};
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 43.919367, lng: 2.138310},
+    center: albi,
     zoom: 4,
 	zoomControl: true,
 	mapTypeControl: false,
@@ -22,13 +23,31 @@ function initMap() {
 	streetViewControl: false,
 	rotateControl: false
   });
-}
-	
-	var chicago = {lat: 41.850, lng: -87.650};
+  
+  google.maps.event.addListener(map, 'click', function(event) {
+    placeMarker(event.latLng);
+  });
+} 
 
-	map.addDomListener(outer, 'click', function() {
-		map.setCenter(chicago)
-	})
+
+function placeMarker(location) {
+  var marker = new google.maps.Marker({
+      position: location,
+      map: map
+  });
+  console.log(location.lat());
+  console.log(location.lng());
+  
+  <!-- TODO chercher sur le geocode pour avoir le nom du pays via une location -->
+  
+}
+
+	
+
+  
+
+	
+	
 
     </script>
     <script async defer
