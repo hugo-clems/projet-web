@@ -8,6 +8,8 @@
   <body>
     <div id="map"></div>
     <script type="text/javascript">
+	
+;
 
 var map;
 function initMap() {
@@ -21,6 +23,12 @@ function initMap() {
 	rotateControl: false
   });
 }
+	
+	var chicago = {lat: 41.850, lng: -87.650};
+
+	map.addDomListener(outer, 'click', function() {
+		map.setCenter(chicago)
+	})
 
     </script>
     <script async defer
