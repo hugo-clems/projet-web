@@ -1,12 +1,14 @@
 # Projet Web - L3 Info - 2016/2017
 Par CLEMENT Hugo, FUZIER Pauline & O'ROURKE Marvyn
 
+
 ## Les données
 ### PIB
 Le PIB pour chaque pays du monde de 1990 à 2015 exprimé en dollards.
 
-### La seconde
-A trouver + Compléter sa description
+### Natalité & Mortalité
+Le taux de natalité et de mortalité par an et par pays.
+
 
 ## Fonctionalités
 ### La carte
@@ -29,8 +31,7 @@ Si possible, cette barre d'icônes "suivra" le bas de la page afin qu'elle serve
 Chacun de ses boutons donne les informations sur le graphique correspondant.
 
 
-## Clé Google API 
-
+## Clé Google API
 AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8
 
 
