@@ -14,6 +14,7 @@
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
 function initMap() {
+	
   map = new google.maps.Map(document.getElementById('map'), {
     center: albi,
     zoom: 4,
@@ -27,6 +28,8 @@ function initMap() {
   google.maps.event.addListener(map, 'click', function(event) {
     placeMarker(event.latLng);
   });
+  
+  
 } 
 
 
@@ -37,9 +40,38 @@ function placeMarker(location) {
   });
   console.log(location.lat());
   console.log(location.lng());
+  getCountry(location);
   
   <!-- TODO chercher sur le geocode pour avoir le nom du pays via une location -->
   
+}
+
+function getCountry (location) {
+	var lat = location.lat();
+	var lng = location.lng();
+	console.log(lat);
+	console.log(lng);
+ 	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false') 
+			.done (function(location) 
+			{ 
+			var countryName;
+			console.log(location);
+			if(location.status == "OK"){
+				country = (location.results[2]).address_components;
+				console.log(country);
+				for(i =0; i < country.length; i++){
+					<!--console.log(country[i]); -->
+					<!-- console.log(country[i].types[0]); -->
+						if ((country[i]).types[0] == 'country') {
+							countryName = (country[i]).long_name;
+							<!-- TODO : Voir pour groenland et les autres --> 
+						}
+				}						
+				console.log(countryName); 
+			}
+			
+		}); 
+	
 }
 
 	
