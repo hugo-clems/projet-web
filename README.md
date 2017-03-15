@@ -31,6 +31,10 @@ Si possible, cette barre d'icônes "suivra" le bas de la page afin qu'elle serve
 Chacun de ses boutons donne les informations sur le graphique correspondant.
 
 
+## Base de Données
+Utilisation de INDEXED DB, voir `src/exempleDB.html` pour comprendre son fonctionnement.
+
+
 ## Clé Google API
 AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8
 
