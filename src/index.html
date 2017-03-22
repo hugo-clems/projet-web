@@ -7,6 +7,9 @@
   </head>
   <body>
     <div id="map"></div>
+	<h3>Pays sélectionnés : </h3>
+	<ul id="myliste">
+    </ul>
     <script type="text/javascript">
 	
 ;
@@ -38,12 +41,9 @@ function placeMarker(location) {
       position: location,
       map: map
   });
-  console.log(location.lat());
-  console.log(location.lng());
-  getCountry(location);
-  
-  <!-- TODO chercher sur le geocode pour avoir le nom du pays via une location -->
-  
+  var pays = getCountry(location);
+  console.log(pays);
+     
 }
 
 function getCountry (location) {
@@ -51,28 +51,54 @@ function getCountry (location) {
 	var lng = location.lng();
 	console.log(lat);
 	console.log(lng);
+	var countryName;
  	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false') 
 			.done (function(location) 
 			{ 
-			var countryName;
-			console.log(location);
+			var i = 2;
+			var country;
+			<!--console.log(location);-->
 			if(location.status == "OK"){
-				country = (location.results[2]).address_components;
-				console.log(country);
+				while(location.results[i] == null){
+					i--;
+				} 
+				country = (location.results[i]).address_components;
+				
 				for(i =0; i < country.length; i++){
-					<!--console.log(country[i]); -->
-					<!-- console.log(country[i].types[0]); -->
 						if ((country[i]).types[0] == 'country') {
 							countryName = (country[i]).long_name;
-							<!-- TODO : Voir pour groenland et les autres --> 
 						}
 				}						
+				console.log("country :");
 				console.log(countryName); 
+				addCountryList(countryName); 
 			}
 			
-		}); 
-	
+		});	
 }
+
+function addCountryList(country) {
+		var ma_liste = document.getElementById("myliste");
+		var li = document.createElement("li");
+		var pays = document.createTextNode(country); 
+		li.appendChild(pays);  
+		ma_liste.appendChild(li);
+		
+		
+		
+		
+		<!-- a supprimer -->
+		<!--var les_li = ma_liste.getElementsByTagName("li"); -->
+		<!--var long_ma_liste = les_li.length; -->
+		<!-- var num_nouv_li = long_ma_liste + 1; -->
+		<!-- var contenu_ma_liste = ma_liste.innerHTML; -->
+		<!-- var li_a_ajouter = '<li id="pays' + num_nouv_li + ">"+country+"</li>" ; -->
+		
+		<!--contenu_ma_liste = contenu_ma_liste + li_a_ajouter; -->
+		<!--console.log("ma liste de pays a ajouter :"); -->
+		<!--console.log(contenu_ma_liste); -->
+		<!--ma_liste.innerHTML = contenu_ma_liste; -->
+}		
 
 	
 
