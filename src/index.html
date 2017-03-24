@@ -8,7 +8,6 @@
   </head>
   <body>
     <div id="map"></div>
-	<div id="regions_div" style="width: 900px; height: 500px;"></div>
 	<h3>Pays sélectionnés : </h3>
 	<ul id="myliste">
     </ul>
@@ -18,6 +17,9 @@
 
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
+var listeName = "";
+
+<!-- Initilisation de la map et des fonctions liées à la map -->
 function initMap() {
 	
   map = new google.maps.Map(document.getElementById('map'), {
@@ -29,52 +31,30 @@ function initMap() {
 	streetViewControl: false,
 	rotateControl: false
   });
-  
+  <!-- Lors du clic sur la map , place un marker avec sa position -->
   google.maps.event.addListener(map, 'click', function(event) {
     placeMarker(event.latLng);
   });  
 } 
-<!-- geochart  -->
-<!-- https://developers.google.com/chart/interactive/docs/gallery/geochart -->
-<!-- http://www.rjruss.info/2010/12/free-countries-of-world-in-polygon-kml.html -->
-google.charts.load('current', {'packages':['geochart']});
-      google.charts.setOnLoadCallback(drawRegionsMap);
 
-      function drawRegionsMap() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Country', 'Popularity'],
-          ['Germany', 200],
-          ['United States', 300],
-          ['Brazil', 400],
-          ['Canada', 500],
-          ['France', 600],
-          ['RU', 700]
-        ]);
-
-        var options = {};
-
-        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
-        chart.draw(data, options);
-      }
-
+<!-- Fonction qui place un marqueur à la location puis qui appelle la fonction get country -->
 function placeMarker(location) {
   var marker = new google.maps.Marker({
       position: location,
       map: map
   });
-  var pays = getCountry(location);
-  console.log(pays);
-     
+  getCountry(location);    
 }
 
+<!-- Récupère le nom(long) du pays et son nom(court) (ex : FR ou UK) --> 
+<!-- et ajoute son nom(long) à la liste des pays ainsi que surligne le pays sur la carte grâce à son nom court -->
 function getCountry (location) {
 	var lat = location.lat();
 	var lng = location.lng();
 	console.log(lat);
 	console.log(lng);
 	var countryName;
+	var countryShortName;
  	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false') 
 			.done (function(location) 
 			{ 
@@ -90,46 +70,57 @@ function getCountry (location) {
 				for(i =0; i < country.length; i++){
 						if ((country[i]).types[0] == 'country') {
 							countryName = (country[i]).long_name;
+							countryShortName = (country[i]).short_name;
 						}
 				}						
 				console.log("country :");
 				console.log(countryName); 
+				console.log("short name :");
+				console.log(countryShortName);
+				if( listeName == ""){
+					listeName = "'"+countryShortName+"'";
+				} else {
+					listeName = listeName + ",'"+countryShortName+"'";
+				}
+				console.log("liste name au clic :");
+				console.log(listeName);				
 				addCountryList(countryName); 
+				selectPays(listeName);
 			}
 			
 		});	
 }
 
+<!-- Ajoute un pays à la liste des pays -->
 function addCountryList(country) {
 		var ma_liste = document.getElementById("myliste");
 		var li = document.createElement("li");
 		var pays = document.createTextNode(country); 
 		li.appendChild(pays);  
 		ma_liste.appendChild(li);
-		
-		
-		
-		
-		<!-- a supprimer -->
-		<!--var les_li = ma_liste.getElementsByTagName("li"); -->
-		<!--var long_ma_liste = les_li.length; -->
-		<!-- var num_nouv_li = long_ma_liste + 1; -->
-		<!-- var contenu_ma_liste = ma_liste.innerHTML; -->
-		<!-- var li_a_ajouter = '<li id="pays' + num_nouv_li + ">"+country+"</li>" ; -->
-		
-		<!--contenu_ma_liste = contenu_ma_liste + li_a_ajouter; -->
-		<!--console.log("ma liste de pays a ajouter :"); -->
-		<!--console.log(contenu_ma_liste); -->
-		<!--ma_liste.innerHTML = contenu_ma_liste; -->
 }		
 
-	
+<!-- Affiche les polygones des pays placés en paramètre (liste de la forme 'UK','FR','DE' etc ) -->
+<!-- TODO résoudre problème : Ne passe pas plusieurs fois dans le world geometry , peut etre un pb de call back encore -->
+<!-- doc sur l'objet fusiontablelayer : https://www.touraineverte.fr/google-maps-api-version-3/reference/FusionTablesStyle.html#propriete-polygonOptions -->
+<!-- https://developers.google.com/maps/documentation/javascript/fusiontableslayer?hl=fr -->
+<!-- https://www.touraineverte.fr/google-maps-api-version-3/reference/FusionTablesLayerOptions.html#FusionTablesLayerOptions -->
+<!-- tuto que j'ai utilisé : http://stackoverflow.com/questions/8670859/highlight-whole-countries-in-google-maps -->
 
-  
-
+function selectPays(listeName) {
+  var world_geometry = new google.maps.FusionTablesLayer({
+  query: {
+    select: 'geometry',
+    from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
+    where: "ISO_2DIGIT IN ("+listeName+")"
 	
-	
-
+  },
+  styles : [{polygonOptions : {fillColor : "#FFFFFF",
+							  strokeWeight : 1}}],
+  map: map,
+  suppressInfoWindows: true
+});
+}
     </script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap">
