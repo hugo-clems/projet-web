@@ -17,15 +17,16 @@
 
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
-var listeName = "";
+var listeName="";
 
 <!-- Initilisation de la map et des fonctions liées à la map -->
 function initMap() {
-	
   map = new google.maps.Map(document.getElementById('map'), {
     center: albi,
     zoom: 4,
 	zoomControl: true,
+	maxZoom : 9,
+	minZoom : 3,
 	mapTypeControl: false,
 	scaleControl: false,
 	streetViewControl: false,
@@ -34,7 +35,7 @@ function initMap() {
   <!-- Lors du clic sur la map , place un marker avec sa position -->
   google.maps.event.addListener(map, 'click', function(event) {
     placeMarker(event.latLng);
-  });  
+  }); 
 } 
 
 <!-- Fonction qui place un marqueur à la location puis qui appelle la fonction get country -->
@@ -120,6 +121,7 @@ function selectPays(listeName) {
   map: map,
   suppressInfoWindows: true
 });
+console.log(world_geometry);
 }
     </script>
     <script async defer
