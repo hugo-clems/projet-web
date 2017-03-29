@@ -9,15 +9,14 @@
   <body>
     <div id="map"></div>
 	<h3>Pays sélectionnés : </h3>
+	<a href="#" > blabla </a>
 	<ul id="myliste">
     </ul>
     <script type="text/javascript">
-	
-;
-
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
 var listeName="";
+var world_geometry= null;
 
 <!-- Initilisation de la map et des fonctions liées à la map -->
 function initMap() {
@@ -40,10 +39,10 @@ function initMap() {
 
 <!-- Fonction qui place un marqueur à la location puis qui appelle la fonction get country -->
 function placeMarker(location) {
-  var marker = new google.maps.Marker({
+  var marker = new google.maps.Marker({ 
       position: location,
       map: map
-  });
+  }); 
   getCountry(location);    
 }
 
@@ -109,7 +108,10 @@ function addCountryList(country) {
 <!-- tuto que j'ai utilisé : http://stackoverflow.com/questions/8670859/highlight-whole-countries-in-google-maps -->
 
 function selectPays(listeName) {
-  var world_geometry = new google.maps.FusionTablesLayer({
+console.log(listeName);
+
+
+  world_geometry = new google.maps.FusionTablesLayer({
   query: {
     select: 'geometry',
     from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
@@ -118,11 +120,17 @@ function selectPays(listeName) {
   },
   styles : [{polygonOptions : {fillColor : "#FFFFFF",
 							  strokeWeight : 1}}],
-  map: map,
-  suppressInfoWindows: true
+  suppressInfoWindows: true,
+  map: map
 });
 console.log(world_geometry);
 }
+
+$(document).ready(function() {
+	$('a').click(function(){
+		map.setStreetView(null);
+	});
+});
     </script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap">
