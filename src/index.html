@@ -9,13 +9,12 @@
   <body>
     <div id="map"></div>
 	<h3>Pays sélectionnés : </h3>
-	<a href="#" > blabla </a>
 	<ul id="myliste">
     </ul>
     <script type="text/javascript">
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
-var listeName="";
+var listeName=[];
 var world_geometry= null;
 
 <!-- Initilisation de la map et des fonctions liées à la map -->
@@ -46,49 +45,43 @@ function placeMarker(location) {
   getCountry(location);    
 }
 
-<!-- Récupère le nom(long) du pays et son nom(court) (ex : FR ou UK) --> 
+<!-- Récupère le nom(long) du pays et son nom(court) (ex : FR ou UK) -->
 <!-- et ajoute son nom(long) à la liste des pays ainsi que surligne le pays sur la carte grâce à son nom court -->
 function getCountry (location) {
 	var lat = location.lat();
 	var lng = location.lng();
-	console.log(lat);
-	console.log(lng);
 	var countryName;
 	var countryShortName;
- 	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false') 
-			.done (function(location) 
-			{ 
+ 	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false')
+			.done (function(location)
+			{
 			var i = 2;
-			var country;
-			<!--console.log(location);-->
-			if(location.status == "OK"){
-				while(location.results[i] == null){
-					i--;
-				} 
-				country = (location.results[i]).address_components;
-				
-				for(i =0; i < country.length; i++){
-						if ((country[i]).types[0] == 'country') {
-							countryName = (country[i]).long_name;
-							countryShortName = (country[i]).short_name;
-						}
-				}						
-				console.log("country :");
-				console.log(countryName); 
-				console.log("short name :");
-				console.log(countryShortName);
-				if( listeName == ""){
-					listeName = "'"+countryShortName+"'";
-				} else {
-					listeName = listeName + ",'"+countryShortName+"'";
-				}
-				console.log("liste name au clic :");
-				console.log(listeName);				
-				addCountryList(countryName); 
-				selectPays(listeName);
-			}
-			
-		});	
+      if (location.results) {
+        var country = location.results[location.results.length-1].address_components[0];
+        var countryName = country.long_name;
+        var countryCode = country.short_name;
+      }
+
+      listeName.push(countryCode);
+      $('ul').append('<li>'+countryName+'</li>')
+
+      var strList = JSON.stringify(listeName);
+      var param = strList.substr(1, strList.length-2).replace(/\"/g,'\'');
+
+      if (world_geometry != null) world_geometry.setMap(null);
+
+      world_geometry = new google.maps.FusionTablesLayer({
+        query: {
+          select: 'geometry',
+          from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
+          where: "ISO_2DIGIT IN ("+param+")"
+        },
+        styles : [{polygonOptions : {fillColor : "#FFFFFF",
+  							  strokeWeight : 1}}],
+        suppressInfoWindows: true,
+      });
+      world_geometry.setMap(map);
+		});
 }
 
 <!-- Ajoute un pays à la liste des pays -->
