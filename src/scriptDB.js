@@ -2,13 +2,13 @@
 /* ***  Les données *** */
 /* ******************** */
 
-// Liste des années
+// Création des variables globales pour remplissage de base
 var annee = [1990,2000,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016];
-
-// Liste des pays
-/*$.getJSON('pib_pays.json', function(data) {
+var pibPays = [];
+var birthPays = [];
+var deathPays = [];
+$.getJSON('pib_pays.json', function(data) {
     // Création de la table contenant les objets des Pays (PIB/DATE)
-    var pibPays = [];
     $.each(data, function(key,val){
         // On enlève les lignes vide
         if(val["Country Name"] != ""){
@@ -21,13 +21,50 @@ var annee = [1990,2000,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016];
                 }
             });
             //On ajoute les données dans notre liste (une par une ofc)
-            pibPays.push({nomPays: val["Country Name"], valeur: datePIB})
+			pibPays.push({nomPays: val["Country Name"], valeur: datePIB})
         }
+
     });
 
-});*/
+});
+
+// On fait avec les taux de natalité
+$.getJSON('birth_per_countries.json', function(data) {
+	$.each(data, function(key,val){
+		if (val["Country Name"] != ""){
+			var dateBirth = [];
+			$.each(val,function(key2,val2){
+                if(key2[0] == 1 || key2[0] == 2){
+                    dateBirth.push({date:key2,birth:val2});
+                }
+            });
+			birthPays.push({nomPays: val["Country Name"], valeur: dateBirth})
 
 
+        }
+		
+	});
+	
+});
+
+// On fait avec le taux de mortalité
+$.getJSON('death_per_countries.json', function(data) {
+	$.each(data, function(key,val){
+		if (val["Country Name"] != ""){
+			var dateDeath = [];
+			$.each(val,function(key2,val2){
+                if(key2[0] == 1 || key2[0] == 2){
+                    dateDeath.push({date:key2,death:val2});
+                }
+            });
+            //On ajoute les données dans notre liste (une par une ofc)
+			deathPays.push({nomPays: val["Country Name"], valeur: dateDeath})
+
+
+        }		
+	});
+	
+});
 
 
 /* ******************** */
@@ -46,7 +83,9 @@ if (!window.indexedDB) {
 
 var db; // La base de données
 
-// On ouvre la base, la nomme et on lui donne un n° de version. 
+// On supprime la abse pour les tests
+var req = indexedDB.deleteDatabase("Database");
+// On ouvre la base, la nomme et on lui donne un n° de version.
 var request = window.indexedDB.open("Database", 1);
 
 // Cas d'échec
@@ -61,24 +100,22 @@ request.onsuccess = function(event) {
 };
 
 
-// Création ou "rechargement" de la BD
+// Création ou "rechargement" de la BD lorsque la version de la db est superieur
 request.onupgradeneeded = function(event) {
     var db = event.target.result;
     
     // Création des tables et définitions des clés primaires
     var db = event.target.result;
-    //var paysTable = db.createObjectStore("Pays", {keyPath: "nomPays"});
+    var paysTable = db.createObjectStore("Pays", {keyPath: "nomPays"});
     var anneeTable = db.createObjectStore("Annee", {keyPath: "annee"});
-    //var continentTable = db.createObjectStore("Continent", {keyPath: "nomContinent"});
-    //var pibTable = db.createObjectStore("PIB", {keyPath: ["nomPaysPIB","anneePIB"]});
-    
+    var continentTable = db.createObjectStore("Continent", {keyPath: "nomContinent"});
+    var pibTable = db.createObjectStore("PIB", {keyPath: ["nomPaysPIB","anneePIB"]});
+    console.log("coucou");
     // On ajoute les données dans la BD
-    /* *** TODO *** */
-    /* ***
-    for (var i in annee) {
-        anneeTable.add({annee: annee[i]});
+
+    for (var i in pibPays) {
+        console.log(pibPays[i]);
     }
-    *** */
 }
 
 
