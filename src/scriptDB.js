@@ -3,8 +3,8 @@
 /* ******************** */
 
 // Création des variables globales pour remplissage de base
-var annee = [1990,2000,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016];
-var pibPays = [];
+var annee = ["1990","2000","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016"];
+var pibPays = {};
 var birthPays = [];
 var deathPays = [];
 $.getJSON('pib_pays.json', function(data) {
@@ -16,12 +16,12 @@ $.getJSON('pib_pays.json', function(data) {
             var datePIB = [];
             // On rempli la liste avec totue les dates
             $.each(val,function(key2,val2){
-                if(key2[0] == 1 || key2[0] == 2){
+                if(key2[0] == 1 || key2[0] == 2 ){
                     datePIB.push({date:key2,pib:val2});
                 }
             });
             //On ajoute les données dans notre liste (une par une ofc)
-			pibPays.push({nomPays: val["Country Name"], valeur: datePIB})
+		pibPays[val["Country Name"]]= [datePIB]
         }
 
     });
@@ -31,14 +31,14 @@ $.getJSON('pib_pays.json', function(data) {
 // On fait avec les taux de natalité
 $.getJSON('birth_per_countries.json', function(data) {
 	$.each(data, function(key,val){
-		if (val["Country Name"] != ""){
+		if (val["Country Name"] in pibPays){
 			var dateBirth = [];
 			$.each(val,function(key2,val2){
-                if(key2[0] == 1 || key2[0] == 2){
+                if(annee.indexOf(key2) !== -1){
                     dateBirth.push({date:key2,birth:val2});
                 }
             });
-			birthPays.push({nomPays: val["Country Name"], valeur: dateBirth})
+			pibPays[val["Country Name"]].push(dateBirth);
 
 
         }
@@ -53,12 +53,14 @@ $.getJSON('death_per_countries.json', function(data) {
 		if (val["Country Name"] != ""){
 			var dateDeath = [];
 			$.each(val,function(key2,val2){
-                if(key2[0] == 1 || key2[0] == 2){
+                if(annee.indexOf(key2) !== -1){
                     dateDeath.push({date:key2,death:val2});
                 }
             });
-            //On ajoute les données dans notre liste (une par une ofc)
-			deathPays.push({nomPays: val["Country Name"], valeur: dateDeath})
+			//Pour les morts on doit vérifier si ils sont dedans sinon il y a des pays en trop et ça bug. lol.
+			if(val["Country Name"] in pibPays){
+				pibPays[val["Country Name"]].push(dateDeath);
+			}
 
 
         }		
@@ -83,7 +85,7 @@ if (!window.indexedDB) {
 
 var db; // La base de données
 
-// On supprime la abse pour les tests
+// On supprime la base pour les tests
 var req = indexedDB.deleteDatabase("Database");
 // On ouvre la base, la nomme et on lui donne un n° de version.
 var request = window.indexedDB.open("Database", 1);
@@ -106,16 +108,23 @@ request.onupgradeneeded = function(event) {
     
     // Création des tables et définitions des clés primaires
     var db = event.target.result;
-    var paysTable = db.createObjectStore("Pays", {keyPath: "nomPays"});
-    var anneeTable = db.createObjectStore("Annee", {keyPath: "annee"});
-    var continentTable = db.createObjectStore("Continent", {keyPath: "nomContinent"});
-    var pibTable = db.createObjectStore("PIB", {keyPath: ["nomPaysPIB","anneePIB"]});
-    console.log("coucou");
+    //var paysTable = db.createObjectStore("Pays", {keyPath: "nomPays"});
+    //var anneeTable = db.createObjectStore("Annee", {keyPath: "annee"});
+    //var continentTable = db.createObjectStore("Continent", {keyPath: "nomContinent"});
+    var pibTable = db.createObjectStore("PIB", {keyPath: ["idPays","annee"]});
     // On ajoute les données dans la BD
-
-    for (var i in pibPays) {
-        console.log(pibPays[i]);
-    }
+	var j = 0;
+    for(var nom in Object.keys(pibPays)){
+		//Boucle de parcours de date
+		for(var i=0;i <11;i++){
+			var date = pibPays[Object.keys(pibPays)[nom]][0][i]["date"];
+			//On prend PIB, birth et death pour une date donnée
+			var pib = pibPays[Object.keys(pibPays)[nom]][0][i]["pib"];
+			var birth = pibPays[Object.keys(pibPays)[nom]][1][i]["birth"];
+			var death = pibPays[Object.keys(pibPays)[nom]][2][i]["death"];
+			pibTable.add({idPays : Object.keys(pibPays)[nom],annee : date, nbNaissance : birth, nbDeces : death });
+		}
+	}
 }
 
 
