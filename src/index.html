@@ -6,13 +6,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
+	<link href="magicsuggest/magicsuggest-min.css" rel="stylesheet">
+	<script src="magicsuggest/magicsuggest-min.js"></script>
+	<script>
+		<!--Search Bar program, DONT TOUCH OR GOD WILL FUCK THE WORLD.-->
+	$(function() {$('#magicsuggest').magicSuggest({
+        placeholder: 'Type some real or fake fruits',
+        data: ['Banana', 'Apple', 'Orange', 'Lemon']
+    });
+});
+	<!--NOW YOU CAN CODE-->
+	</script>
   </head>
   <body>
     <div id="map"></div>
 	<h3>Pays sélectionnés : </h3>
+	<div id="magicsuggest"></div>
 	<ul id="myliste">
     </ul>
     <script type="text/javascript">
+	
+
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
 var listeName=[];

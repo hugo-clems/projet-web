@@ -112,19 +112,22 @@ request.onupgradeneeded = function(event) {
     //var anneeTable = db.createObjectStore("Annee", {keyPath: "annee"});
     //var continentTable = db.createObjectStore("Continent", {keyPath: "nomContinent"});
     var pibTable = db.createObjectStore("PIB", {keyPath: ["idPays","annee"]});
+	var test = db.createObjectStore("test", {keyPath: ["pays","annee"]});
     // On ajoute les données dans la BD
 	var j = 0;
     for(var nom in Object.keys(pibPays)){
 		//Boucle de parcours de date
 		for(var i=0;i <11;i++){
-			var date = pibPays[Object.keys(pibPays)[nom]][0][i]["date"];
+			var date = pibPays[Object.keys(pibPays)[nom]][1][i]["date"];
 			//On prend PIB, birth et death pour une date donnée
 			var pib = pibPays[Object.keys(pibPays)[nom]][0][i]["pib"];
 			var birth = pibPays[Object.keys(pibPays)[nom]][1][i]["birth"];
 			var death = pibPays[Object.keys(pibPays)[nom]][2][i]["death"];
 			pibTable.add({idPays : Object.keys(pibPays)[nom],annee : date, nbNaissance : birth, nbDeces : death });
+		
 		}
 	}
+	test.add({pays : "France", annee: "2010", autre : "test"});
 }
 
 
@@ -135,98 +138,35 @@ request.onupgradeneeded = function(event) {
 /* ******************** */
 
 /**
- * Lit une ligne d'une table.
- * SELECT * FROM table WHERE id = :id
- * @param {type} table  - La table sur laquelle on fait la recherche
- * @param {type} id     - L'identifiant de la ligne recherchée
- * @return {undefined}  - L'objet recherché
+ * Lit toute la table
+ * SELECT * FROM pibTable
+ * @return {undefined}   - L'objet recherché
  */
-function select(table, id) {
-    // Tables nécéssaires
-    var transaction = db.transaction([table]);
-    
-    // La table utilisé
-    var objectStore = transaction.objectStore(table);
-    
-    // Clé recherchée
-    var request = objectStore.get(id);
-    
-    request.onerror = function(event) {
-        console.log("Données non trouvée !");
-    };
-    
-    request.onsuccess = function(event) {
-        // Si on trouve l'élément recherchés, on renvoie les valeurs voulus.
-        if(request.result) {
-            console.log(request.result);
-        } else {
-            console.log("Elèment non présent dans la BD...");
-        }
-    };
-}
-
-/**
- * Lit toutes les lignes d'une table
- * SELECT * FROM table
- * @param {type} table  - La table sur laquelle on fait la recherche
- * @return {undefined}  - Les objets recherchés
- */
-function selectAll(table) {
-    // Choix de la table
-    var objectStore = db.transaction(table).objectStore(table);
-    
-    // Curseur pour parcouri chaque élément de la table
+function selectAll() {
+    var transaction = db.transaction("PIB");
+	var objectStore = transaction.objectStore("PIB");
     objectStore.openCursor().onsuccess = function(event) {
-        // Lit la première ligne
-        var cursor = event.target.result;
-        
-        // Tant qu'il reste des lignes à lire
-        if (cursor) {
-            // Retourne l'objet
-            console.log(cursor.value);
-            
-            // On continue la lecture
-            cursor.continue();
+    var cursor = event.target.result;
+	if(cursor) {
+            console.log(cursor.key );
+			cursor.continue();
         } else {
-            console.log("Fin de la table");
+            console.log("No more entries");
         }
     };
 }
 
 /**
- * Ajout une ligne dans la table.
- * INSERT INTO table VALUES (aAjouter[0], aAjouter[1], ...)
- * @param {type} table      - La table sur laquelle on fait la recherche
- * @param {type} aAjouter   - La ligne à ajouter
- * @return {undefined}      - Message informatif
+ * Lit une ligne d'une table.
+ * SELECT * FROM pibTable WHERE nomPays = :nomPays and annee = :annee
+ * @param {type} nomPays - L'identifiant de la ligne recherchée
+ * @param {type} annee   - annee recherché
+ * @return {undefined}   - L'objet recherché
  */
-function insert(table, aAjouter) {
-    var request = db.transaction([table], "readwrite")
-            .objectStore(table)
-            .add(aAjouter);
-    
-    request.onsuccess = function(event) {
-        console.log("Ajout réussi !");
-    };
-    
-    request.onerror = function(event) {
-        console.log("Echec de l'ajout...");
-    }
+function select(nomPays,anne) {
+    db.transaction("PIB").objectStore("PIB").get(["France","annee"]).onsuccess = function(event) {
+  var obj = event.target.result;
+  console.log(obj);
+};
 }
 
-/**
- * Supprime une ligne d'une table.
- * DELETE FROM table WHERE id = :id
- * @param {type} table  - La table sur laquelle on fait la suppression
- * @param {type} id     - L'identifiant de la ligne à supprimer
- * @return {undefined}  - Message informatif
- */
-function supprimer(table, id) {
-    var request = db.transaction([table], "readwrite")
-            .objectStore(table)
-            .delete(id);
-    
-    request.onsuccess = function(event) {
-        console.log("Suppresion réussi !");
-    };
-}
