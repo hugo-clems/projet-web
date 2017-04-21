@@ -2,6 +2,15 @@
 <html>
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>GeoStats </title>
 	<!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -9,16 +18,29 @@
 	<link href="magicsuggest/magicsuggest-min.css" rel="stylesheet">
 	<script src="magicsuggest/magicsuggest-min.js"></script>
 	<script>
-		<!--Search Bar program, DONT TOUCH OR GOD WILL FUCK THE WORLD.-->
-	$(function() {$('#magicsuggest').magicSuggest({
-        placeholder: 'Type some real or fake fruits',
-        data: ['Banana', 'Apple', 'Orange', 'Lemon']
-    });
-});
-	<!--NOW YOU CAN CODE-->
+
 	</script>
   </head>
   <body>
+	<div class="row">
+		<div class="col-sm-1 ">
+			<img class="img-responsive" src="image/logo.png" alt="Chania">
+		</div>
+		<div class="col-sm-11 text-left">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">GeoStats</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="#"><em>Élu meilleur site de statistiques de l'année 2017<em></a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+			
+	
     <div id="map"></div>
 	<h3>Pays sélectionnés : </h3>
 	<div id="magicsuggest"></div>
@@ -48,14 +70,14 @@ function initMap() {
   <!-- Lors du clic sur la map , place un marker avec sa position -->
   google.maps.event.addListener(map, 'click', function(event) {
 	<!-- lorsque l'on reclic sur un pays selectionné, il devient déselectionné et est retiré de la liste -->
-    getCountry(event.latLng);
+    onClickCountry(event.latLng);
   }); 
 } 
 
 
 <!-- Récupère le nom(long) du pays et son nom(court) (ex : FR ou UK) -->
 <!-- et ajoute son nom(long) à la liste des pays ainsi que surligne le pays sur la carte grâce à son nom court -->
-function getCountry (location) {
+function onClickCountry (location) {
 	var lat = location.lat();
 	var lng = location.lng();
 	var countryName;
@@ -64,27 +86,28 @@ function getCountry (location) {
 			.done (function(location)
 			{
 			var i = 2;
-      if (location.results) {
+	console.log(location.results);
+      if ((location.results).length != 0) {
         var country = location.results[location.results.length-1].address_components[0];
         var countryName = country.long_name;
         var countryCode = country.short_name;
-      }
+      
 	  
 	  <!-- si le pays est déjà dans la liste --> 
 	  if(selected(countryName)){
 		<!-- on le supprime de la liste des pays, et du world_geometry -->
 		deleteFrom(listeName,countryCode);
+		<!-- suppression dans la liste html -->
 		$('li').each(function (){
 			if($(this).text() == countryName){
 				$(this).closest('li').remove();
 			}
 		});
 	  } else {
-		<!-- ajoute du pays à la liste -->
+		<!-- ajout du pays à la liste -->
 		listeName.push(countryCode);
-		$('ul').append('<li>'+countryName+'</li>');
+		$('#myliste').append('<li>'+countryName+'</li>');
 	  }
-	  
 	  if(listeName != ''){
 	  
 		<!-- format de la string pour le fusion tables layer -->
@@ -107,6 +130,7 @@ function getCountry (location) {
          world_geometry.setMap(map);
 	  } else { // si il y a aucun pays 
 		world_geometry.setMap(null);
+	  }
 	  }
 	});
 }
@@ -141,10 +165,16 @@ function deleteFrom(liste,name) {
 	for(var i = 0;i< liste.length; i++){
 		if (liste[i] == name){
 			liste.splice(i,1);
-			console.log(liste);
 		}
 	}
 }
+
+<!--Search Bar program -->
+$(function() {$('#magicsuggest').magicSuggest({
+		placeholder: 'Type some real or fake fruits',
+		data: ['Banana', 'Apple', 'Orange', 'Lemon']
+	});
+});
     </script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap">
