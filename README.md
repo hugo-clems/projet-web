@@ -21,10 +21,7 @@ En dessous de cette barre de recherche ce trouve le *panier des pays*. Il contie
 ### Les statistiques
 Pour chaque type de stats à afficher (courbes, camembert, ...) un bouton/image est affiché sur la ligne juste en dessous de la carte.
 
-**2 Choix :**
-
-* Ce bouton permettra d'activer la carte, et un petit bouton *Go* en dessous permettra d'y accéder.
-* Soit tous les graphiques sont activés dès le chargement de la page. Les boutons permetrons l'accès au graphique correspondant.
+Tous les graphiques sont activés dès le chargement de la page. Les boutons permetrons l'accès au graphique correspondant.
 
 Si possible, cette barre d'icônes "suivra" le bas de la page afin qu'elle serve de sommaire/menu à tout endroits de la page.
 
