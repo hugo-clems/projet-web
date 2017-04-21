@@ -40,31 +40,3 @@ function createChart(target, chartTitle, isAnimate, chartData) {
 function createData(title, show, chartType, chartData) {
     return {legendText: title, showInLegend: show, type: chartType, dataPoints: chartData};
 }
-
-
-/**
- * Fonction principale
- * Lance la création du chart et l'active
- */
-function afficherChart() {
-    var p1 = [{ label: "2000",  y: 10  },
-        { label: "2010", y: 15  },
-        { label: "2011", y: 25  },
-        { label: "2012",  y: 30  },
-        { label: "2013",  y: 28  }];
-    var p2 = [{ label: "2000",  y: 20  },
-        { label: "2010", y: 25  },
-        { label: "2011", y: 35  },
-        { label: "2012",  y: 40  },
-        { label: "2013",  y: 38  }];
-    var p3 = [{ label: "2000",  y: 10  },
-        { label: "2010", y: 20  },
-        { label: "2011", y: 30  },
-        { label: "2012",  y: 40  },
-        { label: "2013",  y: 50  }];
-    
-    var data1 = [createData("PIB", true, "area", p3), createData("France", true, "spline", p1)
-        , createData("Allemagne", true, "spline", p2)];
-    
-    createChart("chart1", "Le taux de natalité influe-t-il sur le PIB ?", true, data1);
-}
