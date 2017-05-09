@@ -19,14 +19,11 @@
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<!-- favicon -->
-		<link rel="icon" type="image/png" href="image/logo.ico" />
             
         <title>GeoStats - Projet Web</title>
     </head>
     <body>
-        <div class="container">
+        <div id="contenu" class="container">
             <!-- Header -->
             <div class="row" id="header">
                 <div class="col-sm-1">
@@ -36,50 +33,47 @@
                     <nav class="navbar navbar-default">
                         <div class="container-fluid">
                             <div class="navbar-header">
-                                <a class="navbar-brand" href="index.html">GeoStats</a>
+                                <a class="navbar-brand" href="#">GeoStats</a>
                             </div>
                             <ul class="nav navbar-nav">
                                 <li id="modification"><a href="#">Modification des données</a></li>
-								<li id="modification"><a href="#encreStat">Statistiques</a></li>
                             </ul>
                         </div>
                     </nav>
                 </div>
             </div>
-               
-			<div id="contenu">
-				<!-- Affichage de la map -->
-				<div class="row">
-					<div class="col-sm-12">
-						<h4>Selectionnez des pays</h4>
-						<div id="map"></div>
-					</div>
-				</div>
                 
-				<!-- Affichage des pays sélectionnés -->
-				<div class="row">
-					<div class="col-sm-12">
-						<h4>Pays sélectionnés :</h4>
-						<div id="magicsuggest"></div>
-						<ul id="myliste"></ul>	
-					</div>
-				</div>
+            <!-- Affichage de la map -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Selectionnez des pays</h4>
+                    <div id="map"></div>
+                </div>
+            </div>
                 
-				<hr><hr><!-- Menu des charts -->
-				<h2 id="encreStat">Statistiques sur les pays sélectionnés</h2>
-				<div>
-					<a href="#chart1" class="btn btn-default"><img src="image/column.png" alt=""/></a>
-					<a href="#chart2" class="btn btn-default"><img src="image/bar.png" alt=""/></a>
-					<a href="#chart3" class="btn btn-default"><img src="image/splines.png" alt=""/></a>
-					<a href="#chart4" class="btn btn-default"><img src="image/pie.png" alt=""/></a>
-				</div>
+            <!-- Affichage des pays sélectionnés -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Pays sélectionnés :</h4>
+                    <div id="magicsuggest"></div>
+                    <ul id="myliste"></ul>	
+                </div>
+            </div>
                 
-				<hr><!-- Les charts -->
-				<div id="chart1" class="unChart"></div><hr>
-				<div id="chart2" class="unChart"></div><hr>
-				<div id="chart3" class="unChart"></div><hr>
-				<div id="chart4" class="unChart"></div>
-			</div>
+            <hr><hr><!-- Menu des charts -->
+            <h2>Statistiques sur les pays sélectionnés</h2>
+            <div>
+                <a href="#chart1" class="btn btn-default"><img src="image/column.png" alt=""/></a>
+                <a href="#chart2" class="btn btn-default"><img src="image/bar.png" alt=""/></a>
+                <a href="#chart3" class="btn btn-default"><img src="image/splines.png" alt=""/></a>
+                <a href="#chart4" class="btn btn-default"><img src="image/pie.png" alt=""/></a>
+            </div>
+                
+            <hr><!-- Les charts -->
+            <div id="chart1" class="unChart"></div><hr>
+            <div id="chart2" class="unChart"></div><hr>
+            <div id="chart3" class="unChart"></div><hr>
+            <div id="chart4" class="unChart"></div>
         </div>
             
         <!-- Scripts pour la map -->
@@ -92,7 +86,6 @@
         <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="chart.js"></script>
         <script>
-			
             var p1 = [{ label: "2000",  y: 10  },
                 { label: "2010", y: 15  },
                 { label: "2011", y: 30  },
@@ -135,21 +128,6 @@
             createChart("chart2", "Taux Natalités et mort de la France et l'Allemagne", true, data2);
             createChart("chart3", "PIB & taux de la France", true, data3);
             createChart("chart4", "PIB de la France", true, data4);
-			
-			// lors du clic sur l'onglet modifier bd , le contenue de la page change et affiche la page donnee.html
-			$("#modification").click(function(){	
-			$("#contenu").hide();
-			$("#contenu").load("donnees.html #donnees",
-						function(response,status,xhr){
-								if (status == "error") {
-									var msg = "Sorry but there was an error: ";
-									console.log(msg + " " + xhr.status + " " + xhr.statusText);
-								} else if(status=='success') {
-									console.log("success");
-								}
-						});
-			$("#contenu").fadeIn('900');
-		}); 
         </script>
             
         <!-- /!\ TOUJOURS A LA FIN /!\ -->        

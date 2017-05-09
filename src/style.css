@@ -16,12 +16,12 @@ html, body {
     height: 370px;
 }
 
+#modification {
+    font-style: italic;
+}
+
 .unChart {
     height: 300px;
     width: 50%;
     margin-bottom: 100px;
-}
-
-#titreTab {
-	font-weight : bold;
 }
