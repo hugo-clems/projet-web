@@ -1,7 +1,19 @@
+/**
+ * Projet Web - GeoStats
+ * CLEMENT, O'ROURKE & FUZIER © 2017
+ */
 
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
-html, body { height: 100%; margin: 0; padding: 0; }
+#map {
+    height: 370px;
+}
 
-
-#map { height: 80%;
-	 }
+#modification {
+    font-style: italic;
+}

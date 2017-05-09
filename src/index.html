@@ -1,54 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <!-- CSS -->
+        <link href="reset.css" rel="stylesheet" type="text/css">
+        <link href="magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="style.css" rel="stylesheet" type="text/css">
+        
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="magicsuggest/magicsuggest-min.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        
+        <!-- Méta -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>GeoStats </title>
-	<!-- jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-	<link href="magicsuggest/magicsuggest-min.css" rel="stylesheet">
-	<script src="magicsuggest/magicsuggest-min.js"></script>
-	<script>
-
-	</script>
-  </head>
+        <title>GeoStats</title>
+    </head>
   <body>
 	<div class="row">
-		<div class="col-sm-1 ">
-			<img class="img-responsive" src="image/logo.png" alt="Chania">
-		</div>
-		<div class="col-sm-11 text-left">
-			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#">GeoStats</a>
-					</div>
-					<ul class="nav navbar-nav">
-						<li><a href="#"><em>Élu meilleur site de statistiques de l'année 2017<em></a></li>
-					</ul>
-				</div>
-			</nav>
+            <div class="col-sm-1">
+                <img class="img-responsive" src="image/logo.png" alt="Chania">
+            </div>
+            <div class="col-sm-11 text-left">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">GeoStats</a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li id="modification"><a href="#">Modification des données</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+<div id="contenu" class="container">				
+	<div class="row">
+		<div class="col-sm-12">
+			<p>Selectionnez des pays </p>
+			<div id="map"></div>
 		</div>
 	</div>
-			
 	
-    <div id="map"></div>
-	<h3>Pays sélectionnés : </h3>
-	<div id="magicsuggest"></div>
-	<ul id="myliste">
-    </ul>
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>Pays sélectionnés : </h3>
+			<div id="magicsuggest"></div>
+			<ul id="myliste">
+			</ul>	
+		</div>
+	</div>
+</div> 
+		
+
+
     <script type="text/javascript">
 	
-
+$("#contenu").show();
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
 var listeName=[];
@@ -175,6 +188,21 @@ $(function() {$('#magicsuggest').magicSuggest({
 		data: ['Banana', 'Apple', 'Orange', 'Lemon']
 	});
 });
+
+<!-- lors du clic sur l'onglet modifier bd , le contenue de la page change et affiche la page donnee.html-->
+$("#modification").click(function(){	
+			$("#contenu").hide();
+			$("#contenu").load("donnees.html #donnees",
+						function(response,status,xhr){
+								if (status == "error") {
+									var msg = "Sorry but there was an error: ";
+									console.log(msg + " " + xhr.status + " " + xhr.statusText);
+								} else if(status=='success') {
+									console.log("success");
+								}
+						});
+			$("#contenu").fadeIn('900');
+		}); 
     </script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap">
