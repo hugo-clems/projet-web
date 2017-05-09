@@ -1,211 +1,145 @@
+<!--
+ - Projet Web - GeoStats
+ - CLEMENT, O'ROURKE & FUZIER © 2017
+ -->
 <!DOCTYPE html>
 <html>
     <head>
         <!-- CSS -->
         <link href="reset.css" rel="stylesheet" type="text/css">
         <link href="magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="style.css" rel="stylesheet" type="text/css">
-        
+            
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="magicsuggest/magicsuggest-min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        
-        <!-- Méta -->
+            
+        <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>GeoStats</title>
+            
+        <title>GeoStats - Projet Web</title>
     </head>
-  <body>
-	<div class="row">
-            <div class="col-sm-1">
-                <img class="img-responsive" src="image/logo.png" alt="Chania">
-            </div>
-            <div class="col-sm-11 text-left">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="#">GeoStats</a>
+    <body>
+        <div id="contenu" class="container">
+            <!-- Header -->
+            <div class="row" id="header">
+                <div class="col-sm-1">
+                    <img class="img-responsive" src="image/logo.png" alt="logo">
+                </div>
+                <div class="col-sm-11 text-left">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="#">GeoStats</a>
+                            </div>
+                            <ul class="nav navbar-nav">
+                                <li id="modification"><a href="#">Modification des données</a></li>
+                            </ul>
                         </div>
-                        <ul class="nav navbar-nav">
-                            <li id="modification"><a href="#">Modification des données</a></li>
-                        </ul>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
             </div>
+                
+            <!-- Affichage de la map -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Selectionnez des pays</h4>
+                    <div id="map"></div>
+                </div>
+            </div>
+                
+            <!-- Affichage des pays sélectionnés -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Pays sélectionnés :</h4>
+                    <div id="magicsuggest"></div>
+                    <ul id="myliste"></ul>	
+                </div>
+            </div>
+                
+            <hr><hr><!-- Menu des charts -->
+            <h2>Statistiques sur les pays sélectionnés</h2>
+            <div>
+                <a href="#chart1" class="btn btn-default"><img src="image/column.png" alt=""/></a>
+                <a href="#chart2" class="btn btn-default"><img src="image/bar.png" alt=""/></a>
+                <a href="#chart3" class="btn btn-default"><img src="image/splines.png" alt=""/></a>
+                <a href="#chart4" class="btn btn-default"><img src="image/pie.png" alt=""/></a>
+            </div>
+                
+            <hr><!-- Les charts -->
+            <div id="chart1" class="unChart"></div><hr>
+            <div id="chart2" class="unChart"></div><hr>
+            <div id="chart3" class="unChart"></div><hr>
+            <div id="chart4" class="unChart"></div>
         </div>
-
-<div id="contenu" class="container">				
-	<div class="row">
-		<div class="col-sm-12">
-			<p>Selectionnez des pays </p>
-			<div id="map"></div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-sm-12">
-			<h3>Pays sélectionnés : </h3>
-			<div id="magicsuggest"></div>
-			<ul id="myliste">
-			</ul>	
-		</div>
-	</div>
-</div> 
-		
-
-
-    <script type="text/javascript">
-	
-$("#contenu").show();
-var map;
-var albi = {lat: 43.919367, lng: 2.138310};
-var listeName=[];
-var world_geometry= null;
-
-<!-- Initilisation de la map et des fonctions liées à la map -->
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: albi,
-    zoom: 4,
-	zoomControl: true,
-	maxZoom : 9,
-	minZoom : 3,
-	mapTypeControl: false,
-	scaleControl: false,
-	streetViewControl: false,
-	rotateControl: false
-  });
-  <!-- Lors du clic sur la map , place un marker avec sa position -->
-  google.maps.event.addListener(map, 'click', function(event) {
-	<!-- lorsque l'on reclic sur un pays selectionné, il devient déselectionné et est retiré de la liste -->
-    onClickCountry(event.latLng);
-  }); 
-} 
-
-
-<!-- Récupère le nom(long) du pays et son nom(court) (ex : FR ou UK) -->
-<!-- et ajoute son nom(long) à la liste des pays ainsi que surligne le pays sur la carte grâce à son nom court -->
-function onClickCountry (location) {
-	var lat = location.lat();
-	var lng = location.lng();
-	var countryName;
-	var countryShortName;
- 	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false')
-			.done (function(location)
-			{
-			var i = 2;
-	console.log(location.results);
-      if ((location.results).length != 0) {
-        var country = location.results[location.results.length-1].address_components[0];
-        var countryName = country.long_name;
-        var countryCode = country.short_name;
-      
-	  
-	  <!-- si le pays est déjà dans la liste --> 
-	  if(selected(countryName)){
-		<!-- on le supprime de la liste des pays, et du world_geometry -->
-		deleteFrom(listeName,countryCode);
-		<!-- suppression dans la liste html -->
-		$('li').each(function (){
-			if($(this).text() == countryName){
-				$(this).closest('li').remove();
-			}
-		});
-	  } else {
-		<!-- ajout du pays à la liste -->
-		listeName.push(countryCode);
-		$('#myliste').append('<li>'+countryName+'</li>');
-	  }
-	  if(listeName != ''){
-	  
-		<!-- format de la string pour le fusion tables layer -->
-		 var strList = JSON.stringify(listeName);
-		 var param = strList.substr(1, strList.length-2).replace(/\"/g,'\'');
-		 if (world_geometry != null) world_geometry.setMap(null);
-
-		 <!-- objet à superposer à la carte -->
-         world_geometry = new google.maps.FusionTablesLayer({
-           query: {
-            select: 'geometry',
-            from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
-            where: "ISO_2DIGIT IN ("+param+")"
-           },
-		   clickable : false,
-           styles : [{polygonOptions : {fillColor : "#FFFFFF",
-  							  strokeWeight : 1}}],
-           suppressInfoWindows: true,
-         });
-         world_geometry.setMap(map);
-	  } else { // si il y a aucun pays 
-		world_geometry.setMap(null);
-	  }
-	  }
-	});
-}
-
-<!-- Ajoute un pays à la liste des pays -->
-function addCountryList(country) {
-		var ma_liste = document.getElementById("myliste");
-		var li = document.createElement("li");
-		var pays = document.createTextNode(country); 
-		li.appendChild(pays);  
-		ma_liste.appendChild(li);
-}	
-
-
-
-<!-- Verifier si un pays est selectionné ou pas, c'est à dire si il est dans la liste des pays -->
-function selected(nompays){
-	var ok= false;
-	var ma_liste = document.getElementById("myliste");
-	$('li').each( function(){
-		var pays = $(this).text();
-		if(pays == nompays){
-			ok = true;
-		} 
-	});
-	return ok;	
-}
-
-	
-<!-- Permet de supprimer un element de la liste via son nom -->
-function deleteFrom(liste,name) {
-	for(var i = 0;i< liste.length; i++){
-		if (liste[i] == name){
-			liste.splice(i,1);
-		}
-	}
-}
-
-<!--Search Bar program -->
-$(function() {$('#magicsuggest').magicSuggest({
-		placeholder: 'Type some real or fake fruits',
-		data: ['Banana', 'Apple', 'Orange', 'Lemon']
-	});
-});
-
-<!-- lors du clic sur l'onglet modifier bd , le contenue de la page change et affiche la page donnee.html-->
-$("#modification").click(function(){	
-			$("#contenu").hide();
-			$("#contenu").load("donnees.html #donnees",
-						function(response,status,xhr){
-								if (status == "error") {
-									var msg = "Sorry but there was an error: ";
-									console.log(msg + " " + xhr.status + " " + xhr.statusText);
-								} else if(status=='success') {
-									console.log("success");
-								}
-						});
-			$("#contenu").fadeIn('900');
-		}); 
-    </script>
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap">
-    </script>
-  </body>
+            
+        <!-- Scripts pour la map -->
+        <script src="map.js"></script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap">
+        </script>
+            
+        <!-- Scripts pour les Charts -->
+        <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script src="chart.js"></script>
+        <script>
+            var p1 = [{ label: "2000",  y: 10  },
+                { label: "2010", y: 15  },
+                { label: "2011", y: 30  },
+                { label: "2012",  y: 35  },
+                { label: "2013",  y: 28  }];
+            var p2 = [{ label: "2000",  y: 20  },
+                { label: "2010", y: 25  },
+                { label: "2011", y: 35  },
+                { label: "2012",  y: 40  },
+                { label: "2013",  y: 38  }];
+            var p3 = [{ label: "2000",  y: 35  },
+                { label: "2010", y: 30  },
+                { label: "2011", y: 20  },
+                { label: "2012",  y: 10  },
+                { label: "2013",  y: 40  }];
+            var p4 = [{ label: "2000",  y: 30  },
+                { label: "2010", y: 15  },
+                { label: "2011", y: 30  },
+                { label: "2012",  y: 20  },
+                { label: "2013",  y: 48  }];
+            var p5 = [{ label: "2000",  y: 10  },
+                { label: "2010", y: 20  },
+                { label: "2011", y: 25  },
+                { label: "2012",  y: 8  },
+                { label: "2013",  y: 30  }];
+            var p6 = [{ label: "2000",  y: 3  },
+                { label: "2010", y: 5  },
+                { label: "2011", y: 8  },
+                { label: "2012",  y: 10  },
+                { label: "2013",  y: 15  }];
+            
+            var data1 = [createData("PIB France", true, "column", p1), createData("PIB Allemagne", true, "column", p2)];
+            var data2 = [createData("Tx nat. FR", true, "bar", p3), createData("Tx nat. GER", true, "bar", p4)
+                , createData("Tx death FR", true, "bar", p5), createData("Tx death GER", true, "bar", p6)];
+            var data3 = [createData("PIB France", true, "column", p1), createData("Tx nat. FR", true, "spline", p3)
+                , createData("Tx death FR", true, "spline", p5)];
+            var data4 = [createData("", false, "pie", p1)];
+            
+            createChart("chart1", "PIB de la France et l'Allemagne", true, data1);
+            createChart("chart2", "Taux Natalités et mort de la France et l'Allemagne", true, data2);
+            createChart("chart3", "PIB & taux de la France", true, data3);
+            createChart("chart4", "PIB de la France", true, data4);
+        </script>
+            
+        <!-- /!\ TOUJOURS A LA FIN /!\ -->        
+        <!-- Scripts pour la recherche -->
+        <script src="magicsuggest/magicsuggest-min.js"></script>
+        <script>
+            // Met en place la recherche
+            $(function() {$('#magicsuggest').magicSuggest({
+                    placeholder: 'Vous pouvez chercher un pays avec son nom',
+                    data: ['Banana', 'Apple', 'Orange', 'Lemon']
+                });
+            });
+        </script>
+    </body>
 </html>
