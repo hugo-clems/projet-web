@@ -3,7 +3,6 @@
  * CLEMENT, O'ROURKE & FUZIER © 2017
  */
 
-$("#contenu").show();
 var map;
 var albi = {lat: 43.919367, lng: 2.138310};
 var listeName=[];
@@ -124,17 +123,3 @@ function deleteFrom(liste,name) {
 	}
 }
 
-// lors du clic sur l'onglet modifier bd , le contenue de la page change et affiche la page donnee.html
-$("#modification").click(function(){	
-			$("#contenu").hide();
-			$("#contenu").load("donnees.html #donnees",
-						function(response,status,xhr){
-								if (status == "error") {
-									var msg = "Sorry but there was an error: ";
-									console.log(msg + " " + xhr.status + " " + xhr.statusText);
-								} else if(status=='success') {
-									console.log("success");
-								}
-						});
-			$("#contenu").fadeIn('900');
-		}); 
