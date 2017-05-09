@@ -1,4 +1,210 @@
 <!DOCTYPE html>
 <div id="donnees">
-	<p> bonjour coucou </p>
+  <h2>Pays du monde</h2>
+  <p>Ici, vous pouvez ajouter des pays, modifier ou bien supprimer un pays. Attention ces pays seront définitivement supprimé de la planete terre. </p>            
+  <br/>
+	<div class="row">
+		<div class="col-sm-12 text-center">
+			<ul class="pagination pagination-sm">
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+			</ul>
+		</div>
+	</div> 
+	<br/>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-striped">
+			<thead>
+				<tr>
+					<th  id="titreTab">Nom du pays</th>
+					<th  id="titreTab">PIB</th>
+					<th  id="titreTab">Natalité / Mortalité </th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="text" class="form-control" id="usr" placeholder="ex : France"></input></td>
+					<td><input type="text" class="form-control" id="usr" placeholder="ex : 100 000"></input></td>
+					<td><input type="text" class="form-control" id="usr" placeholder="ex : 350 000"></input></td>
+					<td class="text-right"><button type="button" class="btn btn-success btn_lg" data-toggle="modal" data-target="#modalAjout">Ajouter</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>Mary</td>
+					<td>Moe</td>
+					<td>mary@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>July</td>
+					<td>Dooley</td>
+					<td>july@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 text-center">
+			<ul class="pagination pagination-sm">
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+			</ul>
+		</div>
+	</div> 
+	
+	<!-- Modal -->
+  <div class="modal fade" id="modalAjout" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Ajouter un pays</h4>
+        </div>
+        <div class="modal-body">
+          <p>Félicitation, vous venez d'ajouter un pays sur terre.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <div class="modal fade" id="modalModif" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modifier un pays</h4>
+        </div>
+        <div class="modal-body">
+			<p>Nom du pays : </p>
+			<p><input type="text" class="form-control" id="usr" placeholder="ex : France" ></input></p>
+			<p>PIB : </p>
+			<p><input type="text" class="form-control" id="usr" placeholder="ex : 1000000"></input></p>
+			<p>Mortalité / Natalité : </p>
+			<p><input type="text" class="form-control" id="usr" placeholder="ex : 350000"></input></p>
+        </div>
+        <div class="modal-footer">
+			<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+			<button type="button" class="btn btn-success " data-dismiss="modal">Modifier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="modalSuppr" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Supprimer un pays</h4>
+        </div>
+        <div class="modal-body">
+          <p>Vous venez de supprimer un pays de la terre, pas cool.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
 </div>
