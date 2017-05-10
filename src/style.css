@@ -6,6 +6,22 @@
 html, body {
     height: 100%;
     width: 100%;
+    background-image: url('image/bg.png');
+    padding-top: 1%;
+}
+
+@media screen and (max-width: 768px) {
+    html, body {
+        padding-top: 0px;
+    }
+}
+
+
+#page {
+    background-color: #FFFFFF;
+    border-width : 1px;
+    border-color : #000000;
+    border-style: ridge;
 }
 
 #header {
@@ -23,5 +39,5 @@ html, body {
 }
 
 #titreTab {
-	font-weight : bold;
+    font-weight : bold;
 }
