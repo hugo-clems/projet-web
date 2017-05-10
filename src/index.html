@@ -27,7 +27,7 @@
         <title>GeoStats - Projet Web</title>
     </head>
     <body>
-        <div class="container">
+        <div id="page" class="container">
             <!-- Header -->
             <div class="row" id="header">
                 <div class="col-sm-1">
@@ -159,16 +159,23 @@
         <script src="magicsuggest/magicsuggest-min.js"></script>
         <script>
 			$(document).ready(function(){	
-				// Met en place la recherche
-				//var listePays = [];
-				//function list(x){console.log(x);listePays=x}
-				//allName(list);
-				//console.log(listePays);
-				$(function() {$('#magicsuggest').magicSuggest({
-						placeholder: 'Vous pouvez chercher un pays avec son nom',
-						data: []//listePays
+				var listePays = [];
+				listePays = allName();
+				$.when(listePays).done(function(data2){
+					var x = $('#magicsuggest').magicSuggest({
+							placeholder: 'Vous pouvez chercher un pays avec son nom',
+							data: data2,
+							allowFreeEntries: false,
+							allowDuplicates:false,
+							id : 'test'
+						});
+					$(x).on(
+						'selectionchange', function(){
+							//Récupère les pays entrés
+							addCountryList(JSON.stringify(this.getValue()));
+  }
+);
 					});
-				});
 				});
         </script> 
     </body>

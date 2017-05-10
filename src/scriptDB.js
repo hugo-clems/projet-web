@@ -201,10 +201,9 @@ function addPays(nomPays,years,pibvar,natalite,mortalite) {
 	};
 }
 
-/*
-//Ne marche pas correctement
+
 function allName(callback){
-	
+	var defer = $.Deferred();
 	var L = new Set();
 	var transaction = db.transaction("PIB");
 	var objectStore = transaction.objectStore("PIB");
@@ -214,9 +213,10 @@ function allName(callback){
 				L.add(cursor.key[0]);
 				//console.log(cursor.key);
 				cursor.continue();
-        }else{callback([...L]);};
+        }else{defer.resolve([...L]); return;}
 		
     };
+	return defer.promise();
 
 
-}*/
+}
