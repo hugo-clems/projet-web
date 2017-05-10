@@ -68,7 +68,6 @@ $.getJSON('death_per_countries.json', function(data) {
 	
 });
 
-
 /* ******************** */
 /* ** Initialisation ** */
 /* ******************** */
@@ -86,9 +85,9 @@ if (!window.indexedDB) {
 var db; // La base de données
 
 // On supprime la base pour les tests
-var req = indexedDB.deleteDatabase("Database");
+//var req = indexedDB.deleteDatabase("Database");
 // On ouvre la base, la nomme et on lui donne un n° de version.
-var request = window.indexedDB.open("Database", 1);
+var request = indexedDB.open("Database", 1);
 
 // Cas d'échec
 request.onerror = function(event) {
@@ -112,7 +111,7 @@ request.onupgradeneeded = function(event) {
     //var anneeTable = db.createObjectStore("Annee", {keyPath: "annee"});
     //var continentTable = db.createObjectStore("Continent", {keyPath: "nomContinent"});
     var pibTable = db.createObjectStore("PIB", {keyPath: ["idPays","annee"]});
-	var test = db.createObjectStore("test", {keyPath: ["pays","annee"]});
+	//var test = db.createObjectStore("test", {keyPath: ["pays","annee"]});
     // On ajoute les données dans la BD
 	var j = 0;
     for(var nom in Object.keys(pibPays)){
@@ -120,14 +119,15 @@ request.onupgradeneeded = function(event) {
 		for(var i=0;i <11;i++){
 			var date = pibPays[Object.keys(pibPays)[nom]][1][i]["date"];
 			//On prend PIB, birth et death pour une date donnée
-			var pib = pibPays[Object.keys(pibPays)[nom]][0][i]["pib"];
+			var pibvar = pibPays[Object.keys(pibPays)[nom]][0][i]["pib"];
 			var birth = pibPays[Object.keys(pibPays)[nom]][1][i]["birth"];
 			var death = pibPays[Object.keys(pibPays)[nom]][2][i]["death"];
-			pibTable.add({idPays : Object.keys(pibPays)[nom],annee : date, nbNaissance : birth, nbDeces : death });
+			pibTable.add({idPays : Object.keys(pibPays)[nom],annee : date,pib : pibvar,  nbNaissance : birth, nbDeces : death });
 		
 		}
 	}
-	test.add({pays : "France", annee: "2010", autre : "test"});
+	//test.add({pays : "France", annee: "2010", autre : "test"});
+	
 }
 
 
@@ -159,14 +159,64 @@ function selectAll() {
 /**
  * Lit une ligne d'une table.
  * SELECT * FROM pibTable WHERE nomPays = :nomPays and annee = :annee
- * @param {type} nomPays - L'identifiant de la ligne recherchée
- * @param {type} annee   - annee recherché
+ * @param {string} nomPays - L'identifiant de la ligne recherchée
+ * @param {string} annee   - annee recherché
  * @return {undefined}   - L'objet recherché
  */
-function select(nomPays,anne) {
-    db.transaction("PIB").objectStore("PIB").get(["France","annee"]).onsuccess = function(event) {
+function select(nomPays,annee) {
+    db.transaction("PIB").objectStore("PIB").get([nomPays,annee]).onsuccess = function(event) {
   var obj = event.target.result;
   console.log(obj);
 };
 }
 
+/**
+ * Supprime une ligne d'un objectStore
+ * @param {string} nomPays - L'identifiant de la ligne recherchée
+ * @return {undefined}   - //
+ */
+function removePays(nomPays) {
+	var os = db.transaction("PIB","readwrite").objectStore("PIB");
+	for(var i =0;i<annee.length;i++){
+		os.delete([nomPays,annee[i]]).onsuccess = function(event){
+			console.log("année supprimée");
+		};
+	}
+	
+}
+
+/**
+ * Ajoute une ligne d'un objectStore
+ * @param {string} nomPays - L'identifiant de la ligne recherchée
+ * @param {string} years - Année 
+ * @param {string} pibvar - PIB du pays pour l'année
+ * @param {string} natalite - Taux de natalité du pays pour l'année
+ * @param {string} mortalite - Taux de mortalité du pays pour l'année
+ * @return {undefined}   - //
+ */
+function addPays(nomPays,years,pibvar,natalite,mortalite) {
+	var os = db.transaction("PIB","readwrite").objectStore("PIB");
+	os.add({idPays : nomPays,annee : years,pib : pibvar, nbNaissance : natalite, nbDeces : mortalite}).onsuccess = function(event){
+		console.log("pays ajouté");
+	};
+}
+
+/*
+//Ne marche pas correctement
+function allName(callback){
+	
+	var L = new Set();
+	var transaction = db.transaction("PIB");
+	var objectStore = transaction.objectStore("PIB");
+    objectStore.openCursor().onsuccess = function(event) {
+		var cursor = event.target.result;
+		if(cursor) {
+				L.add(cursor.key[0]);
+				//console.log(cursor.key);
+				cursor.continue();
+        }else{callback([...L]);};
+		
+    };
+
+
+}*/

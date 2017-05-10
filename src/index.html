@@ -15,6 +15,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
+		<script src="scriptDB.js"></script>
             
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -154,14 +155,21 @@
             
         <!-- /!\ TOUJOURS A LA FIN /!\ -->        
         <!-- Scripts pour la recherche -->
+
         <script src="magicsuggest/magicsuggest-min.js"></script>
         <script>
-            // Met en place la recherche
-            $(function() {$('#magicsuggest').magicSuggest({
-                    placeholder: 'Vous pouvez chercher un pays avec son nom',
-                    data: ['Banana', 'Apple', 'Orange', 'Lemon']
-                });
-            });
-        </script>
+			$(document).ready(function(){	
+				// Met en place la recherche
+				//var listePays = [];
+				//function list(x){console.log(x);listePays=x}
+				//allName(list);
+				//console.log(listePays);
+				$(function() {$('#magicsuggest').magicSuggest({
+						placeholder: 'Vous pouvez chercher un pays avec son nom',
+						data: []//listePays
+					});
+				});
+				});
+        </script> 
     </body>
 </html>
