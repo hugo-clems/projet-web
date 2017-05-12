@@ -1,220 +1,242 @@
+<!--
+ - Projet Web - GeoStats
+ - CLEMENT, O'ROURKE & FUZIER © 2017
+-->
 <!DOCTYPE html>
-<script>
-	$( "add" ).click( function() {
-	console.log("oui");
-		if ($("usr").val() == ""){
-			console.log("non");
-		}
-	
-});
-
-</script>
-<div id="donnees">
-  <h2>Pays du monde</h2>
-  <p>Ici, vous pouvez ajouter des pays, modifier ou bien supprimer un pays. Attention ces pays seront définitivement supprimé de la planete terre. </p>            
-  <br/>
-	<div class="row">
-		<div class="col-sm-12 text-center">
-			<ul class="pagination pagination-sm">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
-	</div> 
-	<br/>
-	
-	<div class="row">
-		<div class="col-sm-12">
-			<table class="table table-striped">
-			<thead>
-				<tr>
-					<th  id="titreTab">Nom du pays</th>
-					<th  id="titreTab">PIB</th>
-					<th  id="titreTab">Natalité / Mortalité </th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><input type="text" class="form-control" id="usr" placeholder="ex : France"></input></td>
-					<td><input type="text" class="form-control" id="usr1" placeholder="ex : 100 000"></input></td>
-					<td><input type="text" class="form-control" id="usr2" placeholder="ex : 350 000"></input></td>
-					<td class="text-right"><button id="add" type="button" class="btn btn-success btn_lg" data-toggle="modal" data-target="#modalAjout">Ajouter</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>Mary</td>
-					<td>Moe</td>
-					<td>mary@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>July</td>
-					<td>Dooley</td>
-					<td>july@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td class="text-right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppr">Supprimer</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalModif" >Modifier</button></td>
-				</tr>
-			</tbody>
-		</table>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-12 text-center">
-			<ul class="pagination pagination-sm">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
-	</div> 
-	
-	<!-- Modal -->
-  <div class="modal fade" id="modalAjout" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Ajouter un pays</h4>
+<html>
+    <head>
+        <!-- CSS -->
+            
+        <link href="reset.css" rel="stylesheet" type="text/css">
+        <link href="magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet" type="text/css">
+            
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="scriptDB.js"></script>
+            
+        <!-- Meta -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            
+        <!-- favicon -->
+        <link rel="icon" type="image/png" href="image/logo.ico" ></link>
+            
+        <title>GeoStats - Projet Web</title>
+    </head>
+    <body>
+        <div id="page" class="container">
+            <!-- Header -->
+            <div class="row" id="header">
+                <div class="col-sm-1">
+                    <img class="img-responsive" src="image/logo.png" alt="logo">
+                </div>
+                <div class="col-sm-11 text-left">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="index.html">GeoStats</a>
+                            </div>
+                            <ul class="nav navbar-nav">
+                                <li id="modification"><a href="donnees.html">Modification des données</a></li>
+                                    
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+                
+            <div id="contenu">
+                <div id="donnees">
+                    <h2>Pays du monde</h2>
+                    <p>
+                        Ici, vous pouvez ajouter des pays, modifier ou bien supprimer un pays.
+                        Attention ces pays seront définitivement supprimé de la planete terre ! :(
+                    </p><br/>
+                        
+                    <!-- Pagination TODO -->
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <ul class="pagination pagination-sm">
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                            </ul>
+                        </div>
+                    </div><br/>
+                        
+                    <!-- Liste des Pays -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-striped">
+                                <!-- Colonnes -->
+                                <thead>
+                                    <tr>
+                                        <th id="titreNomPays">Nom du pays</th>
+                                        <th id="titrePibPays">PIB</th>
+                                        <th id="titreTauxPib">Natalité / Mortalité </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                    
+                                <!-- Lignes -->
+                                <tbody id="corpsTab">
+                                    <!-- Créer Pays -->
+                                    <tr>
+                                        <td><input type="text" class="form-control"
+                                                   id="creerNom" placeholder="ex : France"></td>
+                                        <td><input type="text" class="form-control"
+                                                   id="creerPIB" placeholder="ex : 100 000"></td>
+                                        <td><input type="text" class="form-control"
+                                                   id="creerTaux" placeholder="ex : 350 000"></td>
+                                        <td class="text-right">
+                                            <button onclick="creerPays();" type="button"
+                                                    class="btn btn-success btn_lg" id="add" >
+                                                Ajouter
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                        
+                    <!-- Pagination TODO -->
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <ul class="pagination pagination-sm">
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                            </ul>
+                        </div>
+                    </div> 
+                        
+                    <!-- Ajouter Pays -->
+                    <div class="modal fade" id="modalAjout" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Ajouter un pays</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Félicitation, vous venez d'ajouter un pays sur terre.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <!-- ERREUR : Ajouter Pays -->
+                    <div class="modal fade" id="modalErrAjout" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Impossible d'ajouter le pays</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Merci de remplir tous les champs pour créer un pays !</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <!-- Modifier Pays -->
+                    <div class="modal fade" id="modalModif" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modifier un pays</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Nom du pays : </p>
+                                    <p><input type="text" class="form-control" id="nomPays" placeholder="ex: France" ></p>
+                                    <p>PIB : </p>
+                                    <p><input type="text" class="form-control" id="pibPays" placeholder="ex: 1000000"></p>
+                                    <p>Mortalité / Natalité : </p>
+                                    <p><input type="text" class="form-control" id="tauxPays" placeholder="ex: 350000"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                                    <button type="button" class="btn btn-success " data-dismiss="modal">Modifier</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <!-- Supprimer Pays -->
+                    <div class="modal fade" id="modalSuppr" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Supprimer un pays</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Vous venez de supprimer un pays de la terre, pas cool.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <p>Félicitation, vous venez d'ajouter un pays sur terre.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-    <div class="modal fade" id="modalModif" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modifier un pays</h4>
-        </div>
-        <div class="modal-body">
-			<p>Nom du pays : </p>
-			<p><input type="text" class="form-control" id="usr" placeholder="ex : France" ></input></p>
-			<p>PIB : </p>
-			<p><input type="text" class="form-control" id="usr" placeholder="ex : 1000000"></input></p>
-			<p>Mortalité / Natalité : </p>
-			<p><input type="text" class="form-control" id="usr" placeholder="ex : 350000"></input></p>
-        </div>
-        <div class="modal-footer">
-			<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-			<button type="button" class="btn btn-success " data-dismiss="modal">Modifier</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="modal fade" id="modalSuppr" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Supprimer un pays</h4>
-        </div>
-        <div class="modal-body">
-          <p>Vous venez de supprimer un pays de la terre, pas cool.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  
-</div>
+            
+        <footer>
+            <div class="credits">Projet Web - L3 Info</div>
+            <div>
+                CLEMENT Hugo, FUZIER Pauline & O'ROURKE Marvyn © 2017<br>
+                <a href="https://github.com/hugo-clems/projet-web" target="_blank">Code disponible sur GitHub</a>
+            </div>
+        </footer>
+            
+        <script>
+            // Création d'un Pays
+            function creerPays() {
+                var creerNom  = $("#creerNom").val();
+                var creerPib  = $("#creerPIB").val();
+                var creerTaux = $("#creerTaux").val();
+                
+                if (creerNom == "" || creerPib == "" || creerTaux == "") {
+                    // TODO une modal pour plus jolie :)
+                    $("#modalErrAjout").modal('show');
+                } else {
+                    // TODO : Appel fonction pour enregistrer
+                    $("#modalAjout").modal('show');
+                }
+            }
+            
+            // Remplissage lignes
+            var btn = "<td class='text-right'><button type='button' class='btn btn-danger' data-toggle='modal' data-target='#modalSuppr'>Supprimer</button> <button type='button' class='btn btn-info' data-toggle='modal' data-target='#modalModif' >Modifier</button></td>";
+            
+            // TODO : Appel fonction BD (selectAll)
+            var data = [["test","loul","lel"], ["lal","lol","lel"], ["mdr","ptdr","xptdr"]];
+            
+            for (i = 0; i < data.length; i++) {
+                var pays = data[i][0];
+                var pib  = data[i][1];
+                var taux = data[i][2];
+                
+                $("tbody").append("<tr><td>" + pays + "</td><td>" + pib + "</td><td>" + taux + "</td>" + btn + "</tr>");
+            }
+        </script>
+    </body>
+</html>
