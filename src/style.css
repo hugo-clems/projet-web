@@ -3,6 +3,8 @@
  * CLEMENT, O'ROURKE & FUZIER © 2017
  */
 
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
 html, body {
     height: 100%;
     width: 100%;
@@ -16,12 +18,12 @@ html, body {
     }
 }
 
-
 #page {
     background-color: #FFFFFF;
     border-width : 1px;
     border-color : #000000;
     border-style: ridge;
+    border-bottom: none;
 }
 
 #header {
@@ -43,11 +45,14 @@ html, body {
 }
 
 footer {
-    background-color: #292F33;
-    color: #FFFFFF;
+    background-color: #F8F8F8;
     text-align: center;
     padding-top: 1%;
     padding-bottom: 2%;
+    font-family: 'Quicksand', sans-serif;
+    border-width : 1px;
+    border-color : #000000;
+    border-style: ridge;
 }
 
 footer a {
@@ -55,7 +60,7 @@ footer a {
 }
 
 footer a:hover {
-    color: #FFFFFF;
+    color: brown;
 }
 
 .credits {
