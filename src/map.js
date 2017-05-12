@@ -40,14 +40,18 @@ function onClickCountry (location) {
 			.done (function(location)
 			{
 			var i = 2;
-	console.log(location.results);
+		console.log(location.results);
       if ((location.results).length != 0) {
         var country = location.results[location.results.length-1].address_components[0];
         var countryName = country.long_name;
         var countryCode = country.short_name;
-      
-	  
-	  // si le pays est déjà dans la liste
+		addCountryOnMap(countryName,countryCode);
+	  }
+	});
+}
+
+function addCountryOnMap(countryName,countryCode){
+	// si le pays est déjà dans la liste
 	  if(selected(countryName)){
 		// on le supprime de la liste des pays, et du world_geometry
 		deleteFrom(listeName,countryCode);
@@ -85,8 +89,6 @@ function onClickCountry (location) {
 	  } else { // si il y a aucun pays 
 		world_geometry.setMap(null);
 	  }
-	  }
-	});
 }
 
 // Ajoute un pays à la liste des pays
