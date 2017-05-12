@@ -19,7 +19,8 @@ function initMap() {
 	mapTypeControl: false,
 	scaleControl: false,
 	streetViewControl: false,
-	rotateControl: false
+	rotateControl: false,
+	locale : 'en'
   });
   // Lors du clic sur la map , place un marker avec sa position
   google.maps.event.addListener(map, 'click', function(event) {
