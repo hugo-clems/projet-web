@@ -45,17 +45,22 @@ function onClickCountry (location) {
       if ((location.results).length != 0) {
         var country = location.results[location.results.length-1].address_components[0];
         var countryName = country.long_name;
-        var countryCode = country.short_name;
-		addCountryOnMap(countryName,countryCode);
+		addCountryOnMap(countryName);
 	  }
 	});
 }
-
-function addCountryOnMap(countryName,countryCode){
+//-- Affiche les polygones des pays placés en paramètre (liste de la forme 'UK','FR','DE' etc ) 
+// TODO résoudre problème : Ne passe pas plusieurs fois dans le world geometry , peut etre un pb de call back encore -->
+// doc sur l'objet fusiontablelayer : https://www.touraineverte.fr/google-maps-api-version-3/reference/FusionTablesStyle.html#propriete-polygonOptions -->
+// https://developers.google.com/maps/documentation/javascript/fusiontableslayer?hl=fr -->
+// https://www.touraineverte.fr/google-maps-api-version-3/reference/FusionTablesLayerOptions.html#FusionTablesLayerOptions -->
+// tuto que j'ai utilisé : http://stackoverflow.com/questions/8670859/highlight-whole-countries-in-google-maps -->
+// .kml utilisé : https://fusiontables.google.com/data?docid=1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk&pli=1#rows:id=1
+function addCountryOnMap(countryName){
 	// si le pays est déjà dans la liste
 	  if(selected(countryName)){
 		// on le supprime de la liste des pays, et du world_geometry
-		deleteFrom(listeName,countryCode);
+		deleteFrom(listeName,countryName);
 		// suppression dans la liste html
 		$('li').each(function (){
 			if($(this).text() == countryName){
@@ -64,7 +69,7 @@ function addCountryOnMap(countryName,countryCode){
 		});
 	  } else {
 		// ajout du pays à la liste
-		listeName.push(countryCode);
+		listeName.push(countryName);
 		$('#myliste').append('<li>'+countryName+'</li>');
 	  }
 	  if(listeName != ''){
@@ -73,13 +78,14 @@ function addCountryOnMap(countryName,countryCode){
 		 var strList = JSON.stringify(listeName);
 		 var param = strList.substr(1, strList.length-2).replace(/\"/g,'\'');
 		 if (world_geometry != null) world_geometry.setMap(null);
-
+		console.log(param);
 		 // objet à superposer à la carte
          world_geometry = new google.maps.FusionTablesLayer({
            query: {
             select: 'geometry',
             from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
-            where: "ISO_2DIGIT IN ("+param+")"
+           // where: "ISO_2DIGIT IN ("+param+")"
+			where: "Name IN ("+param+")"
            },
 		   clickable : false,
            styles : [{polygonOptions : {fillColor : "#FFFFFF",
