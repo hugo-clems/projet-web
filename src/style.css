@@ -37,8 +37,22 @@ html, body {
 
 .unChart {
     height: 300px;
-    width: 50%;
+    width: 60%;
     margin-bottom: 100px;
+    /*margin-left: auto;
+    margin-right: auto;*/
+}
+
+@media screen and (max-width: 768px) {
+    .unChart {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .unChart {
+        width: 100%;
+    }
 }
 
 #titreTab {
