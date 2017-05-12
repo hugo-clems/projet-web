@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<script>
+	$( "add" ).click( function() {
+	console.log("oui");
+		if ($("usr").val() == ""){
+			console.log("non");
+		}
+	
+});
+
+</script>
 <div id="donnees">
   <h2>Pays du monde</h2>
   <p>Ici, vous pouvez ajouter des pays, modifier ou bien supprimer un pays. Attention ces pays seront définitivement supprimé de la planete terre. </p>            
@@ -30,9 +40,9 @@
 			<tbody>
 				<tr>
 					<td><input type="text" class="form-control" id="usr" placeholder="ex : France"></input></td>
-					<td><input type="text" class="form-control" id="usr" placeholder="ex : 100 000"></input></td>
-					<td><input type="text" class="form-control" id="usr" placeholder="ex : 350 000"></input></td>
-					<td class="text-right"><button type="button" class="btn btn-success btn_lg" data-toggle="modal" data-target="#modalAjout">Ajouter</button></td>
+					<td><input type="text" class="form-control" id="usr1" placeholder="ex : 100 000"></input></td>
+					<td><input type="text" class="form-control" id="usr2" placeholder="ex : 350 000"></input></td>
+					<td class="text-right"><button id="add" type="button" class="btn btn-success btn_lg" data-toggle="modal" data-target="#modalAjout">Ajouter</button></td>
 				</tr>
 				<tr>
 					<td>John</td>
