@@ -41,3 +41,24 @@ html, body {
 #titreTab {
     font-weight : bold;
 }
+
+footer {
+    background-color: #292F33;
+    color: #FFFFFF;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+
+footer a {
+    color: #4099FF;
+}
+
+footer a:hover {
+    color: #FFFFFF;
+}
+
+.credits {
+    font-size: 35px;
+    margin-bottom: 1%;
+}
