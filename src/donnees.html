@@ -6,25 +6,25 @@
 <html>
     <head>
         <!-- CSS -->
-            
+        
         <link href="reset.css" rel="stylesheet" type="text/css">
         <link href="magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="style.css" rel="stylesheet" type="text/css">
-            
+        
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="scriptDB.js"></script>
-            
+        
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            
+        
         <!-- favicon -->
-        <link rel="icon" type="image/png" href="image/logo.ico" ></link>
-            
+        <link rel="icon" type="image/png" href="image/logo.ico">
+        
         <title>GeoStats - Projet Web</title>
     </head>
     <body>
@@ -42,34 +42,30 @@
                             </div>
                             <ul class="nav navbar-nav">
                                 <li id="modification"><a href="donnees.html">Modification des données</a></li>
-                                    
+                                
                             </ul>
                         </div>
                     </nav>
                 </div>
             </div>
-                
+            
             <div id="contenu">
                 <div id="donnees">
                     <h2>Pays du monde</h2>
                     <p>
-                        Ici, vous pouvez ajouter des pays, modifier ou bien supprimer un pays.
-                        Attention ces pays seront définitivement supprimé de la planete terre ! :(
-                    </p><br/>
-                        
-                    <!-- Pagination TODO -->
+                        Ici vous pouvez ajouter des données (PIB & Taux de Natalité/Mortalité )
+                        par année pour un pays sélectionné.
+                    </p>
+                    
+                    <!-- Liste des pays -->
                     <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <ul class="pagination pagination-sm">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                            </ul>
+                        <div class="col-sm-12">
+                            <h4>Choisir un pays :</h4>
+                            TODO
+                            <div id="magicsuggest"></div>
                         </div>
-                    </div><br/>
-                        
+                    </div>
+                    
                     <!-- Liste des Pays -->
                     <div class="row">
                         <div class="col-sm-12">
@@ -77,58 +73,49 @@
                                 <!-- Colonnes -->
                                 <thead>
                                     <tr>
-                                        <th id="titreNomPays">Nom du pays</th>
+                                        <th id="titreNomPays">Année</th>
                                         <th id="titrePibPays">PIB</th>
-                                        <th id="titreTauxPib">Natalité / Mortalité </th>
+                                        <th id="titreTauxPib">Taux Natalité/Mortalité </th>
                                         <th></th>
                                     </tr>
                                 </thead>
-                                    
+                                
                                 <!-- Lignes -->
                                 <tbody id="corpsTab">
                                     <!-- Créer Pays -->
-                                    <tr>
+                                    <tr id="P">
                                         <td><input type="text" class="form-control"
-                                                   id="creerNom" placeholder="ex : France"></td>
+                                                   id="creerAnnee" placeholder="ex : 2017"></td>
                                         <td><input type="text" class="form-control"
                                                    id="creerPIB" placeholder="ex : 100 000"></td>
                                         <td><input type="text" class="form-control"
-                                                   id="creerTaux" placeholder="ex : 350 000"></td>
+                                                   id="creerTaux" placeholder="ex : 350/000"></td>
                                         <td class="text-right">
-                                            <button onclick="creerPays();" type="button"
+                                            <button onclick="addAnnee();" type="button"
                                                     class="btn btn-success btn_lg" id="add" >
                                                 Ajouter
                                             </button>
                                         </td>
                                     </tr>
+                                    <!-- Données chargées via BD -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                        
-                    <!-- Pagination TODO -->
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <ul class="pagination pagination-sm">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                            </ul>
-                        </div>
-                    </div> 
-                        
-                    <!-- Ajouter Pays -->
+                    
+                    <!-- Ajouter Année -->
                     <div class="modal fade" id="modalAjout" role="dialog">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Ajouter un pays</h4>
+                                    <h4 class="modal-title">Ajouter une année</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Félicitation, vous venez d'ajouter un pays sur terre.</p>
+                                    <p>
+                                        Félicitation, vous venez d'ajouter des données pour le pays sélectionné
+                                        (<span id="addPays"></span>).
+                                    </p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
@@ -136,17 +123,17 @@
                             </div>
                         </div>
                     </div>
-                        
-                    <!-- ERREUR : Ajouter Pays -->
+                    
+                    <!-- ERREUR : Ajouter Année -->
                     <div class="modal fade" id="modalErrAjout" role="dialog">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Impossible d'ajouter le pays</h4>
+                                    <h4 class="modal-title">Impossible d'ajouter l'année</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Merci de remplir tous les champs pour créer un pays !</p>
+                                    <p>Merci de remplir tous les champs pour ajouter un année !</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
@@ -154,44 +141,52 @@
                             </div>
                         </div>
                     </div>
-                        
-                    <!-- Modifier Pays -->
+                    
+                    <!-- Modifier Année -->
                     <div class="modal fade" id="modalModif" role="dialog">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modifier un pays</h4>
+                                    <h4 class="modal-title">Modifier une année</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Nom du pays : </p>
-                                    <p><input type="text" class="form-control" id="nomPays" placeholder="ex: France" ></p>
+                                    <p>Année : </p>
+                                    <p><input type="text" class="form-control" id="editAnnee"></p>
                                     <p>PIB : </p>
-                                    <p><input type="text" class="form-control" id="pibPays" placeholder="ex: 1000000"></p>
+                                    <p><input type="text" class="form-control" id="editPIB" placeholder="ex: 1000000"></p>
                                     <p>Mortalité / Natalité : </p>
-                                    <p><input type="text" class="form-control" id="tauxPays" placeholder="ex: 350000"></p>
+                                    <p><input type="text" class="form-control" id="editTaux" placeholder="ex: 350000"></p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-                                    <button type="button" class="btn btn-success " data-dismiss="modal">Modifier</button>
+                                    <button type="button" class="btn btn-success " data-dismiss="modal"
+                                            onclick="modifierAnnee()">Modifier</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        
-                    <!-- Supprimer Pays -->
+                    
+                    <!-- Supprimer Année -->
                     <div class="modal fade" id="modalSuppr" role="dialog">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Supprimer un pays</h4>
+                                    <h4 class="modal-title">Supprimer une année</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Vous venez de supprimer un pays de la terre, pas cool.</p>
+                                    <p>
+                                        Voulez-vous vraiment supprimer
+                                        <span id="supprAnnee"></span> ainsi que ses données ?<br>
+                                        Ne s'applique que pour le pays sélectionné
+                                        (<span id="supprPays"></span>) !
+                                    </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                            onclick="supprimerAnnee();">Oui</button>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +194,7 @@
                 </div>
             </div>
         </div>
-            
+        
         <footer>
             <div class="credits">Projet Web - L3 Info</div>
             <div>
@@ -207,36 +202,108 @@
                 <a href="https://github.com/hugo-clems/projet-web" target="_blank">Code disponible sur GitHub</a>
             </div>
         </footer>
-            
+        
         <script>
-            // Création d'un Pays
-            function creerPays() {
-                var creerNom  = $("#creerNom").val();
+            var PAYS_SELECTED = "NON DEFINI";
+            
+            chargerPays("France");  // TEMPORAIRE
+            
+            /**
+             * Une fois qu'on à sélectionné un pays
+             * On charge ses données (PIB & Taux / année)
+             * @param {type} nomPays - le nom du pays sélectionné
+             */
+            function chargerPays(nomPays) {
+                // On supprime les lignes éventuellement déjà présentes dans la table (sauf la première)
+                var rowCount = $('#corpsTab tr').length;
+                for (i = 0; i < rowCount-1; i++) {
+                    $("tr").remove("#P"+i);
+                }
+                
+                // TODO : Appel fonction BD (selectAll) - pour remplir data
+                var data = [["2012","24","15"], ["2011","687","39"], ["2010","78","67"]];
+                
+                for (i = 0; i < data.length; i++) {
+                    var annee = data[i][0];
+                    var pib  = data[i][1];
+                    var taux = data[i][2];
+                    var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + i + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + i + ");'>Modifier</button></td>";
+                    
+                    // On ajoute la ligne
+                    $("tbody").append("<tr id='P"+ i +"'><td class='annee'>" + annee + "</td><td class='pib'>" + pib + "</td><td class='taux'>" + taux + "</td>" + btn + "</tr>");
+                }
+                
+                PAYS_SELECTED = "France";
+            }
+            
+            /**
+             * Si tous les champs sont renseignés on ajoute une année à ce pays
+             */
+            function addAnnee() {
+                var creerAnnee  = $("#creerAnnee").val();
                 var creerPib  = $("#creerPIB").val();
                 var creerTaux = $("#creerTaux").val();
                 
-                if (creerNom == "" || creerPib == "" || creerTaux == "") {
-                    // TODO une modal pour plus jolie :)
+                if (creerAnnee == "" || creerPib == "" || creerTaux == "") {
                     $("#modalErrAjout").modal('show');
                 } else {
-                    // TODO : Appel fonction pour enregistrer
+                    // TODO : Appel fonction BD pour ajouter (avec vérif !!)
+                    $("#addPays").html(PAYS_SELECTED);
                     $("#modalAjout").modal('show');
                 }
             }
             
-            // Remplissage lignes
-            var btn = "<td class='text-right'><button type='button' class='btn btn-danger' data-toggle='modal' data-target='#modalSuppr'>Supprimer</button> <button type='button' class='btn btn-info' data-toggle='modal' data-target='#modalModif' >Modifier</button></td>";
+            /**
+             * Affiche le modal pour modifier une année
+             * @param {int} id - identifiant de la ligne concernée
+             */
+            function showSuppr(id) {
+                var anneeToSuppr = $("#P"+id).children(".annee").html();
+                $("#supprAnnee").html(anneeToSuppr);
+                $("#supprPays").html(PAYS_SELECTED);
+                $("#modalSuppr").modal('show');
+            }
             
-            // TODO : Appel fonction BD (selectAll)
-            var data = [["test","loul","lel"], ["lal","lol","lel"], ["mdr","ptdr","xptdr"]];
-            
-            for (i = 0; i < data.length; i++) {
-                var pays = data[i][0];
-                var pib  = data[i][1];
-                var taux = data[i][2];
+            /**
+             * Supprime une année - Accès BD
+             */
+            function supprimerAnnee() {
+                var paysEdited = PAYS_SELECTED;
+                var anneeEdited = $("#supprAnnee").html();
                 
-                $("tbody").append("<tr><td>" + pays + "</td><td>" + pib + "</td><td>" + taux + "</td>" + btn + "</tr>");
+                // TODO : Fonction BD pour suppr l'année
+                // TODO : Rafraîchir ?
+            }
+            
+            /**
+             * Affiche le modal pour modifier une année
+             * @param {int} id - identifiant de la ligne concernée
+             */
+            function showEdit(id) {
+                var anneeToEdit = $("#P"+id).children(".annee").html();
+                var pibToEdit = $("#P"+id).children(".pib").html();
+                var tauxToEdit = $("#P"+id).children(".taux").html();
+                
+                $("#editAnnee").val(anneeToEdit);
+                $("#editPIB").val(pibToEdit);
+                $("#editTaux").val(tauxToEdit);
+                
+                $("#modalModif").modal('show');
+            }
+            
+            /**
+             * Modifie une année - Accès BD
+             */
+            function modifierAnnee() {
+                var paysEdited = PAYS_SELECTED;
+                var anneeEdited = $("#editAnnee").val();
+                var pibEdited = $("#editPIB").val();
+                var tauxEdited = $("#editTaux").val();
+                
+                // TODO : Fonction BD pour maj l'année
+                // TODO : Rafraîchir ?
             }
         </script>
+        <!-- TODO maggissuggest /!\ Attention bug jquery !!-->
     </body>
 </html>
