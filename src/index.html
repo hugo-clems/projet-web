@@ -1,12 +1,11 @@
 <!--
  - Projet Web - GeoStats
- - CLEMENT, O'ROURKE & FUZIER © 2017
+ - CLEMENT, FUZIER & O'ROURKE © 2017
 -->
 <!DOCTYPE html>
 <html>
     <head>
         <!-- CSS -->
-		
         <link href="reset.css" rel="stylesheet" type="text/css">
         <link href="magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -22,14 +21,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
             
-        <!-- favicon -->
-        <link rel="icon" type="image/png" href="image/logo.ico" ></link>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="image/logo.ico" >
             
         <title>GeoStats - Projet Web</title>
     </head>
     <body>
         <div id="page" class="container">
-            <!-- Header -->
+            <!-- *********************************************************** -->
+            <!-- ************************* Header ************************** -->
+            <!-- *********************************************************** -->
             <div class="row" id="header">
                 <div class="col-sm-1">
                     <img class="img-responsive" src="image/logo.png" alt="logo">
@@ -38,18 +39,24 @@
                     <nav class="navbar navbar-default">
                         <div class="container-fluid">
                             <div class="navbar-header">
-                                <a class="navbar-brand" href="index.html">GeoStats</a>
+                                <a class="navbar-brand" href="#" onclick="setTab(0);">GeoStats</a>
                             </div>
                             <ul class="nav navbar-nav">
-                                <li id="modification"><a href="#">Modification des données</a></li>
-                                
+                                <li id="modification"><a href="#" onclick="setTab(1);">Modification des données</a></li>
+                                    
                             </ul>
                         </div>
                     </nav>
                 </div>
             </div>
                 
-            <div id="contenu">
+                
+                
+                
+            <!-- *********************************************************** -->
+            <!-- *********************** Map & Stats *********************** -->
+            <!-- *********************************************************** -->
+            <div id="tabMapStats">
                 <!-- Affichage de la map -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -62,7 +69,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h4>Pays sélectionnés :</h4>
-                        <div id="magicsuggest"></div>
+                        <!--<div id="magicsuggest"></div>-->
                         <ul id="myliste"></ul>	
                     </div>
                 </div>
@@ -82,8 +89,170 @@
                 <div id="chart3" class="unChart"></div><hr>
                 <div id="chart4" class="unChart"></div>
             </div>
+                
+                
+                
+                
+            <!-- *********************************************************** -->
+            <!-- ************************* Données ************************* -->
+            <!-- *********************************************************** -->
+            <div id="tabDonnees">
+                <h2>Pays du monde</h2>
+                <p>
+                    Ici vous pouvez ajouter des données (PIB & Taux de Natalité/Mortalité )
+                    par année pour un pays sélectionné.
+                </p>
+                    
+                <!-- Liste des pays -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>Choisir un pays :</h4>
+                        TODO
+                        <!--<div id="magicsuggest"></div>-->
+                    </div>
+                </div>
+                    
+                <!-- Liste des années -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-striped">
+                            <!-- Colonnes -->
+                            <thead>
+                                <tr>
+                                    <th id="titreNomPays">Année</th>
+                                    <th id="titrePibPays">PIB</th>
+                                    <th id="titreTauxPib">Taux Natalité/Mortalité </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                                
+                            <!-- Lignes -->
+                            <tbody id="corpsTab">
+                                <!-- Créer Pays -->
+                                <tr id="P">
+                                    <td><input type="text" class="form-control"
+                                               id="creerAnnee" placeholder="ex : 2017"></td>
+                                    <td><input type="text" class="form-control"
+                                               id="creerPIB" placeholder="ex : 100 000"></td>
+                                    <td><input type="text" class="form-control"
+                                               id="creerTaux" placeholder="ex : 350/000"></td>
+                                    <td class="text-right">
+                                        <button onclick="addAnnee();" type="button"
+                                                class="btn btn-success btn_lg" id="add" >
+                                            Ajouter
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Données chargées via BD -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                
+                
+                
+                
+            <!-- *********************************************************** -->
+            <!-- ************************** Modal ************************** -->
+            <!-- *********************************************************** -->
+            <!-- Ajouter Année -->
+            <div class="modal fade" id="modalAjout" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Ajouter une année</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                Félicitation, vous venez d'ajouter des données pour le pays sélectionné
+                                (<span id="addPays"></span>).
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <!-- ERREUR : Ajouter Année -->
+            <div class="modal fade" id="modalErrAjout" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Impossible d'ajouter l'année</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Merci de remplir tous les champs pour ajouter un année !</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <!-- Modifier Année -->
+            <div class="modal fade" id="modalModif" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modifier une année</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Année : </p>
+                            <p><input type="text" class="form-control" id="editAnnee"></p>
+                            <p>PIB : </p>
+                            <p><input type="text" class="form-control" id="editPIB" placeholder="ex: 1000000"></p>
+                            <p>Mortalité / Natalité : </p>
+                            <p><input type="text" class="form-control" id="editTaux" placeholder="ex: 350000"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-success " data-dismiss="modal"
+                                    onclick="modifierAnnee()">Modifier</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <!-- Supprimer Année -->
+            <div class="modal fade" id="modalSuppr" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Supprimer une année</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                Voulez-vous vraiment supprimer
+                                <span id="supprAnnee"></span> ainsi que ses données ?<br>
+                                Ne s'applique que pour le pays sélectionné
+                                (<span id="supprPays"></span>) !
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                    onclick="supprimerAnnee();">Oui</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
         </div>
             
+            
+            
+            
+        <!-- *********************************************************** -->
+        <!-- ************************* Footer ************************** -->
+        <!-- *********************************************************** -->
         <footer>
             <div class="credits">Projet Web - L3 Info</div>
             <div>
@@ -92,17 +261,54 @@
             </div>
         </footer>
             
+            
+            
+            
+        <!-- *********************************************************** -->
+        <!-- ************************* Scripts ************************* -->
+        <!-- *********************************************************** -->
+            
+            
+        <!-- Script général -->
+        <script>
+            // Par défaut on cache les données (seul la map et les charts sont affichés)
+            setTab(0);
+            
+            /**
+             * Affiche le bon onglet de la page
+             * @param {int} idTab - Numéro de l'onglet à  afficher
+             */
+            function setTab(idTab) {
+                switch (idTab) {
+                    case 0:     // On affiche l'onglet mapStats
+                        $("#tabMapStats").show();
+                        $("#tabDonnees").hide();
+                        break;
+                    case 1:     // On affiche l'onglet données
+                        $("#tabMapStats").hide();
+                        $("#tabDonnees").show();
+                        break;
+                    default:     // On affiche l'onglet mapStats
+                        $("#tabMapStats").show();
+                        $("#tabDonnees").hide();
+                        break;
+                }
+            }
+        </script>
+            
+            
         <!-- Scripts pour la map -->
         <script src="map.js"></script>
         <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap&amp;language=en&region=JA&hl=en"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap&amp;language=en&region=JA&hl=en">
         </script>
+            
             
         <!-- Scripts pour les Charts -->
         <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="chart.js"></script>
         <script>
-            
+            // TEMPORAIRE : Données en brut
             var p1 = [{ label: "2000",  y: 10  },
                 { label: "2010", y: 15  },
                 { label: "2011", y: 30  },
@@ -145,28 +351,20 @@
             createChart("chart2", "Taux Natalités et mort de la France et l'Allemagne", true, data2);
             createChart("chart3", "PIB & taux de la France", true, data3);
             createChart("chart4", "PIB de la France", true, data4);
-            
-            // lors du clic sur l'onglet modifier bd , le contenue de la page change et affiche la page donnee.html
-            $("#modification").click(function(){	
-                $("#contenu").hide();
-                $("#contenu").load("donnees.html #donnees",
-                function(response,status,xhr){
-                    if (status == "error") {
-                        var msg = "Sorry but there was an error: ";
-                        console.log(msg + " " + xhr.status + " " + xhr.statusText);
-                    } else if(status=='success') {
-                        console.log("success");
-                    }
-                });
-                $("#contenu").fadeIn('900');
-            }); 
         </script>
+            
+            
+        <!-- Script pour les données -->
+        <script src="donnees.js"></script>
+        <script>
+            chargerPays("France");  // TEMPORAIRE
+        </script>
+            
             
         <!-- /!\ TOUJOURS A LA FIN /!\ -->        
         <!-- Scripts pour la recherche -->
-            
-        <script src="magicsuggest/magicsuggest-min.js"></script>
-        <script>
+        <!--<script src="magicsuggest/magicsuggest-min.js"></script>-->
+        <!--<script>
             $(document).ready(function(){	
                 var listePays = [];
                 listePays = allName();
@@ -186,6 +384,6 @@
                             );
                 });
             });
-        </script> 
+        </script>-->
     </body>
 </html>
