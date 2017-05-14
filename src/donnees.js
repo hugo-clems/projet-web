@@ -78,6 +78,7 @@ function showEdit(id) {
     var tauxToEdit = $("#P"+id).children(".taux").html();
     
     $("#editAnnee").val(anneeToEdit);
+    $("#editOldAnnee").val(anneeToEdit);
     $("#editPIB").val(pibToEdit);
     $("#editTaux").val(tauxToEdit);
     
@@ -90,6 +91,7 @@ function showEdit(id) {
 function modifierAnnee() {
     var paysEdited = PAYS_SELECTED;
     var anneeEdited = $("#editAnnee").val();
+    var oldAnnee = $("#editOldAnnee").val();
     var pibEdited = $("#editPIB").val();
     var tauxEdited = $("#editTaux").val();
     

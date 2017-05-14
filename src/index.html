@@ -10,21 +10,21 @@
         <link href="magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="style.css" rel="stylesheet" type="text/css">
-        
+            
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="scriptDB.js"></script>
         <script src="donnees.js"></script>
-        
+            
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        
+            
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="image/logo.ico" >
-        
+            
         <title>GeoStats - Projet Web</title>
     </head>
     <body>
@@ -51,10 +51,10 @@
                     </nav>
                 </div>
             </div>
-            
-            
-            
-            
+                
+                
+                
+                
             <!-- *********************************************************** -->
             <!-- *********************** Map & Stats *********************** -->
             <!-- *********************************************************** -->
@@ -66,7 +66,7 @@
                         <div id="map"></div>
                     </div>
                 </div>
-                
+                    
                 <!-- Affichage des pays sélectionnés -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -75,7 +75,7 @@
                         <ul id="myliste"></ul>	
                     </div>
                 </div>
-                
+                    
                 <hr><hr><!-- Menu des charts -->
                 <h2 >Statistiques sur les pays sélectionnés</h2>
                 <div>
@@ -84,17 +84,17 @@
                     <a href="#chart3" class="btn btn-default"><img src="image/splines.png" alt=""/></a>
                     <a href="#chart4" class="btn btn-default"><img src="image/pie.png" alt=""/></a>
                 </div>
-                
+                    
                 <hr><!-- Les charts -->
                 <div id="chart1" class="unChart"></div><hr>
                 <div id="chart2" class="unChart"></div><hr>
                 <div id="chart3" class="unChart"></div><hr>
                 <div id="chart4" class="unChart"></div>
             </div>
-            
-            
-            
-            
+                
+                
+                
+                
             <!-- *********************************************************** -->
             <!-- ************************* Données ************************* -->
             <!-- *********************************************************** -->
@@ -104,7 +104,7 @@
                     Ici vous pouvez ajouter des données (PIB & Taux de Natalité/Mortalité )
                     par année pour un pays sélectionné.
                 </p>
-                
+                    
                 <!-- Liste des pays -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -112,7 +112,7 @@
                         <div id="magicsuggest2"></div>
                     </div>
                 </div>
-                
+                    
                 <!-- Liste des années -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -127,42 +127,42 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            
+                                
                             <!-- Lignes -->
                             <tbody id="corpsTab">
                                 <!-- Créer Pays -->
-                               <tr id="ligneAdd">
+                                <tr id="ligneAdd">
                                     <td><input type="text" class="form-control"
                                                id="creerAnnee" placeholder="ex : 2017" maxlength="4" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46) )"></td>
+                                                           || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                                           || (95<event.keyCode && event.keyCode<106)
+                                                           || (event.keyCode==8) || (event.keyCode==9) 
+                                                           || (event.keyCode>34 && event.keyCode<40) 
+                                                           || (event.keyCode==46) )"></td>
                                     <td><input type="text" class="form-control"
                                                id="creerPIB" placeholder="ex : 100 000" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46))"></td>
+                                                           || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                                           || (95<event.keyCode && event.keyCode<106)
+                                                           || (event.keyCode==8) || (event.keyCode==9) 
+                                                           || (event.keyCode>34 && event.keyCode<40) 
+                                                           || (event.keyCode==46))"></td>
                                     <td><input type="text" class="form-control"
                                                id="creerTauxNat" placeholder="ex : 13.4" maxlength="5" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46) 
-																					|| (event.keyCode == 188))"></td>
-									<td><input type="text" class="form-control"
+                                                           || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                                           || (95<event.keyCode && event.keyCode<106)
+                                                           || (event.keyCode==8) || (event.keyCode==9) 
+                                                           || (event.keyCode>34 && event.keyCode<40) 
+                                                           || (event.keyCode==46) 
+                                                           || (event.keyCode == 188))"></td>
+                                    <td><input type="text" class="form-control"
                                                id="creerTauxDeath" placeholder="ex : 9.3" maxlength="5" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46) 
-																					|| (event.keyCode == 188))"></td>
-                                   
+                                                           || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                                           || (95<event.keyCode && event.keyCode<106)
+                                                           || (event.keyCode==8) || (event.keyCode==9) 
+                                                           || (event.keyCode>34 && event.keyCode<40) 
+                                                           || (event.keyCode==46) 
+                                                           || (event.keyCode == 188))"></td>
+                                                   
                                     <td class="text-right">
                                         <button onclick="addAnnee();" type="button"
                                                 class="btn btn-success btn_lg" id="add" >
@@ -176,10 +176,10 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
-            
+                
+                
+                
+                
             <!-- *********************************************************** -->
             <!-- ************************** Modal ************************** -->
             <!-- *********************************************************** -->
@@ -203,7 +203,7 @@
                     </div>
                 </div>
             </div>
-            
+                
             <!-- ERREUR : Ajouter Année -->
             <div class="modal fade" id="modalErrAjout" role="dialog">
                 <div class="modal-dialog modal-sm">
@@ -221,7 +221,7 @@
                     </div>
                 </div>
             </div>
-            
+                
             <!-- Modifier Année -->
             <div class="modal fade" id="modalModif" role="dialog">
                 <div class="modal-dialog modal-sm">
@@ -233,37 +233,38 @@
                         <div class="modal-body">
                             <p>Année : </p>
                             <p><input type="text" class="form-control" id="editAnnee" maxlength="4" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46) )"></p>
+                                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                        || (95<event.keyCode && event.keyCode<106)
+                                        || (event.keyCode==8) || (event.keyCode==9) 
+                                        || (event.keyCode>34 && event.keyCode<40) 
+                                        || (event.keyCode==46) )"></p>
                             <p>PIB : </p>
                             <p><input type="text" class="form-control" id="editPIB" placeholder="ex: 1000000" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46))"></p>
+                                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                        || (95<event.keyCode && event.keyCode<106)
+                                        || (event.keyCode==8) || (event.keyCode==9) 
+                                        || (event.keyCode>34 && event.keyCode<40) 
+                                        || (event.keyCode==46))"></p>
                             <p>Mortalité : </p>
                             <p><input type="text" class="form-control" id="editBirth" placeholder="ex: 1,4" maxlength="5" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46) 
-																					|| (event.keyCode == 188))" ></p>
-							<p>Natalité : </p>
-							<p><input type="text" class="form-control"
-                                               id="editDeath" placeholder="ex : 9.3" maxlength="5" onkeydown="return ( event.ctrlKey || event.altKey 
-																					|| (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-																					|| (95<event.keyCode && event.keyCode<106)
-																					|| (event.keyCode==8) || (event.keyCode==9) 
-																					|| (event.keyCode>34 && event.keyCode<40) 
-																					|| (event.keyCode==46) 
-																					|| (event.keyCode == 188))"> </p>
+                                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                        || (95<event.keyCode && event.keyCode<106)
+                                        || (event.keyCode==8) || (event.keyCode==9) 
+                                        || (event.keyCode>34 && event.keyCode<40) 
+                                        || (event.keyCode==46) 
+                                        || (event.keyCode == 188))" ></p>
+                            <p>Natalité : </p>
+                            <p><input type="text" class="form-control"
+                                      id="editDeath" placeholder="ex : 9.3" maxlength="5" onkeydown="return ( event.ctrlKey || event.altKey 
+                                                  || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                                                  || (95<event.keyCode && event.keyCode<106)
+                                                  || (event.keyCode==8) || (event.keyCode==9) 
+                                                  || (event.keyCode>34 && event.keyCode<40) 
+                                                  || (event.keyCode==46) 
+                                                  || (event.keyCode == 188))"> </p>
                         </div>
                         <div class="modal-footer">
+                            <input type="hidden" id="editOldAnnee">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
                             <button type="button" class="btn btn-success " data-dismiss="modal"
                                     onclick="modifierAnnee()">Modifier</button>
@@ -271,7 +272,7 @@
                     </div>
                 </div>
             </div>
-            
+                
             <!-- Supprimer Année -->
             <div class="modal fade" id="modalSuppr" role="dialog">
                 <div class="modal-dialog modal-sm">
@@ -296,12 +297,12 @@
                     </div>
                 </div>
             </div>
-            
+                
         </div>
-        
-        
-        
-        
+            
+            
+            
+            
         <!-- *********************************************************** -->
         <!-- ************************* Footer ************************** -->
         <!-- *********************************************************** -->
@@ -312,14 +313,14 @@
                 <a href="https://github.com/hugo-clems/projet-web" target="_blank">Code disponible sur GitHub</a>
             </div>
         </footer>
-        
-        
-        
-        
+            
+            
+            
+            
         <!-- *********************************************************** -->
         <!-- ************************* Scripts ************************* -->
         <!-- *********************************************************** -->
-        
+            
         <!-- Script général -->
         <script>
             // Par défaut on cache les données (seul la map et les charts sont affichés)
@@ -346,15 +347,15 @@
                 }
             }
         </script>
-        
-        
+            
+            
         <!-- Scripts pour la map -->
         <script src="map.js"></script>
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap&amp;language=en&region=JA&hl=en">
         </script>
-        
-        
+            
+            
         <!-- Scripts pour les Charts -->
         <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="chart.js"></script>
@@ -403,8 +404,8 @@
             createChart("chart3", "PIB & taux de la France", true, data3);
             createChart("chart4", "PIB de la France", true, data4);
         </script>
-        
-        
+            
+            
         <!-- Scripts pour la recherche -->
         <script></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
