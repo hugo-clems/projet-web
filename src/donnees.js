@@ -75,12 +75,15 @@ function supprimerAnnee() {
 function showEdit(id) {
     var anneeToEdit = $("#P"+id).children(".annee").html();
     var pibToEdit = $("#P"+id).children(".pib").html();
-    var tauxToEdit = $("#P"+id).children(".taux").html();
+    var tauxToEdit = $("#P"+id).children(".tauxNat").html();
+	var tauxToEditDeath = $("#P"+id).children(".tauxDeath").html();
+
     
     $("#editAnnee").val(anneeToEdit);
     $("#editOldAnnee").val(anneeToEdit);
     $("#editPIB").val(pibToEdit);
-    $("#editTaux").val(tauxToEdit);
+    $("#editBirth").val(tauxToEdit);
+	$("#editDeath").val(tauxToEditDeath);
     
     $("#modalModif").modal('show');
 }
@@ -93,8 +96,14 @@ function modifierAnnee() {
     var anneeEdited = $("#editAnnee").val();
     var oldAnnee = $("#editOldAnnee").val();
     var pibEdited = $("#editPIB").val();
-    var tauxEdited = $("#editTaux").val();
+    var tauxBirth = $("#editBirth").val();
+	var tauxDeath = $("#editDeath").val();
+
     
-    // TODO : Fonction BD pour maj l'année
-    // TODO : Rafraîchir ?
+    removeAnnee(PAYS_SELECTED,oldAnnee);
+	if(annee.indexOf(anneeEdited)<0){
+		annee.push(anneeEdited);
+	}
+	addPays(PAYS_SELECTED,anneeEdited,pibEdited,tauxBirth,tauxDeath);
+	chargerPays(PAYS_SELECTED);
 }

@@ -159,15 +159,34 @@ function selectAll() {
 function allYearsCountries(nomPays){
     var transaction = db.transaction("PIB");
     var objectStore = transaction.objectStore("PIB");
-    for(var i =0; i<annee.length;i++){
-        objectStore.get([nomPays,annee[i]]).onsuccess = function(event){
-            var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + event.target.result["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + event.target.result["annee"] + ");'>Modifier</button></td>";
-            $("tbody").append("<tr id='P"+event.target.result["annee"]+"'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"</td><td class='taux'>"+event.target.result["nbDeces"]+"</td>"+btn);
-        };
-        objectStore.get([nomPays,annee[i]]).onerror = function(event){
-            console.log("nope");
-        };
-    }
+	objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+	if(cursor) {
+            if(cursor.key[0] == nomPays){
+				var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + cursor.value["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + cursor.value["annee"] + ");'>Modifier</button></td>";
+				$("tbody").append("<tr id='P"+cursor.key[1]+"'><td class='annee'>" + cursor.key[1] + "</td><td class='pib'>" + cursor.value["pib"] + "</td><td class='tauxNat'>" +cursor.value["nbNaissance"]+"</td><td class='tauxDeath'>"+cursor.value["nbDeces"]+"</td>"+btn);
+			}
+            cursor.continue();
+        } else {
+            console.log("No more entries");
+        }
+    };
+	
+	
+	/*var L = allYears(nomPays);
+	$.when(L).done(function(data){
+		for (let item of data){
+			console.log(item);
+			objectStore.get([nomPays]).onsuccess = function(event){
+				console.log("test");
+				var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + event.target.result["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + event.target.result["annee"] + ");'>Modifier</button></td>";
+				$("tbody").append("<tr id='P"+event.target.result["annee"]+"'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"</td><td class='taux'>"+event.target.result["nbDeces"]+"</td>"+btn);
+			};
+			objectStore.get([nomPays,item]).oncomplete = function(event){
+				console.log("nope");
+			};
+		}
+	})*/
 }
 
 
@@ -247,7 +266,7 @@ function allName(){
 /**
  * Renvoie la liste des années
  */
-function allYears() {
+function allYears(nomPays) {
     var defer = $.Deferred();
     var L = new Set();
     var transaction = db.transaction("PIB");
@@ -256,7 +275,9 @@ function allYears() {
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
         if (cursor) {
-            L.add(cursor.key[1]);
+			if(cursor.key[0] == nomPays){
+				L.add(cursor.key[1]);
+			}
             cursor.continue();
         } else {
             defer.resolve([...L]);
