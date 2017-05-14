@@ -36,7 +36,7 @@ function onClickCountry (location) {
 	var lat = location.lat();
 	var lng = location.lng();
 	var countryName;
-	var countryShortName;
+	var countryCode;
  	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false')
 			.done (function(location)
 			{
@@ -44,8 +44,9 @@ function onClickCountry (location) {
 		console.log(location.results);
       if ((location.results).length != 0) {
         var country = location.results[location.results.length-1].address_components[0];
-        var countryName = country.long_name;
-		addCountryOnMap(countryName);
+        countryName = country.long_name;
+		countryCode = country.short_name;
+		addCountryOnMap(countryName,countryCode);
 	  }
 	});
 }
@@ -56,11 +57,11 @@ function onClickCountry (location) {
 // https://www.touraineverte.fr/google-maps-api-version-3/reference/FusionTablesLayerOptions.html#FusionTablesLayerOptions -->
 // tuto que j'ai utilisé : http://stackoverflow.com/questions/8670859/highlight-whole-countries-in-google-maps -->
 // .kml utilisé : https://fusiontables.google.com/data?docid=1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk&pli=1#rows:id=1
-function addCountryOnMap(countryName){
+function addCountryOnMap(countryName,countryCode){
 	// si le pays est déjà dans la liste
 	  if(selected(countryName)){
 		// on le supprime de la liste des pays, et du world_geometry
-		deleteFrom(listeName,countryName);
+		deleteFrom(listeName,countryCode);
 		// suppression dans la liste html
 		$('li').each(function (){
 			if($(this).text() == countryName){
@@ -69,7 +70,7 @@ function addCountryOnMap(countryName){
 		});
 	  } else {
 		// ajout du pays à la liste
-		listeName.push(countryName);
+		listeName.push(countryCode);
 		$('#myliste').append('<li>'+countryName+'</li>');
 	  }
 	  if(listeName != ''){
@@ -84,8 +85,8 @@ function addCountryOnMap(countryName){
            query: {
             select: 'geometry',
             from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
-           // where: "ISO_2DIGIT IN ("+param+")"
-			where: "Name IN ("+param+")"
+				where: "ISO_2DIGIT IN ("+param+")"
+			//where: "Name IN ("+param+")"
            },
 		   clickable : false,
            styles : [{polygonOptions : {fillColor : "#FFFFFF",
