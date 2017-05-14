@@ -188,6 +188,24 @@ function allYearsCountries(nomPays){
 		}
 	})*/
 }
+//Mon retour doit etre de la forme Objet[nom] = [[]]
+function getDataFromList(list){
+	var objetPays = {};
+	var transaction = db.transaction("PIB");
+    var objectStore = transaction.objectStore("PIB");
+	objectStore.openCursor().onsuccess = function(event) {
+    var cursor = event.target.result;
+	if(cursor) {
+            if(list.indexOf(cursor.key[0])>=0){
+				objetPays[cursor.key[0]].append({date:cursor.key[1],pib:cursor.value["pib"],pib:cursor.value["nbNaissance"],pib:cursor.value["nbDeces"]})
+			}
+            cursor.continue();
+        } else {
+            console.log("No more entries");
+        }
+    };
+	
+}
 
 
 /**

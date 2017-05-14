@@ -428,7 +428,7 @@
             
             // Barre de recherche onglet MapStats
   
-            var x = $('#magicsuggest').magicSuggest({
+            /*var x = $('#magicsuggest').magicSuggest({
                 placeholder: 'Vous pouvez chercher un pays avec son nom',
                 data: pays,
                 allowFreeEntries: false,
@@ -438,8 +438,8 @@
                 addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
             });
 			
-			$("#myliste").arrive("li",function(){console.log("ok")});
-            var jQuery_1_8 = $.noConflict(true);
+			$("#myliste").arrive("",function(){console.log($(this+ "li:lastchild").html())});
+            var jQuery_1_8 = $.noConflict(true);*/
         </script>
     </body>
 </html>
