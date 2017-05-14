@@ -14,11 +14,11 @@ function chargerPays(nomPays) {
     // On supprime les lignes éventuellement déjà présentes dans la table (sauf la première)
     var rowCount = $('#corpsTab tr').length;
     for (i = 0; i < rowCount-1; i++) {
-        $("tr").remove("#P");
+        $("tr").remove("#P"+annee[i]);
     }
     
     // On affiche chaque année (avec ses données)
-    var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + i + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + i + ");'>Modifier</button></td>";
+    var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + annee[i] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + annee[i] + ");'>Modifier</button></td>";
     allYearsCountries(nomPays, btn);
     
     PAYS_SELECTED = nomPays;
@@ -30,14 +30,20 @@ function chargerPays(nomPays) {
 function addAnnee() {
     var creerAnnee  = $("#creerAnnee").val();
     var creerPib  = $("#creerPIB").val();
-    var creerTaux = $("#creerTaux").val();
+    var creerTauxNat = $("#creerTauxNat").val();
+	var creerTauxDeath = $("#creerTauxDeath").val();
     
-    if (creerAnnee == "" || creerPib == "" || creerTaux == "") {
+    if (creerAnnee == "" || creerPib == "" || creerTauxNat == ""|| creerTauxDeath == "") {
         $("#modalErrAjout").modal('show');
     } else {
         // TODO : Appel fonction BD pour ajouter (avec vérif !!)
         $("#addPays").html(PAYS_SELECTED);
         $("#modalAjout").modal('show');
+		addPays(PAYS_SELECTED,creerAnnee,creerPib,creerTauxNat,creerTauxDeath);
+		annee.push(creerAnnee);
+		annee = annee.sort();
+		chargerPays(PAYS_SELECTED);
+		
     }
 }
 
@@ -46,7 +52,7 @@ function addAnnee() {
  * @param {int} id - identifiant de la ligne concernée
  */
 function showSuppr(id) {
-    var anneeToSuppr = $("#P"+id).children(".annee").html();
+    var anneeToSuppr = id;
     $("#supprAnnee").html(anneeToSuppr);
     $("#supprPays").html(PAYS_SELECTED);
     $("#modalSuppr").modal('show');
@@ -55,12 +61,13 @@ function showSuppr(id) {
 /**
  * Supprime une année - Accès BD
  */
-function supprimerAnnee() {
+function supprimerAnnee(annee) {
     var paysEdited = PAYS_SELECTED;
     var anneeEdited = $("#supprAnnee").html();
-    
-    // TODO : Fonction BD pour suppr l'année
-    // TODO : Rafraîchir ?
+    removeAnnee(PAYS_SELECTED,annee);
+	annee.sort();
+	chargerPays(PAYS_SELECTED);
+
 }
 
 /**

@@ -161,10 +161,10 @@ function selectAll() {
 function allYearsCountries(nomPays,btn){
 	var transaction = db.transaction("PIB");
 	var objectStore = transaction.objectStore("PIB");
-	console.log(nomPays);
     for(var i =0; i<annee.length;i++){
 		objectStore.get([nomPays,annee[i]]).onsuccess = function(event){
-		 $("tbody").append("<tr id='P'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"/"+event.target.result["nbDeces"]+btn);
+		console.log('<tr id="P'+event.target.result["annee"]+'"><td class="annee">');
+		 $("tbody").append("<tr id='P"+event.target.result["annee"]+"'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"</td><td class='taux'>"+event.target.result["nbDeces"]+"</td>"+btn);
 		};
 	}
 }
@@ -197,6 +197,14 @@ function removePays(nomPays) {
 		};
 	}
 	
+}
+
+
+function removeAnnee(nomPays,annee){
+	var os = db.transaction("PIB","readwrite").objectStore("PIB");
+	os.delete([nomPays,annee]).onsuccess = function(event){
+			console.log("année supprimée");
+		};
 }
 
 /**
