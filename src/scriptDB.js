@@ -4,6 +4,7 @@
 
 // Création des variables globales pour remplissage de base
 var annee = ["1990","2000","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016"];
+var pays = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas, The', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo, Dem. Rep.', 'Congo, Rep.', 'Costa Rica', "Cote d'Ivoire", 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt, Arab Rep.', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'Gabon', 'Gambia, The', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran, Islamic Rep.', 'Iraq', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, Dem. Peopleâ€™s Rep.', 'Korea, Rep.', 'Kosovo', 'Kuwait', 'Kyrgyz Republic', 'Lao PDR', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macedonia, FYR', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia, Fed. Sts.', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Romania', 'Russian Federation', 'Rwanda', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovak Republic', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'Sudan', 'Spain', 'Sri Lanka', 'St. Kitts and Nevis', 'St. Lucia', 'St. Vincent and the Grenadines', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syrian Arab Republic', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Venezuela, RB', 'Vietnam', 'Virgin Islands (U.S.)', 'West Bank and Gaza', 'Yemen, Rep.', 'Zambia', 'Zimbabwe'];
 var pibPays = {};
 var birthPays = [];
 var deathPays = [];
@@ -21,7 +22,7 @@ $.getJSON('pib_pays.json', function(data) {
                 }
             });
             //On ajoute les données dans notre liste (une par une ofc)
-		pibPays[val["Country Name"]]= [datePIB]
+		pibPays[val["Country Name"]]= [val["Country Code"],datePIB]
         }
 
     });
@@ -39,6 +40,7 @@ $.getJSON('birth_per_countries.json', function(data) {
                 }
             });
 			pibPays[val["Country Name"]].push(dateBirth);
+	
 
 
         }
@@ -85,7 +87,7 @@ if (!window.indexedDB) {
 var db; // La base de données
 
 // On supprime la base pour les tests
-//var req = indexedDB.deleteDatabase("Database");
+var req = indexedDB.deleteDatabase("Database");
 // On ouvre la base, la nomme et on lui donne un n° de version.
 var request = indexedDB.open("Database", 1);
 
@@ -117,12 +119,12 @@ request.onupgradeneeded = function(event) {
     for(var nom in Object.keys(pibPays)){
 		//Boucle de parcours de date
 		for(var i=0;i <11;i++){
-			var date = pibPays[Object.keys(pibPays)[nom]][1][i]["date"];
+			var date = pibPays[Object.keys(pibPays)[nom]][2][i]["date"];
 			//On prend PIB, birth et death pour une date donnée
-			var pibvar = pibPays[Object.keys(pibPays)[nom]][0][i]["pib"];
-			var birth = pibPays[Object.keys(pibPays)[nom]][1][i]["birth"];
-			var death = pibPays[Object.keys(pibPays)[nom]][2][i]["death"];
-			pibTable.add({idPays : Object.keys(pibPays)[nom],annee : date,pib : pibvar,  nbNaissance : birth, nbDeces : death });
+			var pibvar = pibPays[Object.keys(pibPays)[nom]][1][i]["pib"];
+			var birth = pibPays[Object.keys(pibPays)[nom]][2][i]["birth"];
+			var death = pibPays[Object.keys(pibPays)[nom]][3][i]["death"];
+			pibTable.add({idPays : Object.keys(pibPays)[nom],annee : date ,code :pibPays[Object.keys(pibPays)[nom]][0].substring(0,2),pib : pibvar,  nbNaissance : birth, nbDeces : death });
 		
 		}
 	}
@@ -148,13 +150,25 @@ function selectAll() {
     objectStore.openCursor().onsuccess = function(event) {
     var cursor = event.target.result;
 	if(cursor) {
-            console.log(cursor.key );
+            console.log(cursor);
 			cursor.continue();
         } else {
             console.log("No more entries");
         }
     };
 }
+
+function allYearsCountries(nomPays,btn){
+	var transaction = db.transaction("PIB");
+	var objectStore = transaction.objectStore("PIB");
+	console.log(nomPays);
+    for(var i =0; i<annee.length;i++){
+		objectStore.get([nomPays,annee[i]]).onsuccess = function(event){
+		 $("tbody").append("<tr id='P'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"/"+event.target.result["nbDeces"]+btn);
+		};
+	}
+}
+
 
 /**
  * Lit une ligne d'une table.
@@ -202,7 +216,7 @@ function addPays(nomPays,years,pibvar,natalite,mortalite) {
 }
 
 
-function allName(callback){
+function allName(){
 	var defer = $.Deferred();
 	var L = new Set();
 	var transaction = db.transaction("PIB");

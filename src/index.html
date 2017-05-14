@@ -42,7 +42,7 @@
                                 <a class="navbar-brand" href="#" onclick="setTab(0);">GeoStats</a>
                             </div>
                             <ul class="nav navbar-nav">
-                                <li id="modification"><a href="#" onclick="setTab(1);">Modification des données</a></li>
+                                <li id="modification"><a href="#" onclick="setTab(1);chargerPays('France');">Modification des données</a></li>
                                     
                             </ul>
                         </div>
@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h4>Pays sélectionnés :</h4>
-                        <!--<div id="magicsuggest"></div>-->
+                        <div id="magicsuggest"></div>
                         <ul id="myliste"></ul>	
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     <div class="col-sm-12">
                         <h4>Choisir un pays :</h4>
                         TODO
-                        <!--<div id="magicsuggest"></div>-->
+                        <div id="magicsuggest2"></div>
                     </div>
                 </div>
                     
@@ -129,7 +129,7 @@
                             <!-- Lignes -->
                             <tbody id="corpsTab">
                                 <!-- Créer Pays -->
-                                <tr id="P">
+                                <tr id="E">
                                     <td><input type="text" class="form-control"
                                                id="creerAnnee" placeholder="ex : 2017"></td>
                                     <td><input type="text" class="form-control"
@@ -356,8 +356,22 @@
             
         <!-- Script pour les données -->
         <script src="donnees.js"></script>
+		<script src="magicsuggest/magicsuggest-min.js"></script>
         <script>
-            chargerPays("France");  // TEMPORAIRE
+		var x = $('#magicsuggest2').magicSuggest({
+                        placeholder: 'Vous pouvez chercher un pays avec son nom',
+                        data:pays,
+                        allowFreeEntries: false,
+                        allowDuplicates:false,
+						maxSelection:1
+                    });
+					$(x).on(
+                            'selectionchange', function(){
+                                //Récupère les pays entrés
+                        chargerPays(this.getValue()[0]);
+                    }
+                            );
+           // $(document).ready(function() {chargerPays("France");})  // TEMPORAIRE
         </script>
             
             
@@ -371,10 +385,9 @@
                 $.when(listePays).done(function(data2){
                     var x = $('#magicsuggest').magicSuggest({
                         placeholder: 'Vous pouvez chercher un pays avec son nom',
-                        data: data2,
+                        data: pays,
                         allowFreeEntries: false,
                         allowDuplicates:false,
-                        id : 'test'
                     });
                     $(x).on(
                             'selectionchange', function(){

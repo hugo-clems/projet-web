@@ -10,27 +10,17 @@ var PAYS_SELECTED = "NON DEFINI";   // Pays actuel
  * On charge ses données (PIB & Taux / année)
  * @param {type} nomPays - le nom du pays sélectionné
  */
-function chargerPays(nomPays) {
-    // On supprime les lignes éventuellement déjà présentes dans la table (sauf la première)
+function chargerPays(nomPays,btn) {
+	    // On supprime les lignes éventuellement déjà présentes dans la table (sauf la première)
     var rowCount = $('#corpsTab tr').length;
     for (i = 0; i < rowCount-1; i++) {
-        $("tr").remove("#P"+i);
+        $("tr").remove("#P");
     }
-    
-    // TODO : Appel fonction BD (selectAll) - pour remplir data
-    var data = [["2012","24","15"], ["2011","687","39"], ["2010","78","67"]];
-    
-    for (i = 0; i < data.length; i++) {
-        var annee = data[i][0];
-        var pib  = data[i][1];
-        var taux = data[i][2];
-        var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + i + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + i + ");'>Modifier</button></td>";
-        
-        // On ajoute la ligne
-        $("tbody").append("<tr id='P"+ i +"'><td class='annee'>" + annee + "</td><td class='pib'>" + pib + "</td><td class='taux'>" + taux + "</td>" + btn + "</tr>");
-    }
+	var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + i + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + i + ");'>Modifier</button></td>";
+    allYearsCountries(nomPays,btn);
     
     PAYS_SELECTED = nomPays;
+
 }
 
 /**
