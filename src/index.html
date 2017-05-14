@@ -16,6 +16,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="scriptDB.js"></script>
+        <script src="donnees.js"></script>
             
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -42,8 +43,9 @@
                                 <a class="navbar-brand" href="#" onclick="setTab(0);">GeoStats</a>
                             </div>
                             <ul class="nav navbar-nav">
-                                <li id="modification"><a href="#" onclick="setTab(1);chargerPays('France');">Modification des données</a></li>
-                                    
+                                <li id="modification"><a href="#" onclick="setTab(1);chargerPays('France');">
+                                        Modification des données</a>
+                                </li>
                             </ul>
                         </div>
                     </nav>
@@ -107,7 +109,6 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h4>Choisir un pays :</h4>
-                        TODO
                         <div id="magicsuggest2"></div>
                     </div>
                 </div>
@@ -119,7 +120,7 @@
                             <!-- Colonnes -->
                             <thead>
                                 <tr>
-                                    <th id="titreNomPays">Année</th>
+                                    <th id="titreAnneePays">Année</th>
                                     <th id="titrePibPays">PIB</th>
                                     <th id="titreTauxPib">Taux Natalité/Mortalité </th>
                                     <th></th>
@@ -129,13 +130,13 @@
                             <!-- Lignes -->
                             <tbody id="corpsTab">
                                 <!-- Créer Pays -->
-                                <tr id="E">
+                                <tr id="ligneAdd">
                                     <td><input type="text" class="form-control"
                                                id="creerAnnee" placeholder="ex : 2017"></td>
                                     <td><input type="text" class="form-control"
                                                id="creerPIB" placeholder="ex : 100 000"></td>
                                     <td><input type="text" class="form-control"
-                                               id="creerTaux" placeholder="ex : 350/000"></td>
+                                               id="creerTaux" placeholder="ex : 13.4/9.3"></td>
                                     <td class="text-right">
                                         <button onclick="addAnnee();" type="button"
                                                 class="btn btn-success btn_lg" id="add" >
@@ -143,7 +144,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <!-- Données chargées via BD -->
+                                <!-- Données chargées via BD ici -->
                             </tbody>
                         </table>
                     </div>
@@ -268,7 +269,6 @@
         <!-- ************************* Scripts ************************* -->
         <!-- *********************************************************** -->
             
-            
         <!-- Script général -->
         <script>
             // Par défaut on cache les données (seul la map et les charts sont affichés)
@@ -354,49 +354,40 @@
         </script>
             
             
-        <!-- Script pour les données -->
-        <script src="donnees.js"></script>
-		<script src="magicsuggest/magicsuggest-min.js"></script>
-        <script>
-		var x = $('#magicsuggest2').magicSuggest({
-                        placeholder: 'Vous pouvez chercher un pays avec son nom',
-                        data:pays,
-                        allowFreeEntries: false,
-                        allowDuplicates:false,
-						maxSelection:1
-                    });
-					$(x).on(
-                            'selectionchange', function(){
-                                //Récupère les pays entrés
-                        chargerPays(this.getValue()[0]);
-                    }
-                            );
-           // $(document).ready(function() {chargerPays("France");})  // TEMPORAIRE
-        </script>
-            
-            
-        <!-- /!\ TOUJOURS A LA FIN /!\ -->        
+        <!-- /!\ TOUJOURS A LA FIN /!\ -->
         <!-- Scripts pour la recherche -->
-        <!--<script src="magicsuggest/magicsuggest-min.js"></script>-->
-        <!--<script>
+        <script src="magicsuggest/magicsuggest-min.js"></script>
+        <script>
+            // Barre de recherche onglet Données
+            var recDonnee = $('#magicsuggest2').magicSuggest({
+                placeholder: 'Vous pouvez chercher un pays avec son nom',
+                data: pays,
+                value: ['France'],  // Par défaut on sélectionne la France
+                allowFreeEntries: false,
+                allowDuplicates: false,
+                maxSelection: 1
+            });
+            $(recDonnee).on('selectionchange', function() {
+                chargerPays(this.getValue()[0]);    // Récupère les pays entrés
+            });
+            
+            
+            // Barre de recherche onglet MapStats
             $(document).ready(function(){	
                 var listePays = [];
                 listePays = allName();
-                $.when(listePays).done(function(data2){
+                $.when(listePays).done(function(data2) {
                     var x = $('#magicsuggest').magicSuggest({
                         placeholder: 'Vous pouvez chercher un pays avec son nom',
                         data: pays,
                         allowFreeEntries: false,
-                        allowDuplicates:false,
+                        allowDuplicates: false
                     });
-                    $(x).on(
-                            'selectionchange', function(){
-                                //Récupère les pays entrés
-                        addCountryList(JSON.stringify(this.getValue()));
-                    }
-                            );
+                    $(x).on('selectionchange', function(){
+                        addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
+                    });
                 });
             });
-        </script>-->
+        </script>
     </body>
 </html>
