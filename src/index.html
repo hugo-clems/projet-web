@@ -14,10 +14,8 @@
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script src="chart.js"></script>
         <script src="scriptDB.js"></script>
+		<script src="chart.js"></script>
         <script src="donnees.js"></script>
             
         <!-- Meta -->
@@ -359,12 +357,14 @@
             
             
         <!-- Scripts pour les Charts -->
+		<script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script>
-            $(document).ready(function () {
+            /*$(document).ready(function () {
                 getDataFromList(["France","Italy"]);
             });
             // TEMPORAIRE : Données en brut
-            /*var p1 = [{ label: "2000",  y: 10  },
+            var p1 = [{ label: "2000",  y: 10  },
                 { label: "2010", y: 15  },
                 { label: "2011", y: 30  },
                 { label: "2012",  y: 35  },
@@ -410,7 +410,6 @@
             
             
         <!-- Scripts pour la recherche -->
-        <script></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
         <script src="magicsuggest/magicsuggest-min.js"></script>
         <script type="text/javascript">
@@ -427,7 +426,9 @@
             $(recDonnee).on('selectionchange', function() {
                 chargerPays(this.getValue()[0]);    // Récupère les pays entrés
             });
-            
+			/*$(myliste).change(function(){
+				getDataFromList(["France","Italy"]);
+            });*/
             
             // Barre de recherche onglet MapStats
             
@@ -439,10 +440,10 @@
             });
             $(x).on('selectionchange', function(){
                 addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
-            });
+            });*/
             
-                        $("#myliste").arrive("",function(){console.log($(this+ "li:lastchild").html())});
-            var jQuery_1_8 = $.noConflict(true);*/
+                        $("#myliste").on("contentChanged",function(){console.log("yest")});
+            var jQuery_1_8 = $.noConflict(true);
         </script>
     </body>
 </html>

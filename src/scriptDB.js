@@ -190,28 +190,41 @@ function allYearsCountries(nomPays){
 }
 //Mon retour doit etre de la forme Objet[nom] = [[]]
 function getDataFromList(list){
+	var defer = $.Deferred();
     var objetPays = {};
     var transaction = db.transaction("PIB");
     var objectStore = transaction.objectStore("PIB");
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
 	if(cursor) {
-            if(list.indexOf(cursor.key[0])>=0){
-                objetPays[cursor.key[0]].append({date:cursor.key[1],pib:cursor.value["pib"],pib:cursor.value["nbNaissance"],pib:cursor.value["nbDeces"]})
+            if(list.indexOf(cursor.value["code"])>=0){
+				if(cursor.key[0] in objetPays){
+					objetPays[cursor.key[0]].push({date:cursor.key[1],pib:cursor.value["pib"],birth:cursor.value["nbNaissance"],death:cursor.value["nbDeces"]})
+					console.log(cursor.value["pib"]);
+				}else{
+					objetPays[cursor.key[0]]=[{date:cursor.key[1],pib:cursor.value["pib"],birth:cursor.value["nbNaissance"],death:cursor.value["nbDeces"]}];
+				}
             }
             cursor.continue();
         } else {
-            console.log("No more entries");
+            defer.resolve(objetPays);
         }
+		
     };
-    //
-    var p1 = [{ label: "2000",  y: 10  },
-                { label: "2010", y: 15  },
-                { label: "2011", y: 30  },
-                { label: "2012",  y: 35  },
-                { label: "2013",  y: 28  }];
-    var data1 = [createData(objetPays[0], true, "column", p1), createData(objetPays[1], true, "column", p1)];
-    createChart("chart1", "PIB de la France et l'Allemagne", true, data1);
+	$.when(defer).done(function(data){
+		var finalList = []
+		for(let pays in data){
+			console.log(pays);
+			var L = []
+			for(var i =0; i<objetPays[pays].length;i++){
+				L.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["pib"])});
+			}
+			console.log(L);
+			finalList.push(createData(pays, true, "column", L));
+		}
+		 createChart("chart1", "PIB des Pays", true, finalList);
+	});
+
 }
 
 
@@ -223,7 +236,8 @@ function getDataFromList(list){
  * @return {undefined}   - L'objet recherché
  */
 function select(nomPays,annee) {
-    db.transaction("PIB").objectStore("PIB").get([nomPays,annee]).onsuccess = function(event) {
+	
+    os = db.transaction("PIB").objectStore("PIB").get([nomPays,annee]).onsuccess = function(event) {
         var obj = event.target.result;
         console.log(obj);
     };
@@ -254,7 +268,7 @@ function removeAnnee(nomPays,annee){
 /**
  * Ajoute une ligne d'un objectStore
  * @param {string} nomPays - L'identifiant de la ligne recherchée
- * @param {string} years - Année 
+ * @param {string} years - Année
  * @param {string} pibvar - PIB du pays pour l'année
  * @param {string} natalite - Taux de natalité du pays pour l'année
  * @param {string} mortalite - Taux de mortalité du pays pour l'année
@@ -262,9 +276,17 @@ function removeAnnee(nomPays,annee){
  */
 function addPays(nomPays,years,pibvar,natalite,mortalite) {
     var os = db.transaction("PIB","readwrite").objectStore("PIB");
-    os.add({idPays : nomPays,annee : years,pib : pibvar, nbNaissance : natalite, nbDeces : mortalite}).onsuccess = function(event){
-        console.log("pays ajouté");
-    };
+	os.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+		if(cursor) {
+			if(cursor.key[0] ==nomPays){
+				os.add({idPays : nomPays,annee : years,code : cursor.value["code"],pib : pibvar, nbNaissance : natalite, nbDeces : mortalite}).onsuccess = function(event){
+					console.log("pays ajouté");
+					};
+			}else{
+			cursor.continue();}
+		}
+	}
 }
 
 

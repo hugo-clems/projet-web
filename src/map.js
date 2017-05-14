@@ -41,7 +41,6 @@ function onClickCountry (location) {
 			.done (function(location)
 			{
 			var i = 2;
-		console.log(location.results);
       if ((location.results).length != 0) {
         var country = location.results[location.results.length-1].address_components[0];
         countryName = country.long_name;
@@ -62,6 +61,7 @@ function addCountryOnMap(countryName,countryCode){
 	  if(selected(countryName)){
 		// on le supprime de la liste des pays, et du world_geometry
 		deleteFrom(listeName,countryCode);
+		getDataFromList(listeName);
 		// suppression dans la liste html
 		$('li').each(function (){
 			if($(this).text() == countryName){
@@ -71,6 +71,7 @@ function addCountryOnMap(countryName,countryCode){
 	  } else {
 		// ajout du pays à la liste
 		listeName.push(countryCode);
+		getDataFromList(listeName);
 		$('#myliste').append('<li>'+countryName+'</li>');
 	  }
 	  if(listeName != ''){
@@ -79,7 +80,6 @@ function addCountryOnMap(countryName,countryCode){
 		 var strList = JSON.stringify(listeName);
 		 var param = strList.substr(1, strList.length-2).replace(/\"/g,'\'');
 		 if (world_geometry != null) world_geometry.setMap(null);
-		console.log(param);
 		 // objet à superposer à la carte
          world_geometry = new google.maps.FusionTablesLayer({
            query: {
