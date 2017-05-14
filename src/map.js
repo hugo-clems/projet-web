@@ -37,7 +37,7 @@ function onClickCountry (location) {
 	var lng = location.lng();
 	var countryName;
 	var countryCode;
- 	jQuery_3_1_1.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false')
+ 	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false')
 			.done (function(location)
 			{
 			var i = 2;
@@ -63,15 +63,15 @@ function addCountryOnMap(countryName,countryCode){
 		// on le supprime de la liste des pays, et du world_geometry
 		deleteFrom(listeName,countryCode);
 		// suppression dans la liste html
-		jQuery_3_1_1('li').each(function (){
-			if(jQuery_3_1_1(this).text() == countryName){
-				jQuery_3_1_1(this).closest('li').remove();
+		$('li').each(function (){
+			if($(this).text() == countryName){
+				$(this).closest('li').remove();
 			}
 		});
 	  } else {
 		// ajout du pays à la liste
 		listeName.push(countryCode);
-		jQuery_3_1_1('#myliste').append('<li>'+countryName+'</li>');
+		$('#myliste').append('<li>'+countryName+'</li>');
 	  }
 	  if(listeName != ''){
 	  
@@ -114,8 +114,8 @@ function addCountryList(country) {
 function selected(nompays){
 	var ok= false;
 	var ma_liste = document.getElementById("myliste");
-	jQuery_3_1_1('li').each( function(){
-		var pays = jQuery_3_1_1(this).text();
+	$('li').each( function(){
+		var pays = $(this).text();
 		if(pays == nompays){
 			ok = true;
 		} 

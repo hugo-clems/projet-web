@@ -8,15 +8,15 @@ var pays = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'A
 var pibPays = {};
 var birthPays = [];
 var deathPays = [];
-jQuery_3_1_1.getJSON('pib_pays.json', function(data) {
+$.getJSON('pib_pays.json', function(data) {
     // Création de la table contenant les objets des Pays (PIB/DATE)
-    jQuery_3_1_1.each(data, function(key,val){
+    $.each(data, function(key,val){
         // On enlève les lignes vide
         if(val["Country Name"] != ""){
             //Création de la liste contenant les objets avec attributs Date / PIB
             var datePIB = [];
             // On rempli la liste avec totue les dates
-            jQuery_3_1_1.each(val,function(key2,val2){
+            $.each(val,function(key2,val2){
                 if(key2[0] == 1 || key2[0] == 2 ){
                     datePIB.push({date:key2,pib:val2});
                 }
@@ -30,11 +30,11 @@ jQuery_3_1_1.getJSON('pib_pays.json', function(data) {
 });
 
 // On fait avec les taux de natalité
-jQuery_3_1_1.getJSON('birth_per_countries.json', function(data) {
-	jQuery_3_1_1.each(data, function(key,val){
+$.getJSON('birth_per_countries.json', function(data) {
+	$.each(data, function(key,val){
 		if (val["Country Name"] in pibPays){
 			var dateBirth = [];
-			jQuery_3_1_1.each(val,function(key2,val2){
+			$.each(val,function(key2,val2){
                 if(annee.indexOf(key2) !== -1){
                     dateBirth.push({date:key2,birth:val2});
                 }
@@ -50,11 +50,11 @@ jQuery_3_1_1.getJSON('birth_per_countries.json', function(data) {
 });
 
 // On fait avec le taux de mortalité
-jQuery_3_1_1.getJSON('death_per_countries.json', function(data) {
-	jQuery_3_1_1.each(data, function(key,val){
+$.getJSON('death_per_countries.json', function(data) {
+	$.each(data, function(key,val){
 		if (val["Country Name"] != ""){
 			var dateDeath = [];
-			jQuery_3_1_1.each(val,function(key2,val2){
+			$.each(val,function(key2,val2){
                 if(annee.indexOf(key2) !== -1){
                     dateDeath.push({date:key2,death:val2});
                 }
@@ -164,7 +164,7 @@ function allYearsCountries(nomPays,btn){
 	console.log(nomPays);
     for(var i =0; i<annee.length;i++){
 		objectStore.get([nomPays,annee[i]]).onsuccess = function(event){
-		 jQuery_3_1_1("tbody").append("<tr id='P'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"/"+event.target.result["nbDeces"]+btn);
+		 $("tbody").append("<tr id='P'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"/"+event.target.result["nbDeces"]+btn);
 		};
 	}
 }
@@ -217,7 +217,7 @@ function addPays(nomPays,years,pibvar,natalite,mortalite) {
 
 
 function allName(){
-	var defer = jQuery_3_1_1.Deferred();
+	var defer = $.Deferred();
 	var L = new Set();
 	var transaction = db.transaction("PIB");
 	var objectStore = transaction.objectStore("PIB");

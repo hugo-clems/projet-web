@@ -12,15 +12,8 @@
         <link href="style.css" rel="stylesheet" type="text/css">
             
         <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.4/jquery.min.js"></script>
-        <script type="text/javascript">
-            var jQuery_1_8_4 = $.noConflict(true);
-        </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            var jQuery_3_1_1 = $.noConflict(true);
-        </script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="scriptDB.js"></script>
         <script src="donnees.js"></script>
@@ -288,16 +281,16 @@
             function setTab(idTab) {
                 switch (idTab) {
                     case 0:     // On affiche l'onglet mapStats
-                        jQuery_3_1_1("#tabMapStats").show();
-                        jQuery_3_1_1("#tabDonnees").hide();
+                        $("#tabMapStats").show();
+                        $("#tabDonnees").hide();
                         break;
                     case 1:     // On affiche l'onglet données
-                        jQuery_3_1_1("#tabMapStats").hide();
-                        jQuery_3_1_1("#tabDonnees").show();
+                        $("#tabMapStats").hide();
+                        $("#tabDonnees").show();
                         break;
                     default:     // On affiche l'onglet mapStats
-                        jQuery_3_1_1("#tabMapStats").show();
-                        jQuery_3_1_1("#tabDonnees").hide();
+                        $("#tabMapStats").show();
+                        $("#tabDonnees").hide();
                         break;
                 }
             }
@@ -362,10 +355,14 @@
             
             
         <!-- Scripts pour la recherche -->
-        <script src="magicsuggest/magicsuggest-min.js"></script>
-        <script>
+		<script></script>
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		         <script src="magicsuggest/magicsuggest-min.js"></script>
+        <script type="text/javascript">
+			
+			console.log("&",$.fn.jquery);
             // Barre de recherche onglet Données
-            var recDonnee = jQuery_1_8_4('#magicsuggest2').magicSuggest({
+            var recDonnee = $('#magicsuggest2').magicSuggest({
                 placeholder: 'Vous pouvez chercher un pays avec son nom',
                 data: pays,
                 value: ['France'],  // Par défaut on sélectionne la France
@@ -373,27 +370,27 @@
                 allowDuplicates: false,
                 maxSelection: 1
             });
-            jQuery_1_8_4(recDonnee).on('selectionchange', function() {
+            $(recDonnee).on('selectionchange', function() {
                 chargerPays(this.getValue()[0]);    // Récupère les pays entrés
             });
             
             
             // Barre de recherche onglet MapStats
-            jQuery_3_1_1(document).ready(function(){	
                 var listePays = [];
-                listePays = allName();
-                jQuery_3_1_1.when(listePays).done(function(data2) {
-                    var x = jQuery_1_8_4('#magicsuggest').magicSuggest({
+
+                $.when(listePays).done(function(data2) {
+                    var x = $('#magicsuggest').magicSuggest({
                         placeholder: 'Vous pouvez chercher un pays avec son nom',
                         data: pays,
                         allowFreeEntries: false,
                         allowDuplicates: false
                     });
-                    jQuery_1_8_4(x).on('selectionchange', function(){
+                    $(x).on('selectionchange', function(){
                         addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
                     });
                 });
-            });
+var jQuery_1_8 = $.noConflict(true);
+console.log($.fn.jquery);
         </script>
     </body>
 </html>
