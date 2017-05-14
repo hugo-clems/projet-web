@@ -12,9 +12,9 @@
         <link href="style.css" rel="stylesheet" type="text/css">
             
         <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.4/jquery.min.js"></script>
         <script type="text/javascript">
-            var jQuery_1_12_4 = $.noConflict(true);
+            var jQuery_1_8_4 = $.noConflict(true);
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script type="text/javascript">
@@ -288,16 +288,16 @@
             function setTab(idTab) {
                 switch (idTab) {
                     case 0:     // On affiche l'onglet mapStats
-                        $("#tabMapStats").show();
-                        $("#tabDonnees").hide();
+                        jQuery_3_1_1("#tabMapStats").show();
+                        jQuery_3_1_1("#tabDonnees").hide();
                         break;
                     case 1:     // On affiche l'onglet données
-                        $("#tabMapStats").hide();
-                        $("#tabDonnees").show();
+                        jQuery_3_1_1("#tabMapStats").hide();
+                        jQuery_3_1_1("#tabDonnees").show();
                         break;
                     default:     // On affiche l'onglet mapStats
-                        $("#tabMapStats").show();
-                        $("#tabDonnees").hide();
+                        jQuery_3_1_1("#tabMapStats").show();
+                        jQuery_3_1_1("#tabDonnees").hide();
                         break;
                 }
             }
@@ -365,7 +365,7 @@
         <script src="magicsuggest/magicsuggest-min.js"></script>
         <script>
             // Barre de recherche onglet Données
-            var recDonnee = $('#magicsuggest2').magicSuggest({
+            var recDonnee = jQuery_1_8_4('#magicsuggest2').magicSuggest({
                 placeholder: 'Vous pouvez chercher un pays avec son nom',
                 data: pays,
                 value: ['France'],  // Par défaut on sélectionne la France
@@ -373,23 +373,23 @@
                 allowDuplicates: false,
                 maxSelection: 1
             });
-            $(recDonnee).on('selectionchange', function() {
+            jQuery_1_8_4(recDonnee).on('selectionchange', function() {
                 chargerPays(this.getValue()[0]);    // Récupère les pays entrés
             });
             
             
             // Barre de recherche onglet MapStats
-            $(document).ready(function(){	
+            jQuery_3_1_1(document).ready(function(){	
                 var listePays = [];
                 listePays = allName();
-                $.when(listePays).done(function(data2) {
-                    var x = $('#magicsuggest').magicSuggest({
+                jQuery_3_1_1.when(listePays).done(function(data2) {
+                    var x = jQuery_1_8_4('#magicsuggest').magicSuggest({
                         placeholder: 'Vous pouvez chercher un pays avec son nom',
                         data: pays,
                         allowFreeEntries: false,
                         allowDuplicates: false
                     });
-                    $(x).on('selectionchange', function(){
+                    jQuery_1_8_4(x).on('selectionchange', function(){
                         addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
                     });
                 });

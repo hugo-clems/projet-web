@@ -12,9 +12,9 @@ var PAYS_SELECTED = "NON DEFINI";   // Pays actuel
  */
 function chargerPays(nomPays) {
     // On supprime les lignes éventuellement déjà présentes dans la table (sauf la première)
-    var rowCount = $('#corpsTab tr').length;
+    var rowCount = jQuery_3_1_1('#corpsTab tr').length;
     for (i = 0; i < rowCount-1; i++) {
-        $("tr").remove("#P");
+        jQuery_3_1_1("tr").remove("#P");
     }
     
     // On affiche chaque année (avec ses données)
@@ -28,16 +28,16 @@ function chargerPays(nomPays) {
  * Si tous les champs sont renseignés on ajoute une année à ce pays
  */
 function addAnnee() {
-    var creerAnnee  = $("#creerAnnee").val();
-    var creerPib  = $("#creerPIB").val();
-    var creerTaux = $("#creerTaux").val();
+    var creerAnnee  = jQuery_3_1_1("#creerAnnee").val();
+    var creerPib  = jQuery_3_1_1("#creerPIB").val();
+    var creerTaux = jQuery_3_1_1("#creerTaux").val();
     
     if (creerAnnee == "" || creerPib == "" || creerTaux == "") {
-        $("#modalErrAjout").modal('show');
+        jQuery_3_1_1("#modalErrAjout").modal('show');
     } else {
         // TODO : Appel fonction BD pour ajouter (avec vérif !!)
-        $("#addPays").html(PAYS_SELECTED);
-        $("#modalAjout").modal('show');
+        jQuery_3_1_1("#addPays").html(PAYS_SELECTED);
+        jQuery_3_1_1("#modalAjout").modal('show');
     }
 }
 
@@ -46,10 +46,10 @@ function addAnnee() {
  * @param {int} id - identifiant de la ligne concernée
  */
 function showSuppr(id) {
-    var anneeToSuppr = $("#P"+id).children(".annee").html();
-    $("#supprAnnee").html(anneeToSuppr);
-    $("#supprPays").html(PAYS_SELECTED);
-    $("#modalSuppr").modal('show');
+    var anneeToSuppr = jQuery_3_1_1("#P"+id).children(".annee").html();
+    jQuery_3_1_1("#supprAnnee").html(anneeToSuppr);
+    jQuery_3_1_1("#supprPays").html(PAYS_SELECTED);
+    jQuery_3_1_1("#modalSuppr").modal('show');
 }
 
 /**
@@ -57,7 +57,7 @@ function showSuppr(id) {
  */
 function supprimerAnnee() {
     var paysEdited = PAYS_SELECTED;
-    var anneeEdited = $("#supprAnnee").html();
+    var anneeEdited = jQuery_3_1_1("#supprAnnee").html();
     
     // TODO : Fonction BD pour suppr l'année
     // TODO : Rafraîchir ?
@@ -68,15 +68,15 @@ function supprimerAnnee() {
  * @param {int} id - identifiant de la ligne concernée
  */
 function showEdit(id) {
-    var anneeToEdit = $("#P"+id).children(".annee").html();
-    var pibToEdit = $("#P"+id).children(".pib").html();
-    var tauxToEdit = $("#P"+id).children(".taux").html();
+    var anneeToEdit = jQuery_3_1_1("#P"+id).children(".annee").html();
+    var pibToEdit = jQuery_3_1_1("#P"+id).children(".pib").html();
+    var tauxToEdit = jQuery_3_1_1("#P"+id).children(".taux").html();
     
-    $("#editAnnee").val(anneeToEdit);
-    $("#editPIB").val(pibToEdit);
-    $("#editTaux").val(tauxToEdit);
+    jQuery_3_1_1("#editAnnee").val(anneeToEdit);
+    jQuery_3_1_1("#editPIB").val(pibToEdit);
+    jQuery_3_1_1("#editTaux").val(tauxToEdit);
     
-    $("#modalModif").modal('show');
+    jQuery_3_1_1("#modalModif").modal('show');
 }
 
 /**
@@ -84,9 +84,9 @@ function showEdit(id) {
  */
 function modifierAnnee() {
     var paysEdited = PAYS_SELECTED;
-    var anneeEdited = $("#editAnnee").val();
-    var pibEdited = $("#editPIB").val();
-    var tauxEdited = $("#editTaux").val();
+    var anneeEdited = jQuery_3_1_1("#editAnnee").val();
+    var pibEdited = jQuery_3_1_1("#editPIB").val();
+    var tauxEdited = jQuery_3_1_1("#editTaux").val();
     
     // TODO : Fonction BD pour maj l'année
     // TODO : Rafraîchir ?
