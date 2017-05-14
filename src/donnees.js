@@ -30,19 +30,19 @@ function addAnnee() {
     var creerAnnee  = $("#creerAnnee").val();
     var creerPib  = $("#creerPIB").val();
     var creerTauxNat = $("#creerTauxNat").val();
-	var creerTauxDeath = $("#creerTauxDeath").val();
+    var creerTauxDeath = $("#creerTauxDeath").val();
     
     if (creerAnnee == "" || creerPib == "" || creerTauxNat == ""|| creerTauxDeath == "") {
         $("#modalErrAjout").modal('show');
     } else {
-        // TODO : Appel fonction BD pour ajouter (avec vérif !!)
         $("#addPays").html(PAYS_SELECTED);
         $("#modalAjout").modal('show');
-		addPays(PAYS_SELECTED,creerAnnee,creerPib,creerTauxNat,creerTauxDeath);
-		annee.push(creerAnnee);
-		annee = annee.sort();
-		chargerPays(PAYS_SELECTED);
-		
+        
+        addPays(PAYS_SELECTED, creerAnnee, creerPib, creerTauxNat, creerTauxDeath);
+        annee.push(creerAnnee);
+        annee = annee.sort();
+        
+        chargerPays(PAYS_SELECTED);
     }
 }
 
@@ -51,8 +51,7 @@ function addAnnee() {
  * @param {int} id - identifiant de la ligne concernée
  */
 function showSuppr(id) {
-    var anneeToSuppr = id;
-    $("#supprAnnee").html(anneeToSuppr);
+    $("#supprAnnee").html(id);
     $("#supprPays").html(PAYS_SELECTED);
     $("#modalSuppr").modal('show');
 }
@@ -61,12 +60,12 @@ function showSuppr(id) {
  * Supprime une année - Accès BD
  */
 function supprimerAnnee() {
-    var paysEdited = PAYS_SELECTED;
-    var anneeEdited = $("#supprAnnee").html();
-    removeAnnee(PAYS_SELECTED,anneeEdited);
-	annee.sort();
-	chargerPays(PAYS_SELECTED);
-
+    var anneeDeleted = $("#supprAnnee").html();
+    
+    removeAnnee(PAYS_SELECTED, anneeDeleted);
+    annee.sort();
+    
+    chargerPays(PAYS_SELECTED);
 }
 
 /**

@@ -10,21 +10,21 @@
         <link href="magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="style.css" rel="stylesheet" type="text/css">
-            
+        
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="scriptDB.js"></script>
         <script src="donnees.js"></script>
-            
+        
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            
+        
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="image/logo.ico" >
-            
+        
         <title>GeoStats - Projet Web</title>
     </head>
     <body>
@@ -51,10 +51,10 @@
                     </nav>
                 </div>
             </div>
-                
-                
-                
-                
+            
+            
+            
+            
             <!-- *********************************************************** -->
             <!-- *********************** Map & Stats *********************** -->
             <!-- *********************************************************** -->
@@ -66,7 +66,7 @@
                         <div id="map"></div>
                     </div>
                 </div>
-                    
+                
                 <!-- Affichage des pays sélectionnés -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -75,7 +75,7 @@
                         <ul id="myliste"></ul>	
                     </div>
                 </div>
-                    
+                
                 <hr><hr><!-- Menu des charts -->
                 <h2 >Statistiques sur les pays sélectionnés</h2>
                 <div>
@@ -84,17 +84,17 @@
                     <a href="#chart3" class="btn btn-default"><img src="image/splines.png" alt=""/></a>
                     <a href="#chart4" class="btn btn-default"><img src="image/pie.png" alt=""/></a>
                 </div>
-                    
+                
                 <hr><!-- Les charts -->
                 <div id="chart1" class="unChart"></div><hr>
                 <div id="chart2" class="unChart"></div><hr>
                 <div id="chart3" class="unChart"></div><hr>
                 <div id="chart4" class="unChart"></div>
             </div>
-                
-                
-                
-                
+            
+            
+            
+            
             <!-- *********************************************************** -->
             <!-- ************************* Données ************************* -->
             <!-- *********************************************************** -->
@@ -104,7 +104,7 @@
                     Ici vous pouvez ajouter des données (PIB & Taux de Natalité/Mortalité )
                     par année pour un pays sélectionné.
                 </p>
-                    
+                
                 <!-- Liste des pays -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -112,7 +112,7 @@
                         <div id="magicsuggest2"></div>
                     </div>
                 </div>
-                    
+                
                 <!-- Liste des années -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -123,11 +123,11 @@
                                     <th id="titreAnneePays">Année</th>
                                     <th id="titrePibPays">PIB</th>
                                     <th id="titreTauxNat">Taux Natalité</th>
-									<th id="titreTauxMort">Taux Mortalité</th>
+                                    <th id="titreTauxMort">Taux Mortalité</th>
                                     <th></th>
                                 </tr>
                             </thead>
-                                
+                            
                             <!-- Lignes -->
                             <tbody id="corpsTab">
                                 <!-- Créer Pays -->
@@ -138,7 +138,7 @@
                                                id="creerPIB" placeholder="ex : 100 000"></td>
                                     <td><input type="text" class="form-control"
                                                id="creerTauxNat" placeholder="ex : 13.4"></td>
-									<td><input type="text" class="form-control"
+                                    <td><input type="text" class="form-control"
                                                id="creerTauxDeath" placeholder="ex : 9.3"></td>
                                     <td class="text-right">
                                         <button onclick="addAnnee();" type="button"
@@ -153,10 +153,10 @@
                     </div>
                 </div>
             </div>
-                
-                
-                
-                
+            
+            
+            
+            
             <!-- *********************************************************** -->
             <!-- ************************** Modal ************************** -->
             <!-- *********************************************************** -->
@@ -180,7 +180,7 @@
                     </div>
                 </div>
             </div>
-                
+            
             <!-- ERREUR : Ajouter Année -->
             <div class="modal fade" id="modalErrAjout" role="dialog">
                 <div class="modal-dialog modal-sm">
@@ -198,7 +198,7 @@
                     </div>
                 </div>
             </div>
-                
+            
             <!-- Modifier Année -->
             <div class="modal fade" id="modalModif" role="dialog">
                 <div class="modal-dialog modal-sm">
@@ -223,7 +223,7 @@
                     </div>
                 </div>
             </div>
-                
+            
             <!-- Supprimer Année -->
             <div class="modal fade" id="modalSuppr" role="dialog">
                 <div class="modal-dialog modal-sm">
@@ -248,12 +248,12 @@
                     </div>
                 </div>
             </div>
-                
+            
         </div>
-            
-            
-            
-            
+        
+        
+        
+        
         <!-- *********************************************************** -->
         <!-- ************************* Footer ************************** -->
         <!-- *********************************************************** -->
@@ -264,14 +264,14 @@
                 <a href="https://github.com/hugo-clems/projet-web" target="_blank">Code disponible sur GitHub</a>
             </div>
         </footer>
-            
-            
-            
-            
+        
+        
+        
+        
         <!-- *********************************************************** -->
         <!-- ************************* Scripts ************************* -->
         <!-- *********************************************************** -->
-            
+        
         <!-- Script général -->
         <script>
             // Par défaut on cache les données (seul la map et les charts sont affichés)
@@ -298,15 +298,15 @@
                 }
             }
         </script>
-            
-            
+        
+        
         <!-- Scripts pour la map -->
         <script src="map.js"></script>
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt880iw5HS2GPerK_RZ1K-Qt5NneaP-_8&callback=initMap&amp;language=en&region=JA&hl=en">
         </script>
-            
-            
+        
+        
         <!-- Scripts pour les Charts -->
         <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="chart.js"></script>
@@ -355,14 +355,14 @@
             createChart("chart3", "PIB & taux de la France", true, data3);
             createChart("chart4", "PIB de la France", true, data4);
         </script>
-            
-            
+        
+        
         <!-- Scripts pour la recherche -->
-		<script></script>
-		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-		         <script src="magicsuggest/magicsuggest-min.js"></script>
+        <script></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script src="magicsuggest/magicsuggest-min.js"></script>
         <script type="text/javascript">
-
+            
             // Barre de recherche onglet Données
             var recDonnee = $('#magicsuggest2').magicSuggest({
                 placeholder: 'Vous pouvez chercher un pays avec son nom',
@@ -378,20 +378,20 @@
             
             
             // Barre de recherche onglet MapStats
-                var listePays = [];
-
-                $.when(listePays).done(function(data2) {
-                    var x = $('#magicsuggest').magicSuggest({
-                        placeholder: 'Vous pouvez chercher un pays avec son nom',
-                        data: pays,
-                        allowFreeEntries: false,
-                        allowDuplicates: false
-                    });
-                    $(x).on('selectionchange', function(){
-                        addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
-                    });
+            var listePays = [];
+            
+            $.when(listePays).done(function(data2) {
+                var x = $('#magicsuggest').magicSuggest({
+                    placeholder: 'Vous pouvez chercher un pays avec son nom',
+                    data: pays,
+                    allowFreeEntries: false,
+                    allowDuplicates: false
                 });
-			var jQuery_1_8 = $.noConflict(true);
+                $(x).on('selectionchange', function(){
+                    addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
+                });
+            });
+            var jQuery_1_8 = $.noConflict(true);
         </script>
     </body>
 </html>
