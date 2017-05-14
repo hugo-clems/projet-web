@@ -427,19 +427,18 @@
             
             
             // Barre de recherche onglet MapStats
-            var listePays = [];
-            
-            $.when(listePays).done(function(data2) {
-                var x = $('#magicsuggest').magicSuggest({
-                    placeholder: 'Vous pouvez chercher un pays avec son nom',
-                    data: pays,
-                    allowFreeEntries: false,
-                    allowDuplicates: false
-                });
-                $(x).on('selectionchange', function(){
-                    addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
-                });
+  
+            var x = $('#magicsuggest').magicSuggest({
+                placeholder: 'Vous pouvez chercher un pays avec son nom',
+                data: pays,
+                allowFreeEntries: false,
+                allowDuplicates: false
             });
+            $(x).on('selectionchange', function(){
+                addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
+            });
+			
+			$("#myliste").arrive("li",function(){console.log("ok")});
             var jQuery_1_8 = $.noConflict(true);
         </script>
     </body>
