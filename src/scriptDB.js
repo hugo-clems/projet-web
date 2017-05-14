@@ -190,21 +190,28 @@ function allYearsCountries(nomPays){
 }
 //Mon retour doit etre de la forme Objet[nom] = [[]]
 function getDataFromList(list){
-	var objetPays = {};
-	var transaction = db.transaction("PIB");
+    var objetPays = {};
+    var transaction = db.transaction("PIB");
     var objectStore = transaction.objectStore("PIB");
-	objectStore.openCursor().onsuccess = function(event) {
-    var cursor = event.target.result;
+    objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
 	if(cursor) {
             if(list.indexOf(cursor.key[0])>=0){
-				objetPays[cursor.key[0]].append({date:cursor.key[1],pib:cursor.value["pib"],pib:cursor.value["nbNaissance"],pib:cursor.value["nbDeces"]})
-			}
+                objetPays[cursor.key[0]].append({date:cursor.key[1],pib:cursor.value["pib"],pib:cursor.value["nbNaissance"],pib:cursor.value["nbDeces"]})
+            }
             cursor.continue();
         } else {
             console.log("No more entries");
         }
     };
-	
+    //
+    var p1 = [{ label: "2000",  y: 10  },
+                { label: "2010", y: 15  },
+                { label: "2011", y: 30  },
+                { label: "2012",  y: 35  },
+                { label: "2013",  y: 28  }];
+    var data1 = [createData(objetPays[0], true, "column", p1), createData(objetPays[1], true, "column", p1)];
+    createChart("chart1", "PIB de la France et l'Allemagne", true, data1);
 }
 
 
