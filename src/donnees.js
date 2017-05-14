@@ -18,8 +18,7 @@ function chargerPays(nomPays) {
     }
     
     // On affiche chaque année (avec ses données)
-    var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + annee[i] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + annee[i] + ");'>Modifier</button></td>";
-    allYearsCountries(nomPays, btn);
+    allYearsCountries(nomPays);
     
     PAYS_SELECTED = nomPays;
 }
@@ -61,10 +60,10 @@ function showSuppr(id) {
 /**
  * Supprime une année - Accès BD
  */
-function supprimerAnnee(annee) {
+function supprimerAnnee() {
     var paysEdited = PAYS_SELECTED;
     var anneeEdited = $("#supprAnnee").html();
-    removeAnnee(PAYS_SELECTED,annee);
+    removeAnnee(PAYS_SELECTED,anneeEdited);
 	annee.sort();
 	chargerPays(PAYS_SELECTED);
 

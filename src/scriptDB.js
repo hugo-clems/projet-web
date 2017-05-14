@@ -158,14 +158,17 @@ function selectAll() {
     };
 }
 
-function allYearsCountries(nomPays,btn){
+function allYearsCountries(nomPays){
 	var transaction = db.transaction("PIB");
 	var objectStore = transaction.objectStore("PIB");
     for(var i =0; i<annee.length;i++){
 		objectStore.get([nomPays,annee[i]]).onsuccess = function(event){
-		console.log('<tr id="P'+event.target.result["annee"]+'"><td class="annee">');
-		 $("tbody").append("<tr id='P"+event.target.result["annee"]+"'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"</td><td class='taux'>"+event.target.result["nbDeces"]+"</td>"+btn);
+		    var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + event.target.result["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + event.target.result["annee"] + ");'>Modifier</button></td>";
+			$("tbody").append("<tr id='P"+event.target.result["annee"]+"'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"</td><td class='taux'>"+event.target.result["nbDeces"]+"</td>"+btn);
 		};
+		objectStore.get([nomPays,annee[i]]).onerror = function(event){
+			console.log("nope");
+			};
 	}
 }
 
