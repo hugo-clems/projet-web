@@ -71,8 +71,12 @@ function addCountryOnMap(countryName,countryCode){
 	  } else {
 		// ajout du pays à la liste
 		listeName.push(countryCode);
+                
+                // On affiche les charts
+                afficherCharts(true);
+                
 		getDataFromList(listeName);
-		$('#myliste').append('<li>'+countryName+'</li>');
+		$('#myliste').append('<li class="list-group-item">'+countryName+'</li>');
 	  }
 	  if(listeName != ''){
 	  
@@ -100,6 +104,7 @@ function addCountryOnMap(countryName,countryCode){
 }
 
 // Ajoute un pays à la liste des pays
+// UNUSED !!
 function addCountryList(country) {
 		var ma_liste = document.getElementById("myliste");
 		var li = document.createElement("li");

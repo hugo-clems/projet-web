@@ -15,7 +15,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="scriptDB.js"></script>
-		<script src="chart.js"></script>
+        <script src="chart.js"></script>
         <script src="donnees.js"></script>
             
         <!-- Meta -->
@@ -72,24 +72,26 @@
                     <div class="col-sm-12">
                         <h4>Pays sélectionnés :</h4>
                         <div id="magicsuggest"></div>
-                        <ul id="myliste"></ul>	
+                        <ul id="myliste" class="list-group"></ul>
                     </div>
                 </div>
                     
-                <hr><hr><!-- Menu des charts -->
-                <h2 >Statistiques sur les pays sélectionnés</h2>
-                <div>
-                    <a href="#chart1" class="btn btn-default"><img src="image/column.png" alt=""/></a>
-                    <a href="#chart2" class="btn btn-default"><img src="image/bar.png" alt=""/></a>
-                    <a href="#chart3" class="btn btn-default"><img src="image/splines.png" alt=""/></a>
-                    <a href="#chart4" class="btn btn-default"><img src="image/pie.png" alt=""/></a>
+                <div id="lesCharts">
+                    <hr><hr><!-- Menu des charts -->
+                    <h2>Statistiques sur les pays sélectionnés</h2>
+                    <div>
+                        <a href="#chart1" class="btn btn-info">PIB des Pays</a>
+                        <a href="#chart2" class="btn btn-info">Taux Natalités des Pays</a>
+                        <a href="#chart3" class="btn btn-info">Taux Mortalités Pays</a>
+                        <a href="#chart4" class="btn btn-info">PIB des Pays</a>
+                    </div>
+                        
+                    <hr><!-- Les charts -->
+                    <div id="chart1" class="unChart"></div><hr>
+                    <div id="chart2" class="unChart"></div><hr>
+                    <div id="chart3" class="unChart"></div><hr>
+                    <div id="chart4" class="unChart"></div>
                 </div>
-                    
-                <hr><!-- Les charts -->
-                <div id="chart1" class="unChart"></div><hr>
-                <div id="chart2" class="unChart"></div><hr>
-                <div id="chart3" class="unChart"></div><hr>
-                <div id="chart4" class="unChart"></div>
             </div>
                 
                 
@@ -357,55 +359,19 @@
             
             
         <!-- Scripts pour les Charts -->
-		<script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script>
-            /*$(document).ready(function () {
-                getDataFromList(["France","Italy"]);
-            });
-            // TEMPORAIRE : Données en brut
-            var p1 = [{ label: "2000",  y: 10  },
-                { label: "2010", y: 15  },
-                { label: "2011", y: 30  },
-                { label: "2012",  y: 35  },
-                { label: "2013",  y: 28  }];
-            var p2 = [{ label: "2000",  y: 20  },
-                { label: "2010", y: 25  },
-                { label: "2011", y: 35  },
-                { label: "2012",  y: 40  },
-                { label: "2013",  y: 38  }];
-            var p3 = [{ label: "2000",  y: 35  },
-                { label: "2010", y: 30  },
-                { label: "2011", y: 20  },
-                { label: "2012",  y: 10  },
-                { label: "2013",  y: 40  }];
-            var p4 = [{ label: "2000",  y: 30  },
-                { label: "2010", y: 15  },
-                { label: "2011", y: 30  },
-                { label: "2012",  y: 20  },
-                { label: "2013",  y: 48  }];
-            var p5 = [{ label: "2000",  y: 10  },
-                { label: "2010", y: 20  },
-                { label: "2011", y: 25  },
-                { label: "2012",  y: 8  },
-                { label: "2013",  y: 30  }];
-            var p6 = [{ label: "2000",  y: 3  },
-                { label: "2010", y: 5  },
-                { label: "2011", y: 8  },
-                { label: "2012",  y: 10  },
-                { label: "2013",  y: 15  }];
+            function afficherCharts(yesOrNo) {
+                if (yesOrNo) {
+                    $("#lesCharts").show();
+                } else {
+                    $("#lesCharts").hide();
+                }
+            }
             
-            var data1 = [createData("PIB France", true, "column", p1), createData("PIB Allemagne", true, "column", p2)];
-            var data2 = [createData("Tx nat. FR", true, "bar", p3), createData("Tx nat. GER", true, "bar", p4)
-                , createData("Tx death FR", true, "bar", p5), createData("Tx death GER", true, "bar", p6)];
-            var data3 = [createData("PIB France", true, "column", p1), createData("Tx nat. FR", true, "spline", p3)
-                , createData("Tx death FR", true, "spline", p5)];
-            var data4 = [createData("", false, "pie", p1)];
-            
-            createChart("chart1", "PIB de la France et l'Allemagne", true, data1);
-            createChart("chart2", "Taux Natalités et mort de la France et l'Allemagne", true, data2);
-            createChart("chart3", "PIB & taux de la France", true, data3);
-            createChart("chart4", "PIB de la France", true, data4);*/
+            // Par défaut on cache les charts
+            afficherCharts(false);
         </script>
             
             
@@ -426,8 +392,8 @@
             $(recDonnee).on('selectionchange', function() {
                 chargerPays(this.getValue()[0]);    // Récupère les pays entrés
             });
-			/*$(myliste).change(function(){
-				getDataFromList(["France","Italy"]);
+            /*$(myliste).change(function(){
+                                getDataFromList(["France","Italy"]);
             });*/
             
             // Barre de recherche onglet MapStats
@@ -442,7 +408,7 @@
                 addCountryList(JSON.stringify(this.getValue()));    // Récupère les pays entrés
             });*/
             
-                        $("#myliste").on("contentChanged",function(){console.log("yest")});
+            $("#myliste").on("contentChanged",function(){console.log("yest")});
             var jQuery_1_8 = $.noConflict(true);
         </script>
     </body>

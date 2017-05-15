@@ -37,26 +37,32 @@ html, body {
 
 .unChart {
     height: 300px;
-    width: 60%;
+    width: 100%;
+    height: 400px;
     margin-bottom: 100px;
-    /*margin-left: auto;
-    margin-right: auto;*/
-}
-
-@media screen and (max-width: 768px) {
-    .unChart {
-        width: 80%;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .unChart {
-        width: 100%;
-    }
 }
 
 #titreTab {
     font-weight : bold;
+}
+
+#myliste {
+    width: 20%;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media screen and (max-width: 768px) {
+    #myliste {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #myliste {
+        width: 100%;
+    }
 }
 
 footer {

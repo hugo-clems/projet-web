@@ -213,12 +213,13 @@ function getDataFromList(list){
     };
 	$.when(defer).done(function(data){
 		var finalListPib = [];
-		var finalListTaux = [];
+		var finalListTauxNat = [];
+		var finalListTauxDeath = [];
 		var payss;
-		var finalListGraph3 = [];
+		var finalListGraph4 = [];
 		var finalListCam = [];
 		for(let pays in data){
-			var pib = []
+			var pib = [];
 			var birth = [];
 			var death = [];
 			for(var i =0; i<objetPays[pays].length;i++){
@@ -229,19 +230,19 @@ function getDataFromList(list){
 				death.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["death"])});
 			}
 			finalListPib.push(createData(pays, true, "column", pib));
-			finalListTaux.push(createData("Tx nat."+pays,true, "bar",birth),createData("Tx death."+pays,true, "bar",death));
-			finalListGraph3.push(createData(pays, true, "column", pib),createData("Tx nat."+pays,true, "spline",birth),createData("Tx death."+pays,true, "spline",death))
+			finalListTauxNat.push(createData(pays,true, "spline",birth));
+			finalListTauxDeath.push(createData(pays,true, "spline",death));
+			finalListGraph4.push(createData("Tx nat."+pays, true, "column", birth), createData("Tx death."+pays,true, "column",death));
+                        
 			payss = pays;
 		}
 		finalListCam.push(createData("", true, "pie", pib));
 
 		
-		 createChart("chart1", "PIB des Pays", true, finalListPib);
-		 createChart("chart2", "Taux Natalités et Morts ", true, finalListTaux);
-		 createChart("chart3", "PIB & taux", true, finalListGraph3);
-		 createChart("chart4", "PIB "+payss, true, finalListCam);
-
-
+		 createChart("chart1", "PIB des Pays", false, finalListPib);
+		 createChart("chart2", "Taux Natalités des Pays", false, finalListTauxNat);
+		 createChart("chart3", "Taux Mortalités des Pays", false, finalListTauxDeath);
+		 createChart("chart4", "PIB1990", false, finalListGraph4);
 	});
 
 }
