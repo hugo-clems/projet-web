@@ -37,7 +37,7 @@
                     <img class="img-responsive" src="image/logo.png" alt="logo">
                 </div>
                 <div class="col-sm-11 text-left">
-                    <nav class="navbar navbar-default">
+                    <!--<nav class="navbar navbar-default">
                         <div class="container-fluid">
                             <div class="navbar-header">
                                 <a class="navbar-brand" href="#" onclick="setTab(0);">GeoStats</a>
@@ -48,6 +48,14 @@
                                 </li>
                             </ul>
                         </div>
+                    </nav>-->
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="#" onclick="setTab(0);">GeoStats</a>
+                                <a id="modification" class="navbar-brand" href="#"
+                                   onclick="setTab(1);chargerPays('France');">Modification des données</a>
+                            </div>
                     </nav>
                 </div>
             </div>
@@ -83,7 +91,7 @@
                         <a href="#chart1" class="btn btn-info">PIB des Pays</a>
                         <a href="#chart2" class="btn btn-info">Taux Natalités des Pays</a>
                         <a href="#chart3" class="btn btn-info">Taux Mortalités Pays</a>
-                        <a href="#chart4" class="btn btn-info">PIB des Pays</a>
+                        <a href="#chart4" class="btn btn-info">Taux par Pays</a>
                     </div>
                         
                     <hr><!-- Les charts -->

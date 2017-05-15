@@ -252,7 +252,7 @@ function getDataFromList(list){
         createChart("chart1", "PIB des Pays", false, finalListPib);
         createChart("chart2", "Taux Natalités des Pays", false, finalListTauxNat);
         createChart("chart3", "Taux Mortalités des Pays", false, finalListTauxDeath);
-        createChart("chart4", "PIB1990", false, finalListGraph4);
+        createChart("chart4", "Taux par Pays", false, finalListGraph4);
     });
 }
 

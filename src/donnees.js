@@ -13,7 +13,7 @@ var PAYS_SELECTED = "NON DEFINI";   // Pays actuel
 function chargerPays(nomPays) {
     // On supprime les lignes éventuellement déjà présentes dans la table (sauf la première)
     for (i = 0; i < annee.length; i++) {
-		console.log(annee[i]);
+        console.log(annee[i]);
         $("tr").remove("#P"+annee[i]);
     }
     
@@ -75,14 +75,14 @@ function showEdit(id) {
     var anneeToEdit = $("#P"+id).children(".annee").html();
     var pibToEdit = $("#P"+id).children(".pib").html();
     var tauxToEdit = $("#P"+id).children(".tauxNat").html();
-	var tauxToEditDeath = $("#P"+id).children(".tauxDeath").html();
-
+    var tauxToEditDeath = $("#P"+id).children(".tauxDeath").html();
+    
     
     $("#editAnnee").val(anneeToEdit);
     $("#editOldAnnee").val(anneeToEdit);
     $("#editPIB").val(pibToEdit);
     $("#editBirth").val(tauxToEdit);
-	$("#editDeath").val(tauxToEditDeath);
+    $("#editDeath").val(tauxToEditDeath);
     
     $("#modalModif").modal('show');
 }
@@ -96,13 +96,13 @@ function modifierAnnee() {
     var oldAnnee = $("#editOldAnnee").val();
     var pibEdited = $("#editPIB").val();
     var tauxBirth = $("#editBirth").val();
-	var tauxDeath = $("#editDeath").val();
-
+    var tauxDeath = $("#editDeath").val();
+    
     
     removeAnnee(PAYS_SELECTED,oldAnnee);
-	if(annee.indexOf(anneeEdited)<0){
-		annee.push(anneeEdited);
-	}
-	addPays(PAYS_SELECTED,anneeEdited,pibEdited,tauxBirth,tauxDeath);
-	chargerPays(PAYS_SELECTED);
+    if(annee.indexOf(anneeEdited)<0){
+        annee.push(anneeEdited);
+    }
+    addPays(PAYS_SELECTED,anneeEdited,pibEdited,tauxBirth,tauxDeath);
+    chargerPays(PAYS_SELECTED);
 }
