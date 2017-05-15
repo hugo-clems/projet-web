@@ -12,8 +12,8 @@ var PAYS_SELECTED = "NON DEFINI";   // Pays actuel
  */
 function chargerPays(nomPays) {
     // On supprime les lignes éventuellement déjà présentes dans la table (sauf la première)
-    var rowCount = $('#corpsTab tr').length;
-    for (i = 0; i < rowCount-1; i++) {
+    for (i = 0; i < annee.length; i++) {
+		console.log(annee[i]);
         $("tr").remove("#P"+annee[i]);
     }
     
@@ -63,7 +63,6 @@ function supprimerAnnee() {
     var anneeDeleted = $("#supprAnnee").html();
     
     removeAnnee(PAYS_SELECTED, anneeDeleted);
-    annee.sort();
     
     chargerPays(PAYS_SELECTED);
 }
