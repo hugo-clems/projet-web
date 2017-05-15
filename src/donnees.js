@@ -21,6 +21,7 @@ function chargerPays(nomPays) {
     allYearsCountries(nomPays);
     
     PAYS_SELECTED = nomPays;
+    getDataFromList(listeName);
 }
 
 /**
