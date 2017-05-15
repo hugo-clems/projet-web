@@ -68,10 +68,10 @@
                 </div>
                     
                 <!-- Affichage des pays sélectionnés -->
-                <div class="row">
+                <div class="row" id="listeDesPaysSelect">
                     <div class="col-sm-12">
                         <h4>Pays sélectionnés :</h4>
-                        <div id="magicsuggest"></div>
+                        <button class="btn btn-warning" onclick="deleteAll();">Supprimer tous les pays</button>
                         <ul id="myliste" class="list-group"></ul>
                     </div>
                 </div>
@@ -348,6 +348,8 @@
                         break;
                 }
             }
+            
+            $("#listeDesPaysSelect").hide();
         </script>
             
             
