@@ -1,3 +1,8 @@
+/**
+ * Projet Web - GeoStats
+ * CLEMENT, O'ROURKE & FUZIER © 2017
+ */
+
 /* ******************** */
 /* ***  Les données *** */
 /* ******************** */
@@ -38,13 +43,8 @@ $.getJSON('birth_per_countries.json', function(data) {
                 }
             });
             pibPays[val["Country Name"]].push(dateBirth);
-            
-            
-            
         }
-        
     });
-    
 });
 
 // On fait avec le taux de mortalité
@@ -57,16 +57,17 @@ $.getJSON('death_per_countries.json', function(data) {
                     dateDeath.push({date:key2,death:val2});
                 }
             });
-            //Pour les morts on doit vérifier si ils sont dedans sinon il y a des pays en trop et ça bug. lol.
+            
+            // Pour les morts on doit vérifier si ils sont dedans sinon il y a des pays en trop et ça bug. lol.
             if(val["Country Name"] in pibPays){
                 pibPays[val["Country Name"]].push(dateDeath);
             }
-            
-            
         }		
     });
-    
 });
+
+
+
 
 /* ******************** */
 /* ** Initialisation ** */
@@ -86,6 +87,7 @@ var db; // La base de données
 
 // On supprime la base pour les tests
 var req = indexedDB.deleteDatabase("Database");
+
 // On ouvre la base, la nomme et on lui donne un n° de version.
 var request = indexedDB.open("Database", 1);
 
@@ -107,27 +109,26 @@ request.onupgradeneeded = function(event) {
     
     // Création des tables et définitions des clés primaires
     var db = event.target.result;
-    //var paysTable = db.createObjectStore("Pays", {keyPath: "nomPays"});
-    //var anneeTable = db.createObjectStore("Annee", {keyPath: "annee"});
-    //var continentTable = db.createObjectStore("Continent", {keyPath: "nomContinent"});
+    
     var pibTable = db.createObjectStore("PIB", {keyPath: ["idPays","annee"]});
-    //var test = db.createObjectStore("test", {keyPath: ["pays","annee"]});
+    
     // On ajoute les données dans la BD
     var j = 0;
-    for(var nom in Object.keys(pibPays)){
+    for (var nom in Object.keys(pibPays)) {
         //Boucle de parcours de date
-        for(var i=0;i <11;i++){
+        for (var i=0;i <11;i++) {
             var date = pibPays[Object.keys(pibPays)[nom]][2][i]["date"];
+            
             //On prend PIB, birth et death pour une date donnée
             var pibvar = pibPays[Object.keys(pibPays)[nom]][1][i]["pib"];
             var birth = pibPays[Object.keys(pibPays)[nom]][2][i]["birth"];
             var death = pibPays[Object.keys(pibPays)[nom]][3][i]["death"];
-            pibTable.add({idPays : Object.keys(pibPays)[nom],annee : date ,code :pibPays[Object.keys(pibPays)[nom]][0].substring(0,2),pib : pibvar,  nbNaissance : birth, nbDeces : death });
+            pibTable.add({idPays : Object.keys(pibPays)[nom], annee : date,
+                code :pibPays[Object.keys(pibPays)[nom]][0].substring(0,2),
+                pib : pibvar,  nbNaissance : birth, nbDeces : death });
             
         }
     }
-    //test.add({pays : "France", annee: "2010", autre : "test"});
-    
 }
 
 
@@ -156,97 +157,104 @@ function selectAll() {
     };
 }
 
+/**
+ * Ajoute dans la table des données (vu utilisateur)
+ * la liste des année pour le pays choisis.
+ */
 function allYearsCountries(nomPays){
     var transaction = db.transaction("PIB");
     var objectStore = transaction.objectStore("PIB");
-	objectStore.openCursor().onsuccess = function(event) {
+    
+    objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
 	if(cursor) {
             if(cursor.key[0] == nomPays){
-				var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + cursor.value["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + cursor.value["annee"] + ");'>Modifier</button></td>";
-				$("tbody").append("<tr id='P"+cursor.key[1]+"'><td class='annee'>" + cursor.key[1] + "</td><td class='pib'>" + cursor.value["pib"] + "</td><td class='tauxNat'>" +cursor.value["nbNaissance"]+"</td><td class='tauxDeath'>"+cursor.value["nbDeces"]+"</td>"+btn);
-			}
+                var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + cursor.value["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + cursor.value["annee"] + ");'>Modifier</button></td>";
+                $("tbody").append("<tr id='P"+cursor.key[1]+"'><td class='annee'>" + cursor.key[1] + "</td><td class='pib'>" + cursor.value["pib"] + "</td><td class='tauxNat'>" +cursor.value["nbNaissance"]+"</td><td class='tauxDeath'>"+cursor.value["nbDeces"]+"</td>"+btn);
+            }
             cursor.continue();
         } else {
             console.log("No more entries");
         }
     };
-	
-	
-	/*var L = allYears(nomPays);
-	$.when(L).done(function(data){
-		for (let item of data){
-			console.log(item);
-			objectStore.get([nomPays]).onsuccess = function(event){
-				console.log("test");
-				var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + event.target.result["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + event.target.result["annee"] + ");'>Modifier</button></td>";
-				$("tbody").append("<tr id='P"+event.target.result["annee"]+"'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"</td><td class='taux'>"+event.target.result["nbDeces"]+"</td>"+btn);
-			};
-			objectStore.get([nomPays,item]).oncomplete = function(event){
-				console.log("nope");
-			};
-		}
-	})*/
+    
+    /*var L = allYears(nomPays);
+    $.when(L).done(function(data){
+        for (let item of data){
+            console.log(item);
+            objectStore.get([nomPays]).onsuccess = function(event){
+                console.log("test");
+                var btn = "<td class='text-right'><button type='button' class='btn btn-danger' onclick='showSuppr(" + event.target.result["annee"] + ");'>Supprimer</button> <button type='button' class='btn btn-info' onclick='showEdit(" + event.target.result["annee"] + ");'>Modifier</button></td>";
+                $("tbody").append("<tr id='P"+event.target.result["annee"]+"'><td class='annee'>" + event.target.result["annee"] + "</td><td class='pib'>" + event.target.result["pib"] + "</td><td class='taux'>" + event.target.result["nbNaissance"]+"</td><td class='taux'>"+event.target.result["nbDeces"]+"</td>"+btn);
+            };
+            objectStore.get([nomPays,item]).oncomplete = function(event){
+                console.log("nope");
+            };
+        }
+    })*/
 }
-//Mon retour doit etre de la forme Objet[nom] = [[]]
+
+/**
+ * Créer les affichages statistiques (charts) en fonction des pays sélectionnés
+ * @param {[String]} list - liste des pays sélectionnés
+ */
 function getDataFromList(list){
-	var defer = $.Deferred();
+    var defer = $.Deferred();
     var objetPays = {};
     var transaction = db.transaction("PIB");
     var objectStore = transaction.objectStore("PIB");
+    
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
-	if(cursor) {
-            if(list.indexOf(cursor.value["code"])>=0){
-				if(cursor.key[0] in objetPays){
-					objetPays[cursor.key[0]].push({date:cursor.key[1],pib:cursor.value["pib"],birth:cursor.value["nbNaissance"],death:cursor.value["nbDeces"]})
-					console.log(cursor.value["pib"]);
-				}else{
-					objetPays[cursor.key[0]]=[{date:cursor.key[1],pib:cursor.value["pib"],birth:cursor.value["nbNaissance"],death:cursor.value["nbDeces"]}];
-				}
+	if (cursor) {
+            if (list.indexOf(cursor.value["code"])>=0){
+                if (cursor.key[0] in objetPays){
+                    objetPays[cursor.key[0]].push({date:cursor.key[1],pib:cursor.value["pib"],birth:cursor.value["nbNaissance"],death:cursor.value["nbDeces"]})
+                    console.log(cursor.value["pib"]);
+                } else {
+                    objetPays[cursor.key[0]]=[{date:cursor.key[1],pib:cursor.value["pib"],birth:cursor.value["nbNaissance"],death:cursor.value["nbDeces"]}];
+                }
             }
             cursor.continue();
         } else {
             defer.resolve(objetPays);
         }
-		
     };
-	$.when(defer).done(function(data){
-		var finalListPib = [];
-		var finalListTauxNat = [];
-		var finalListTauxDeath = [];
-		var payss;
-		var finalListGraph4 = [];
-		var finalListCam = [];
-		for(let pays in data){
-			var pib = [];
-			var birth = [];
-			var death = [];
-			for(var i =0; i<objetPays[pays].length;i++){
-				if(objetPays[pays][i]["pib"] != ".."){
-					pib.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["pib"])});
-				}
-				birth.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["birth"])});
-				death.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["death"])});
-			}
-			finalListPib.push(createData(pays, true, "column", pib));
-			finalListTauxNat.push(createData(pays,true, "spline",birth));
-			finalListTauxDeath.push(createData(pays,true, "spline",death));
-			finalListGraph4.push(createData("Tx nat."+pays, true, "column", birth), createData("Tx death."+pays,true, "column",death));
-                        
-			payss = pays;
-		}
-		finalListCam.push(createData("", true, "pie", pib));
-
-		
-		 createChart("chart1", "PIB des Pays", false, finalListPib);
-		 createChart("chart2", "Taux Natalités des Pays", false, finalListTauxNat);
-		 createChart("chart3", "Taux Mortalités des Pays", false, finalListTauxDeath);
-		 createChart("chart4", "PIB1990", false, finalListGraph4);
-	});
-
+    
+    $.when(defer).done(function(data){
+        var finalListPib = [];
+        var finalListTauxNat = [];
+        var finalListTauxDeath = [];
+        var payss;
+        var finalListGraph4 = [];
+        
+        for (let pays in data) {
+            var pib = [];
+            var birth = [];
+            var death = [];
+            
+            for (var i = 0; i < objetPays[pays].length; i++) {
+                if (objetPays[pays][i]["pib"] != "..") {
+                    pib.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["pib"])});
+                }
+                birth.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["birth"])});
+                death.push({label : objetPays[pays][i]["date"], y : Number(objetPays[pays][i]["death"])});
+            }
+            
+            finalListPib.push(createData(pays, true, "column", pib));
+            finalListTauxNat.push(createData(pays,true, "spline",birth));
+            finalListTauxDeath.push(createData(pays,true, "spline",death));
+            finalListGraph4.push(createData("Tx nat."+pays, true, "column", birth), createData("Tx death."+pays,true, "column",death));
+            
+            payss = pays;
+        }
+        
+        createChart("chart1", "PIB des Pays", false, finalListPib);
+        createChart("chart2", "Taux Natalités des Pays", false, finalListTauxNat);
+        createChart("chart3", "Taux Mortalités des Pays", false, finalListTauxDeath);
+        createChart("chart4", "PIB1990", false, finalListGraph4);
+    });
 }
-
 
 /**
  * Lit une ligne d'une table.
@@ -256,7 +264,6 @@ function getDataFromList(list){
  * @return {undefined}   - L'objet recherché
  */
 function select(nomPays,annee) {
-	
     os = db.transaction("PIB").objectStore("PIB").get([nomPays,annee]).onsuccess = function(event) {
         var obj = event.target.result;
         console.log(obj);
@@ -296,21 +303,23 @@ function removeAnnee(nomPays,annee){
  */
 function addPays(nomPays,years,pibvar,natalite,mortalite) {
     var os = db.transaction("PIB","readwrite").objectStore("PIB");
-	os.openCursor().onsuccess = function(event) {
+    os.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
-		if(cursor) {
-			if(cursor.key[0] ==nomPays){
-				os.add({idPays : nomPays,annee : years,code : cursor.value["code"],pib : pibvar, nbNaissance : natalite, nbDeces : mortalite}).onsuccess = function(event){
-					console.log("pays ajouté");
-					};
-			}else{
-			cursor.continue();}
-		}
-	}
+        if(cursor) {
+            if(cursor.key[0] ==nomPays){
+                os.add({idPays : nomPays,annee : years,code : cursor.value["code"],pib : pibvar, nbNaissance : natalite, nbDeces : mortalite}).onsuccess = function(event){
+                    console.log("pays ajouté");
+                };
+            }else{
+                cursor.continue();}
+        }
+    }
 }
 
-
-function allName(){
+/**
+ * Renvoie la liste de tous les pays (leur noms)
+ */
+function allName() {
     var defer = $.Deferred();
     var L = new Set();
     var transaction = db.transaction("PIB");
@@ -331,7 +340,7 @@ function allName(){
 }
 
 /**
- * Renvoie la liste des années
+ * Renvoie la liste de toutes les années
  */
 function allYears(nomPays) {
     var defer = $.Deferred();
@@ -342,9 +351,9 @@ function allYears(nomPays) {
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
         if (cursor) {
-			if(cursor.key[0] == nomPays){
-				L.add(cursor.key[1]);
-			}
+            if(cursor.key[0] == nomPays){
+                L.add(cursor.key[1]);
+            }
             cursor.continue();
         } else {
             defer.resolve([...L]);
