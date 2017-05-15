@@ -214,9 +214,10 @@ function getDataFromList(list){
 	$.when(defer).done(function(data){
 		var finalListPib = [];
 		var finalListTaux = [];
+		var payss;
 		var finalListGraph3 = [];
+		var finalListCam = [];
 		for(let pays in data){
-			console.log(pays);
 			var pib = []
 			var birth = [];
 			var death = [];
@@ -230,11 +231,15 @@ function getDataFromList(list){
 			finalListPib.push(createData(pays, true, "column", pib));
 			finalListTaux.push(createData("Tx nat."+pays,true, "bar",birth),createData("Tx death."+pays,true, "bar",death));
 			finalListGraph3.push(createData(pays, true, "column", pib),createData("Tx nat."+pays,true, "spline",birth),createData("Tx death."+pays,true, "spline",death))
+			payss = pays;
 		}
+		finalListCam.push(createData("", true, "pie", pib));
+
 		
 		 createChart("chart1", "PIB des Pays", true, finalListPib);
 		 createChart("chart2", "Taux Natalités et Morts ", true, finalListTaux);
 		 createChart("chart3", "PIB & taux", true, finalListGraph3);
+		 createChart("chart4", "PIB "+payss, true, finalListCam);
 
 
 	});
