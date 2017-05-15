@@ -85,8 +85,8 @@ if (!window.indexedDB) {
 
 var db; // La base de données
 
-// On supprime la base pour les tests
-var req = indexedDB.deleteDatabase("Database");
+// On supprime la base pour les tests (désactivé pour l'utilisation du site en condition réél)
+//var req = indexedDB.deleteDatabase("Database");
 
 // On ouvre la base, la nomme et on lui donne un n° de version.
 var request = indexedDB.open("Database", 1);
